@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61210357803588362}
   - component: {fileID: 114496403877635198}
   m_Layer: 0
-  m_Name: EnemyCloud
+  m_Name: EnemyCloudLevel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
