@@ -12,6 +12,11 @@ public class MainScript : MonoBehaviour
     public static Random r;
     public static float mapWidth;
     public static float mapHeight;
+    public static float mapBorderWidth;
+    public static float mapBorderHeight;
+    public static float placementWidthBuffer;
+    public static float placementHeightBuffer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +24,18 @@ public class MainScript : MonoBehaviour
         Vector3 mapRend = mapPic.GetComponent<Renderer>().bounds.size;
         mapWidth = mapRend.x;
         mapHeight = mapRend.y;
+        mapBorderWidth = (float)1.54;
+        mapBorderHeight = (float)1.5;
+        placementWidthBuffer = 3;
+        placementHeightBuffer = 3;
+
+        GameObject door = GameObject.Find("door");
+
+
+
+
         seed = (int)System.DateTime.Now.Ticks;
+        seed = 1;
         r = new Random(seed);
         map[new Point(0,0)] = new Room(0, new Point(0,0));
         map[new Point(0, 0)].SpawnNewRoom(10);
@@ -40,10 +56,52 @@ public class MainScript : MonoBehaviour
             Debug.Log(test);
 
             GameObject newBox = Instantiate(mapPic);
-            newBox.transform.position = new Vector3(x*mapWidth, y*mapHeight + transform.localScale.y / 2, mapRend.z);
+            newBox.name = "madeBox";
+            float placementX = x * (mapWidth + placementWidthBuffer);
+            float placementY = y * (mapHeight + placementHeightBuffer);
+            float placementZ = mapRend.z;
+
+            newBox.transform.position = new Vector3(placementX, placementY, placementZ);
+            for (int i = 0; i < 4; i++)
+            {
+                if (map[entry.Key].GetRoomInt(i) != null){
+                    GameObject newDoor = Instantiate(door);
+                    newDoor.name = "madeDoor";
+
+                    switch (i)
+                    {
+
+                        case 0:
+                            door.transform.position = new Vector3( placementX + mapWidth/2,
+                                                                  placementY,
+                                                                  placementZ);
+                            break;
+                        case 1:
+                            door.transform.position = new Vector3(placementX ,
+                                                              placementY + mapHeight / 2,
+                                                              placementZ);
+                            break;
+                        case 2:
+                            door.transform.position = new Vector3(placementX - mapWidth / 2,
+                                                              placementY,
+                                                              placementZ);
+                            break;
+                        case 3:
+                            door.transform.position = new Vector3(placementX ,
+                                                              placementY - mapHeight / 2,
+                                                              placementZ);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+            }
+
         }
         GameObject.Find("wholeMap").SetActive(false);
-        
+        //GameObject.Find("door").SetActive(false);
+
         string output = "\n";
 
         for (int y = yMin; y <= yMax; y++)

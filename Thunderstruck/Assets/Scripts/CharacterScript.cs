@@ -11,11 +11,13 @@ public class CharacterScript : BaseSprite {
         panSpeed = 10;
         health = 5;
         iFrames = 0;
+        base.BaseStart();
 	}
     
     public bool IsAlive()
     {
         return health > 0;
+
     }
     // Update is called once per frame
     void Update () {
