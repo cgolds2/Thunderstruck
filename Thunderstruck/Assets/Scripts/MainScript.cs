@@ -35,7 +35,7 @@ public class MainScript : MonoBehaviour
 
 
         seed = (int)System.DateTime.Now.Ticks;
-        seed = 1;
+        //seed = 1;
         r = new Random(seed);
         map[new Point(0,0)] = new Room(0, new Point(0,0));
         map[new Point(0, 0)].SpawnNewRoom(10);
@@ -62,6 +62,8 @@ public class MainScript : MonoBehaviour
             float placementZ = mapRend.z;
 
             newBox.transform.position = new Vector3(placementX, placementY, placementZ);
+            placementZ--;
+            Vector3 doorRend = door.GetComponent<Renderer>().bounds.size;
             for (int i = 0; i < 4; i++)
             {
                 if (map[entry.Key].GetRoomInt(i) != null){
@@ -72,23 +74,23 @@ public class MainScript : MonoBehaviour
                     {
 
                         case 0:
-                            door.transform.position = new Vector3( placementX + mapWidth/2,
+                            door.transform.position = new Vector3( placementX + mapWidth/ 2 - (MainScript.mapBorderWidth / 2 - doorRend.x / 4),
                                                                   placementY,
                                                                   placementZ);
                             break;
                         case 1:
                             door.transform.position = new Vector3(placementX ,
-                                                              placementY + mapHeight / 2,
+                                                              placementY + mapHeight / 2 - (MainScript.mapBorderHeight/2 - doorRend.y/4),
                                                               placementZ);
                             break;
                         case 2:
-                            door.transform.position = new Vector3(placementX - mapWidth / 2,
+                            door.transform.position = new Vector3(placementX - mapWidth / 2 + (MainScript.mapBorderWidth / 2 - doorRend.x / 4),
                                                               placementY,
                                                               placementZ);
                             break;
                         case 3:
                             door.transform.position = new Vector3(placementX ,
-                                                              placementY - mapHeight / 2,
+                                                              placementY - mapHeight / 2 + (MainScript.mapBorderHeight / 2 - doorRend.y / 4),
                                                               placementZ);
                             break;
                         default:
