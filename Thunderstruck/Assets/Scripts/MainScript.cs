@@ -8,7 +8,7 @@ using Random = System.Random;
 public class MainScript : MonoBehaviour
 {
     static int seed;
-    public static Dictionary<Point,Room> map = new Dictionary<Point, Room>();
+    public static Dictionary<Point, Room> map = new Dictionary<Point, Room>();
     public static Random r;
     public static float mapWidth;
     public static float mapHeight;
@@ -18,7 +18,7 @@ public class MainScript : MonoBehaviour
     public static float placementHeightBuffer;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         GameObject mapPic = GameObject.Find("wholeMap");
         Vector3 mapRend = mapPic.GetComponent<Renderer>().bounds.size;
@@ -37,12 +37,12 @@ public class MainScript : MonoBehaviour
         seed = (int)System.DateTime.Now.Ticks;
         //seed = 1;
         r = new Random(seed);
-        map[new Point(0,0)] = new Room(0, new Point(0,0));
+        map[new Point(0, 0)] = new Room(0, new Point(0, 0));
         map[new Point(0, 0)].SpawnNewRoom(10);
-        int xMin=0;
-        int yMin=0;
-        int xMax=0;
-        int yMax=0;
+        int xMin = 0;
+        int yMin = 0;
+        int xMax = 0;
+        int yMax = 0;
 
         foreach (KeyValuePair<Point, Room> entry in map)
         {
@@ -66,7 +66,8 @@ public class MainScript : MonoBehaviour
             Vector3 doorRend = door.GetComponent<Renderer>().bounds.size;
             for (int i = 0; i < 4; i++)
             {
-                if (map[entry.Key].GetRoomInt(i) != null){
+                if (map[entry.Key].GetRoomInt(i) != null)
+                {
                     GameObject newDoor = Instantiate(door);
                     newDoor.name = "madeDoor";
 
@@ -74,27 +75,27 @@ public class MainScript : MonoBehaviour
                     {
 
                         case 0:
-                            door.transform.position = new Vector3( placementX + mapWidth/ 2 - (MainScript.mapBorderWidth / 2 - doorRend.x / 4),
+                            newDoor.transform.position = new Vector3(placementX + mapWidth / 2 - (MainScript.mapBorderWidth / 2 - doorRend.x / 4),
                                                                   placementY,
                                                                   placementZ);
                             break;
                         case 1:
-                            door.transform.position = new Vector3(placementX ,
-                                                              placementY + mapHeight / 2 - (MainScript.mapBorderHeight/2 - doorRend.y/4),
+                            newDoor.transform.position = new Vector3(placementX,
+                                                              placementY + mapHeight / 2 - (MainScript.mapBorderHeight / 2 - doorRend.y / 4),
                                                               placementZ);
                             break;
                         case 2:
-                            door.transform.position = new Vector3(placementX - mapWidth / 2 + (MainScript.mapBorderWidth / 2 - doorRend.x / 4),
+                            newDoor.transform.position = new Vector3(placementX - mapWidth / 2 + (MainScript.mapBorderWidth / 2 - doorRend.x / 4),
                                                               placementY,
                                                               placementZ);
                             break;
                         case 3:
-                            door.transform.position = new Vector3(placementX ,
+                            newDoor.transform.position = new Vector3(placementX,
                                                               placementY - mapHeight / 2 + (MainScript.mapBorderHeight / 2 - doorRend.y / 4),
                                                               placementZ);
                             break;
                         default:
-                            break;
+                            throw new Exception("Something went wrong");
                     }
                 }
 
@@ -102,7 +103,7 @@ public class MainScript : MonoBehaviour
 
         }
         GameObject.Find("wholeMap").SetActive(false);
-        //GameObject.Find("door").SetActive(false);
+        GameObject.Find("door").SetActive(false);
 
         string output = "\n";
 
@@ -110,9 +111,12 @@ public class MainScript : MonoBehaviour
         {
             for (int x = xMin; x <= xMax; x++)
             {
-                if(x==0 && y==0){
+                if (x == 0 && y == 0)
+                {
                     output += "2 ";
-                }else{
+                }
+                else
+                {
                     if (map.ContainsKey(new Point(x, y)))
                     {
                         output += "1 ";
@@ -137,7 +141,7 @@ public class MainScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public static Point GetNeighborByInt(Point point, int i)
     {
@@ -174,8 +178,10 @@ public class Room
 
 
 
-    public Room GetRoomInt(int i){
-        switch(i){
+    public Room GetRoomInt(int i)
+    {
+        switch (i)
+        {
             case 0:
                 return GetRoomRight();
             case 1:
@@ -215,11 +221,13 @@ public class Room
         int dir = MainScript.r.Next(6);
 
         //give a higher chance to spawn in the same direction
-        if(dir>3){
+        if (dir > 3)
+        {
             dir = previousDirection;
         }
 
-        if(GetRoomInt(dir)!=null){
+        if (GetRoomInt(dir) != null)
+        {
             GetRoomInt(dir).SpawnNewRoom(roomsToSpawn);
         }
         else
@@ -228,13 +236,14 @@ public class Room
             //0 is 2, 1 is 3, 2 is 0, 3 is 1
             Point pointOfNewRoom = MainScript.GetNeighborByInt(point, dir);
             MainScript.map[pointOfNewRoom] = new Room((previousDirection + 2) % 4, pointOfNewRoom);
-            if (roomsToSpawn > 1){
+            if (roomsToSpawn > 1)
+            {
                 GetRoomInt(dir).SpawnNewRoom(roomsToSpawn - 1);
             }
         }
 
-      
-      
+
+
     }
 }
 
