@@ -16,10 +16,17 @@ public class MainScript : MonoBehaviour
     public static float mapBorderHeight;
     public static float placementWidthBuffer;
     public static float placementHeightBuffer;
+    public static Room currentRoom;
+    public static GameObject camera;
+    public static float currentRoomX;
+
+    public static float currentRoomY;
 
     // Start is called before the first frame update
     void Awake()
     {
+        camera = GameObject.Find("MainCamera");
+
         GameObject mapPic = GameObject.Find("wholeMap");
         Vector3 mapRend = mapPic.GetComponent<Renderer>().bounds.size;
         mapWidth = mapRend.x;
@@ -37,8 +44,15 @@ public class MainScript : MonoBehaviour
         seed = (int)System.DateTime.Now.Ticks;
         //seed = 1;
         r = new Random(seed);
-        map[new Point(0, 0)] = new Room(0, new Point(0, 0));
-        map[new Point(0, 0)].SpawnNewRoom(10);
+        int maxRooms = 10;
+        int minRooms = 6;
+        int numRooms = r.Next(minRooms,maxRooms);
+
+        map[new Point(0, 0)] = new Room(0, new Point(0, 0),1);
+        map[new Point(0, 0)].SpawnNewRoom(numRooms);
+        SetRoom(GetRoomFromCoord(0, 0));
+        //currentRoom = GetRoomFromCoord(0,0);
+
         int xMin = 0;
         int yMin = 0;
         int xMax = 0;
@@ -69,6 +83,7 @@ public class MainScript : MonoBehaviour
                 if (map[entry.Key].GetRoomInt(i) != null)
                 {
                     GameObject newDoor = Instantiate(door);
+                    newDoor.GetComponent<DoorScript>().Direction = i;
                     newDoor.name = "madeDoor";
 
                     switch (i)
@@ -143,6 +158,11 @@ public class MainScript : MonoBehaviour
     {
 
     }
+
+    private void Start()
+    {
+    }
+
     public static Point GetNeighborByInt(Point point, int i)
     {
         switch (i)
@@ -161,7 +181,41 @@ public class MainScript : MonoBehaviour
         }
     }
 
+    public static Room GetRoomFromCoord(int x, int y)
+    {
+        Point point = new Point(x, y);
+        return MainScript.map.ContainsKey(point) ? MainScript.map[point] : null;
 
+    }
+
+    public static void SetRoom(Room room)
+    {
+        currentRoom = room;
+       
+            var xBound = (MainScript.mapWidth / 2) - MainScript.mapBorderWidth;
+                
+            var yBound = (MainScript.mapHeight / 2) - MainScript.mapBorderHeight;
+
+        
+        BaseSprite.SetBounds(xBound,yBound);
+
+        float placementX = room.point.x * (mapWidth + placementWidthBuffer);
+        float placementY = room.point.y * (mapHeight + placementHeightBuffer);
+        MainScript.currentRoomX = placementX;
+        MainScript.currentRoomY = placementY;
+
+        camera.transform.position = new Vector3(
+            placementX,
+            placementY,
+            camera.transform.position.z);
+
+
+        var player = GameObject.FindWithTag("Player");
+        player.transform.position = new Vector3(
+            placementX,
+            placementY,
+            player.transform.position.z);
+    }
 
 }
 
@@ -170,10 +224,27 @@ public class Room
     public Point point;
     //right is 0, top is 1, etc
     private readonly int previousDirection;
-    public Room(int previousDirection, Point point)
+    public int numEnemies;
+    public int difficulty;
+
+    public Room(int previousDirection, Point point, int difficulty)
     {
         this.previousDirection = previousDirection;
         this.point = point;
+        this.difficulty = difficulty;
+        SpawnEnemies();
+        
+    }
+
+    public void SpawnEnemies()
+    {
+        int minEnemies = 1;
+        int maxEnemies = 5 + difficulty * 2;
+        numEnemies = MainScript.r.Next(minEnemies,maxEnemies);
+        for (int i = 0; i < numEnemies; i++)
+        {
+
+        }
     }
 
 
@@ -235,7 +306,7 @@ public class Room
             //spawn the room on dir
             //0 is 2, 1 is 3, 2 is 0, 3 is 1
             Point pointOfNewRoom = MainScript.GetNeighborByInt(point, dir);
-            MainScript.map[pointOfNewRoom] = new Room((previousDirection + 2) % 4, pointOfNewRoom);
+            MainScript.map[pointOfNewRoom] = new Room((previousDirection + 2) % 4, pointOfNewRoom,1);
             if (roomsToSpawn > 1)
             {
                 GetRoomInt(dir).SpawnNewRoom(roomsToSpawn - 1);
