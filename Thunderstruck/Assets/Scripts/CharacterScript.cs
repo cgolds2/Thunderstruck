@@ -52,6 +52,10 @@ public class CharacterScript : BaseSprite {
         if (col.gameObject.tag == "Enemy")
         {
             health--;
+        }else if(col.gameObject.tag == "Door")
+        {
+           var direction = col.gameObject.GetComponent<DoorScript>().Direction;
+            MainScript.SetRoom(MainScript.currentRoom.GetRoomInt(direction));
         }
     }
 }
