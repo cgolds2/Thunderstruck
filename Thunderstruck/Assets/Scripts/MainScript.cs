@@ -17,7 +17,7 @@ public class MainScript : MonoBehaviour
     public static float placementWidthBuffer;
     public static float placementHeightBuffer;
     public static Room currentRoom;
-    public static GameObject camera;
+    public static GameObject mainCamera;
     public static float currentRoomX;
 
     public static float currentRoomY;
@@ -25,9 +25,9 @@ public class MainScript : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        camera = GameObject.Find("MainCamera");
+        mainCamera = GameObject.Find("MainCamera");
 
-        GameObject mapPic = GameObject.Find("wholeMap");
+        GameObject mapPic = GameObject.Find("templateRoom");
         Vector3 mapRend = mapPic.GetComponent<Renderer>().bounds.size;
         mapWidth = mapRend.x;
         mapHeight = mapRend.y;
@@ -36,7 +36,9 @@ public class MainScript : MonoBehaviour
         placementWidthBuffer = 3;
         placementHeightBuffer = 3;
 
-        GameObject door = GameObject.Find("door");
+        var assetDoor = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/door.prefab");
+
+        //GameObject door = GameObject.Find("door");
 
 
 
@@ -68,8 +70,9 @@ public class MainScript : MonoBehaviour
             if (y > yMax) { yMax = y; };
             string test = string.Format("Point at {0},{1}", x, y);
             Debug.Log(test);
-
-            GameObject newBox = Instantiate(mapPic);
+            var assetRoom = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/room.prefab");
+             GameObject newBox = Instantiate(assetRoom);
+           // GameObject newBox = Instantiate(mapPic);
             newBox.name = "madeBox";
             float placementX = x * (mapWidth + placementWidthBuffer);
             float placementY = y * (mapHeight + placementHeightBuffer);
@@ -77,12 +80,12 @@ public class MainScript : MonoBehaviour
 
             newBox.transform.position = new Vector3(placementX, placementY, placementZ);
             placementZ--;
-            Vector3 doorRend = door.GetComponent<Renderer>().bounds.size;
+            Vector3 doorRend = assetDoor.GetComponent<Renderer>().bounds.size;
             for (int i = 0; i < 4; i++)
             {
                 if (map[entry.Key].GetRoomInt(i) != null)
                 {
-                    GameObject newDoor = Instantiate(door);
+                    GameObject newDoor = Instantiate(assetDoor);
                     newDoor.GetComponent<DoorScript>().Direction = i;
                     newDoor.name = "madeDoor";
 
@@ -117,8 +120,8 @@ public class MainScript : MonoBehaviour
             }
 
         }
-        GameObject.Find("wholeMap").SetActive(false);
-        GameObject.Find("door").SetActive(false);
+        GameObject.Find("templateRoom").SetActive(false);
+        GameObject.Find("templateDoor").SetActive(false);
 
         string output = "\n";
 
@@ -204,10 +207,10 @@ public class MainScript : MonoBehaviour
         MainScript.currentRoomX = placementX;
         MainScript.currentRoomY = placementY;
 
-        camera.transform.position = new Vector3(
+        mainCamera.transform.position = new Vector3(
             placementX,
             placementY,
-            camera.transform.position.z);
+            mainCamera.transform.position.z);
 
 
         var player = GameObject.FindWithTag("Player");
