@@ -355,7 +355,7 @@ PrefabInstance:
     - target: {fileID: 7882276779379810017, guid: cb33d340549394f149fecbe671724693,
         type: 3}
       propertyPath: m_Name
-      value: door
+      value: templateDoor
       objectReference: {fileID: 0}
     - target: {fileID: 7882276779379810047, guid: cb33d340549394f149fecbe671724693,
         type: 3}
