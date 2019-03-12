@@ -11,11 +11,13 @@ public class CharacterScript : BaseSprite {
         panSpeed = 10;
         health = 5;
         iFrames = 0;
+        base.BaseStart();
 	}
     
     public bool IsAlive()
     {
         return health > 0;
+
     }
     // Update is called once per frame
     void Update () {
@@ -50,6 +52,10 @@ public class CharacterScript : BaseSprite {
         if (col.gameObject.tag == "Enemy")
         {
             health--;
+        }else if(col.gameObject.tag == "Door")
+        {
+           var direction = col.gameObject.GetComponent<DoorScript>().Direction;
+            MainScript.SetRoom(MainScript.currentRoom.GetRoomInt(direction));
         }
     }
 }
