@@ -23,7 +23,7 @@ public class BaseSprite : MonoBehaviour {
 	public void BaseUpdate() {
 
         
-        if (transform.position.x - (spriteSize.x/2) <= MainScript.currentRoomX + -1 * xBound)
+        if (transform.position.x - (spriteSize.x/2) < MainScript.currentRoomX + -1 * xBound)
         {
             transform.position = new Vector3(
                 MainScript.currentRoomX + (-1 * xBound) + (spriteSize.x / 2),
@@ -31,7 +31,7 @@ public class BaseSprite : MonoBehaviour {
                 transform.position.z
                 );
         }
-        else if (transform.position.x + (spriteSize.x / 2) >= MainScript.currentRoomX + (xBound))
+        else if (transform.position.x + (spriteSize.x / 2) > MainScript.currentRoomX + (xBound))
         {
             transform.position = new Vector3(
                 MainScript.currentRoomX + (xBound) - (spriteSize.x / 2),
@@ -41,7 +41,7 @@ public class BaseSprite : MonoBehaviour {
         }
 
         // Y axis
-        if (transform.position.y - (spriteSize.y / 2) <= MainScript.currentRoomY + (-1 * yBound))
+        if (transform.position.y - (spriteSize.y / 2) < MainScript.currentRoomY + (-1 * yBound))
         {
             transform.position = new Vector3(
                 transform.position.x, 
@@ -49,7 +49,7 @@ public class BaseSprite : MonoBehaviour {
                 transform.position.z
                 );
         }
-        else if (transform.position.y + (spriteSize.y / 2) >= MainScript.currentRoomY + ((float)yBound))
+        else if (transform.position.y + (spriteSize.y / 2) > MainScript.currentRoomY + ((float)yBound))
         {
             transform.position = new Vector3(
                 transform.position.x, 
