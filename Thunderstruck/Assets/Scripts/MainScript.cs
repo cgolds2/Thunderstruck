@@ -37,8 +37,8 @@ public class MainScript : MonoBehaviour
         //mapBorderHeight = (float)1.5;
         mapBorderWidth = (float)0;
         mapBorderHeight = (float)0;
-        placementWidthBuffer = 6;
-        placementHeightBuffer = 6;
+        placementWidthBuffer = 10;
+        placementHeightBuffer = 10;
 
         HUDObjects = new List<GameObject>();
         var hud = GameObject.Find("HUD");
@@ -106,8 +106,9 @@ public class MainScript : MonoBehaviour
                                                                   placementZ);
                             break;
                         case 1:
+                            newDoor.transform.Rotate(Vector3.forward * -90);
                             newDoor.transform.position = new Vector3(placementX,
-                                                              placementY + mapHeight / 2 - (MainScript.mapBorderHeight / 2 - doorRend.y / 2),
+                                                              placementY + mapHeight / 2 - (MainScript.mapBorderHeight / 2 - doorRend.x / 2),
                                                               placementZ);
                             break;
                         case 2:
@@ -116,8 +117,10 @@ public class MainScript : MonoBehaviour
                                                               placementZ);
                             break;
                         case 3:
+                            newDoor.transform.Rotate(Vector3.forward * -90);
+
                             newDoor.transform.position = new Vector3(placementX,
-                                                              placementY - mapHeight / 2 + (MainScript.mapBorderHeight / 2 - doorRend.y / 2),
+                                                              placementY - mapHeight / 2 + (MainScript.mapBorderHeight / 2 - doorRend.x / 2),
                                                               placementZ);
                             break;
                         default:
