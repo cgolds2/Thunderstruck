@@ -1,17 +1,27 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HUDScript : MonoBehaviour
 {
-    public static GameObject hud;
-    public static GameObject score;
+    public static GameObject HUD;
+    public static GameObject Score;
+    public static GameObject Time;
+    private static Text ScoreText;
+    private static Text TimeText;
+    private static int _score;
+    private static TimeSpan _time;
+
     // Start is called before the first frame update
     void Start()
     {
-        hud = GameObject.Find("HUD");
-        score = GameObject.Find("Score");
-
+        HUD = GameObject.Find("HUD");
+        Score  = GameObject.Find("Score");
+        ScoreText = Score.GetComponent<Text>();
+        Time = GameObject.Find("Time");
+        TimeText = Time.GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -19,5 +29,36 @@ public class HUDScript : MonoBehaviour
     {
         
     }
-}
 
+    public static void SetScore(int score)
+    {
+        _score = score;
+        var ui = Score.GetComponent<Text>();
+        ui.text = "SCORE: " +score.ToString();
+    }
+    public static int GetScore()
+    {
+        return _score;
+    }
+
+    public static void SetTime(TimeSpan time)
+    {
+        _time = time;
+        var ui = Time.GetComponent<Text>();
+        ui.text = "TIME: " + time.ToString("hh\\:mm\\:ss");
+    }
+    public static TimeSpan GetTime()
+    {
+        return _time;
+    }
+
+    public static void MoveObjects(Vector3 location)
+    {
+        if (HUD == null) { return; }
+        location.x -= (float)1.22;
+        HUD.transform.position = location;
+        //SetTime(new TimeSpan(1,2,3));
+        //Score.transform.position = location;
+        //Time.transform.position = location;
+    }
+}
