@@ -18,8 +18,6 @@ public class MainScript : MonoBehaviour
     public static float placementHeightBuffer;
     public static Room currentRoom;
     public static GameObject mainCamera;
-    public static List<GameObject> HUDObjects;
-    public static GameObject HUD;
     public static float currentRoomX;
 
     public static float currentRoomY;
@@ -40,10 +38,7 @@ public class MainScript : MonoBehaviour
         placementWidthBuffer = 10;
         placementHeightBuffer = 10;
 
-        HUDObjects = new List<GameObject>();
-        var hud = GameObject.Find("HUD");
-        HUDObjects.Add(hud);
-
+       
         var assetDoor = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/door.prefab");
 
         //GameObject door = GameObject.Find("door");
@@ -223,13 +218,8 @@ public class MainScript : MonoBehaviour
             placementY,
             mainCamera.transform.position.z);
 
-        foreach (var huditem in HUDObjects)
-        {
-            huditem.transform.position = new Vector3(
-            placementX - (float)1.22,
-            placementY,
-            huditem.transform.position.z);
-        }
+        HUDScript.MoveObjects(new Vector3(placementX, placementY, 0));
+
 
 
         var player = GameObject.FindWithTag("Player");
