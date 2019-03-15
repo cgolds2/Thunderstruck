@@ -18,6 +18,8 @@ public class MainScript : MonoBehaviour
     public static float placementHeightBuffer;
     public static Room currentRoom;
     public static GameObject mainCamera;
+    public static List<GameObject> HUDObjects;
+    public static GameObject HUD;
     public static float currentRoomX;
 
     public static float currentRoomY;
@@ -31,10 +33,16 @@ public class MainScript : MonoBehaviour
         Vector3 mapRend = mapPic.GetComponent<Renderer>().bounds.size;
         mapWidth = mapRend.x;
         mapHeight = mapRend.y;
-        mapBorderWidth = (float)1.54;
-        mapBorderHeight = (float)1.5;
-        placementWidthBuffer = 3;
-        placementHeightBuffer = 3;
+        //mapBorderWidth = (float)1.54;
+        //mapBorderHeight = (float)1.5;
+        mapBorderWidth = (float)0;
+        mapBorderHeight = (float)0;
+        placementWidthBuffer = 10;
+        placementHeightBuffer = 10;
+
+        HUDObjects = new List<GameObject>();
+        var hud = GameObject.Find("HUD");
+        HUDObjects.Add(hud);
 
         var assetDoor = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/door.prefab");
 
@@ -74,7 +82,7 @@ public class MainScript : MonoBehaviour
              GameObject newBox = Instantiate(assetRoom);
            // GameObject newBox = Instantiate(mapPic);
             newBox.name = "madeBox";
-            float placementX = x * (mapWidth + placementWidthBuffer);
+            float placementX = x * (mapWidth + placementWidthBuffer );
             float placementY = y * (mapHeight + placementHeightBuffer);
             float placementZ = mapRend.z;
 
@@ -93,23 +101,26 @@ public class MainScript : MonoBehaviour
                     {
 
                         case 0:
-                            newDoor.transform.position = new Vector3(placementX + mapWidth / 2 - (MainScript.mapBorderWidth / 2 - doorRend.x / 4),
+                            newDoor.transform.position = new Vector3(placementX + mapWidth / 2 - (MainScript.mapBorderWidth / 2 - doorRend.x / 2),
                                                                   placementY,
                                                                   placementZ);
                             break;
                         case 1:
+                            newDoor.transform.Rotate(Vector3.forward * -90);
                             newDoor.transform.position = new Vector3(placementX,
-                                                              placementY + mapHeight / 2 - (MainScript.mapBorderHeight / 2 - doorRend.y / 4),
+                                                              placementY + mapHeight / 2 - (MainScript.mapBorderHeight / 2 - doorRend.x / 2),
                                                               placementZ);
                             break;
                         case 2:
-                            newDoor.transform.position = new Vector3(placementX - mapWidth / 2 + (MainScript.mapBorderWidth / 2 - doorRend.x / 4),
+                            newDoor.transform.position = new Vector3(placementX - mapWidth / 2 + (MainScript.mapBorderWidth / 2 - doorRend.x / 2),
                                                               placementY,
                                                               placementZ);
                             break;
                         case 3:
+                            newDoor.transform.Rotate(Vector3.forward * -90);
+
                             newDoor.transform.position = new Vector3(placementX,
-                                                              placementY - mapHeight / 2 + (MainScript.mapBorderHeight / 2 - doorRend.y / 4),
+                                                              placementY - mapHeight / 2 + (MainScript.mapBorderHeight / 2 - doorRend.x / 2),
                                                               placementZ);
                             break;
                         default:
@@ -208,9 +219,17 @@ public class MainScript : MonoBehaviour
         MainScript.currentRoomY = placementY;
 
         mainCamera.transform.position = new Vector3(
-            placementX,
+            placementX - (float)1.22,
             placementY,
             mainCamera.transform.position.z);
+
+        foreach (var huditem in HUDObjects)
+        {
+            huditem.transform.position = new Vector3(
+            placementX - (float)1.22,
+            placementY,
+            huditem.transform.position.z);
+        }
 
 
         var player = GameObject.FindWithTag("Player");
