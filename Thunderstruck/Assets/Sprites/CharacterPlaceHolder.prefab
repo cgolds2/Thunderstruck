@@ -97,6 +97,9 @@ MonoBehaviour:
   panSpeed: 20
   health: 0
   iFrames: 0
+  spherePrefab: {fileID: 5275300646029730585, guid: 27bc8a5345b06cd4db19f49c37580193,
+    type: 3}
+  bodyMC: {fileID: 0}
 --- !u!61 &61406782820609114
 BoxCollider2D:
   m_ObjectHideFlags: 0

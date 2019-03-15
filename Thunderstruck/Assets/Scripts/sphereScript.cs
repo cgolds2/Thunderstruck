@@ -9,7 +9,7 @@ public class sphereScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -21,14 +21,14 @@ public class sphereScript : MonoBehaviour
     }
 
 
-   public void fire(Vector2 origin)
+    public void fire(Vector2 origin)
     {
         Vector2 angle = GetFireAngle(origin);
 
         GameObject shot = Instantiate(spherePrefab, transform.position, Quaternion.identity);
         proj.transform.position = new Vector3(origin.x, origin.y, 0);
         proj.velocity = new Vector3(angle.x, angle.y, 0);
-        
+
     }
     Vector2 GetFireAngle(Vector3 charpos)
     {
@@ -53,4 +53,5 @@ public class sphereScript : MonoBehaviour
         //  Debug.Log(mSC.y);
         return new Vector2(charpos.x - mSC.x, charpos.y - mSC.y);
     }
+  
 }

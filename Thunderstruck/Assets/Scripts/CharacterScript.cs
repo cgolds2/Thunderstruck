@@ -37,7 +37,7 @@ public class CharacterScript : BaseSprite {
             //  bodyMC.velocity = new Vector2(movement.x *panSpeed, movement.y * panSpeed);
             if (Input.GetMouseButtonDown(0))
             {
-                fire(pos);
+                fire(pos,3);
             }
             if (Input.GetKey("w"))
             {
@@ -77,13 +77,31 @@ public class CharacterScript : BaseSprite {
         }
     }
 
-    public void fire(Vector2 origin)
+    public void fire(Vector2 origin, float speed)
     {
 
-        GameObject shot = Instantiate(spherePrefab, transform.position + new Vector3(GetFireAngle(origin).x, GetFireAngle(origin).y, 0), Quaternion.identity);
-        shot.GetComponent<Rigidbody2D>().velocity = GetFireAngle(origin) * -10;
-        bodyMC.velocity = new Vector3(0, 0, 0);
 
+
+        GameObject shot = Instantiate(spherePrefab, transform.position, Quaternion.identity);
+        Physics2D.IgnoreCollision(shot.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+
+        Vector3 shootDirection;
+        shootDirection = Input.mousePosition;
+        shootDirection.z = 0.0f;
+        shootDirection = Camera.main.ScreenToWorldPoint(shootDirection);
+        shootDirection = shootDirection - transform.position;
+        //...instantiating the rocket
+        Rigidbody2D rigidBody =  shot.GetComponent<Rigidbody2D>();
+        // Rigidbody2D bulletInstance = Instantiate(rocket, transform.position, Quaternion.Euler(new Vector3(0, 0, 0))) as Rigidbody2D;
+        float angle =90+ Mathf.Atan2(origin.x - shootDirection.x, origin.y - shootDirection.y) * Mathf.Rad2Deg;
+        angle = angle*Mathf.PI / -180;
+        Debug.Log(angle);
+        
+
+        float xUnit = Mathf.Cos(angle);
+        float yUnit = Mathf.Sin(angle);
+
+        rigidBody.velocity = new Vector2(xUnit * speed, yUnit * speed);
     }
     Vector2 GetFireAngle(Vector3 charpos)
     {
