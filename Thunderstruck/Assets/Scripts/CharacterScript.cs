@@ -39,7 +39,7 @@ public class CharacterScript : BaseSprite {
             //  bodyMC.velocity = new Vector2(movement.x *panSpeed, movement.y * panSpeed);
             if (Input.GetMouseButtonDown(0))
             {
-                Fire(pos,3);
+                Fire(pos,5);
             }
             if (Input.GetKey("w"))
             {
@@ -101,5 +101,6 @@ public class CharacterScript : BaseSprite {
 
         Rigidbody2D rigidBody = shot.GetComponent<Rigidbody2D>();
         rigidBody.velocity = new Vector2(xUnit * speed, yUnit * speed);
+        Destroy(shot, 5f);
     }
 }

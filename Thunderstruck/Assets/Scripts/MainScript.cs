@@ -227,6 +227,14 @@ public class MainScript : MonoBehaviour
             placementX,
             placementY,
             player.transform.position.z);
+
+        GameObject[] killEmAll;
+        killEmAll = GameObject.FindGameObjectsWithTag("projectile");
+        for (int i = 0; i < killEmAll.Length; i++)
+        {
+            if(killEmAll[i].gameObject.name == "sphere(Clone)")
+                Destroy(killEmAll[i].gameObject);
+        }
     }
 
 }
