@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Enemy
   - Door
+  - projectile
+  - PlayerBullet
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX

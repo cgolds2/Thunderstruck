@@ -85,6 +85,7 @@ public class CharacterScript : BaseSprite {
 
 
         GameObject shot = Instantiate(spherePrefab, transform.position, Quaternion.identity);
+        shot.tag = "PlayerBullet";
         Physics2D.IgnoreCollision(shot.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
         Vector3 shootDirection;
