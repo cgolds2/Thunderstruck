@@ -37,7 +37,7 @@ public class CharacterScript : BaseSprite {
             //  bodyMC.velocity = new Vector2(movement.x *panSpeed, movement.y * panSpeed);
             if (Input.GetMouseButtonDown(0))
             {
-                Fire(pos,3);
+                Fire(pos,5);
             }
             if (Input.GetKey("w"))
             {

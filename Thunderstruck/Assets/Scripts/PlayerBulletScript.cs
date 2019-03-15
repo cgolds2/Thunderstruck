@@ -23,7 +23,8 @@ public class PlayerBulletScript : BaseSprite
         //    Destroy(gameObject);
         //}
         //lastPos = curPos;
-        base.BaseUpdate();
+        if (null != gameObject && gameObject.name == "sphere(Clone)")
+            base.BaseUpdate_DestroyOnBoundsCheck(gameObject);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -31,6 +32,11 @@ public class PlayerBulletScript : BaseSprite
         if (collision.gameObject.tag == "Player")
         {
             Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        }
+        else
+        {
+            if (null != gameObject && gameObject.name == "sphere(Clone)")
+                Destroy(gameObject);
         }
 
     }

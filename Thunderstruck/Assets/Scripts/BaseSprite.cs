@@ -58,4 +58,27 @@ public class BaseSprite : MonoBehaviour {
                 );
         }
     }
+
+    //destroy object if it runs out of bounds (instead of correcting its position)
+    public void BaseUpdate_DestroyOnBoundsCheck(GameObject obj)
+    {
+        if (transform.position.x - (spriteSize.x / 2) < MainScript.currentRoomX + -1 * xBound)
+        {
+            Destroy(obj);
+        }
+        else if (transform.position.x + (spriteSize.x / 2) > MainScript.currentRoomX + (xBound))
+        {
+            Destroy(obj);
+        }
+
+        // Y axis
+        if (transform.position.y - (spriteSize.y / 2) < MainScript.currentRoomY + (-1 * yBound))
+        {
+            Destroy(obj);
+        }
+        else if (transform.position.y + (spriteSize.y / 2) > MainScript.currentRoomY + ((float)yBound))
+        {
+            Destroy(obj);
+        }
+    }
 }
