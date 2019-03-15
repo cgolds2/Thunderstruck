@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBulletScript : MonoBehaviour
+public class PlayerBulletScript : BaseSprite
 {
     // Start is called before the first frame update
+    float curPos = 0;
+    float lastPos = 0;
     void Start()
     {
         
@@ -13,7 +15,15 @@ public class PlayerBulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //kill the projectile if its no longer moving
+        //curPos = transform.position.x;
+        //if (curPos == lastPos)
+        //{
+        //    if (gameObject != null)
+        //    Destroy(gameObject);
+        //}
+        //lastPos = curPos;
+        base.BaseUpdate();
     }
 
     void OnCollisionEnter2D(Collision2D collision)

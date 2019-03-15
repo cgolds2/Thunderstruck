@@ -99,5 +99,6 @@ public class CharacterScript : BaseSprite {
 
         Rigidbody2D rigidBody = shot.GetComponent<Rigidbody2D>();
         rigidBody.velocity = new Vector2(xUnit * speed, yUnit * speed);
+        Destroy(shot, 5f);
     }
 }
