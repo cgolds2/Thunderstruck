@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class CharacterScript : BaseSprite {
@@ -16,6 +17,7 @@ public class CharacterScript : BaseSprite {
         panSpeed = 10;
         health = 5;
         iFrames = 0;
+        spherePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/sphere.prefab");
         base.BaseStart();
 	}
     
