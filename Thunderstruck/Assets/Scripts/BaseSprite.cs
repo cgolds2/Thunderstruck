@@ -7,11 +7,9 @@ public class BaseSprite : MonoBehaviour {
     static float yBound;
     private Vector3 spriteSize;
 
-  
-	// Use this for initialization
-	public void BaseStart () {
+    // Use this for initialization
+    public void BaseStart () {
         spriteSize = GetComponent<Renderer>().bounds.size;
-
     }
 	public static void SetBounds(float xBound, float yBound)
     {
@@ -81,4 +79,44 @@ public class BaseSprite : MonoBehaviour {
             Destroy(obj);
         }
     }
+
+    public void BaseUpdate_ReflectOnBoundsCheck(Rigidbody2D rb)
+    {
+        Vector2 yNorm = new Vector2(0, 1);
+        Vector2 xNorm = new Vector2(1, 0);
+
+        if (transform.position.x - (spriteSize.x / 2) < MainScript.currentRoomX + -1 * xBound)
+        {
+            rb.velocity = Vector2.Reflect(rb.velocity, xNorm);
+        }
+        else if (transform.position.x + (spriteSize.x / 2) > MainScript.currentRoomX + (xBound))
+        {
+            rb.velocity = Vector2.Reflect(rb.velocity, xNorm);
+        }
+
+        // Y axis
+        if (transform.position.y - (spriteSize.y / 2) < MainScript.currentRoomY + (-1 * yBound))
+        {
+            rb.velocity = Vector2.Reflect(rb.velocity, yNorm);
+        }
+        else if (transform.position.y + (spriteSize.y / 2) > MainScript.currentRoomY + ((float)yBound))
+        {
+            rb.velocity = Vector2.Reflect(rb.velocity, yNorm);
+        }
+        BaseUpdate();
+    }
+
+    public void Reflect(Collision2D collision)
+    {
+        Vector2 inDirection = collision.otherRigidbody.velocity;//GetComponent<Rigidbody2D>().velocity;
+        Vector2 inNormal = collision.contacts[0].normal;
+        Vector2 newVelocity = Vector2.Reflect(inDirection, inNormal);
+        //GetComponent<Collider2D>().attachedRigidbody.velocity = newVelocity;
+        collision.otherRigidbody.velocity = -1 *newVelocity;
+        //if (collision.gameObject.tag == "playerBullet")
+        //{
+        //    collision.rigidbody.velocity = newVelocity;
+        //}
+    }
+
 }

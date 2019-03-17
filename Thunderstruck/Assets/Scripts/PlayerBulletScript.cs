@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerBulletScript : BaseSprite
 {
     // Start is called before the first frame update
-    float curPos = 0;
-    float lastPos = 0;
+    int reflections = 500;
+    Rigidbody2D rb;
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -24,7 +24,11 @@ public class PlayerBulletScript : BaseSprite
         //}
         //lastPos = curPos;
         if (null != gameObject && gameObject.name == "sphere(Clone)")
-            base.BaseUpdate_DestroyOnBoundsCheck(gameObject);
+        {
+            //base.BaseUpdate_DestroyOnBoundsCheck(gameObject);
+            base.BaseUpdate_ReflectOnBoundsCheck(rb);
+        }
+
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -36,7 +40,20 @@ public class PlayerBulletScript : BaseSprite
         else
         {
             if (null != gameObject && gameObject.name == "sphere(Clone)")
-                Destroy(gameObject);
+            {
+                if (reflections > 0)
+                {
+                    //relfect
+                    //base.Reflect(collision);
+                    //reflections--;
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+                
+            }
+                
         }
 
     }
