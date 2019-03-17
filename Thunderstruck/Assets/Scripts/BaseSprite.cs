@@ -103,7 +103,7 @@ public class BaseSprite : MonoBehaviour {
         {
             rb.velocity = Vector2.Reflect(rb.velocity, yNorm);
         }
-        BaseUpdate();
+        
     }
 
     public void Reflect(Collision2D collision)
@@ -112,11 +112,28 @@ public class BaseSprite : MonoBehaviour {
         Vector2 inNormal = collision.contacts[0].normal;
         Vector2 newVelocity = Vector2.Reflect(inDirection, inNormal);
         //GetComponent<Collider2D>().attachedRigidbody.velocity = newVelocity;
-        collision.otherRigidbody.velocity = -1 *newVelocity;
+        collision.otherRigidbody.velocity = newVelocity;
         //if (collision.gameObject.tag == "playerBullet")
         //{
         //    collision.rigidbody.velocity = newVelocity;
         //}
     }
+
+    public void ReflectOther(Collision2D collision)
+    {
+        Vector2 inDirection = collision.rigidbody.velocity;//GetComponent<Rigidbody2D>().velocity;
+        ContactPoint2D[] contacts = new ContactPoint2D[10];
+        collision.otherCollider.GetContacts(contacts);
+        Vector2 inNormal = contacts[0].normal;
+        //inNormal = inNormal + new Vector2(Random.value / 2, Random.value / 2);
+        Vector2 newVelocity = Vector2.Reflect(inDirection, inNormal);
+        //GetComponent<Collider2D>().attachedRigidbody.velocity = newVelocity;
+        collision.rigidbody.velocity =  newVelocity * 2;
+        //if (collision.gameObject.tag == "playerBullet")
+        //{
+        //    collision.rigidbody.velocity = newVelocity;
+        //}
+    }
+
 
 }

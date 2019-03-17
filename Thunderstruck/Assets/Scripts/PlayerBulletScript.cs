@@ -27,6 +27,7 @@ public class PlayerBulletScript : BaseSprite
         {
             //base.BaseUpdate_DestroyOnBoundsCheck(gameObject);
             base.BaseUpdate_ReflectOnBoundsCheck(rb);
+            base.BaseUpdate();
         }
 
     }
@@ -39,18 +40,21 @@ public class PlayerBulletScript : BaseSprite
         }
         else
         {
-            if (null != gameObject && gameObject.name == "sphere(Clone)")
+            //if (null != gameObject && gameObject.name == "sphere(Clone)")
+            if (null != gameObject && collision.otherCollider.gameObject.tag == "PlayerBullet")
             {
-                if (reflections > 0)
-                {
-                    //relfect
-                    //base.Reflect(collision);
-                    //reflections--;
-                }
-                else
-                {
-                    Destroy(gameObject);
-                }
+                Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+                return;
+                //if (reflections > 0)
+                //{
+                //    //relfect
+                //    //base.Reflect(collision);
+                //    //reflections--;
+                //}
+                //else
+                //{
+                //    Destroy(gameObject);
+                //}
                 
             }
                 
