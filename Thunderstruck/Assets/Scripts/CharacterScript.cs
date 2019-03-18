@@ -40,21 +40,26 @@ public class CharacterScript : BaseSprite {
             if (Input.GetMouseButtonDown(0))
             {
                 Fire(pos,5);
+                SoundManagerScript.PlaySound("fire");
             }
             if (Input.GetKey("w"))
             {
+                SoundManagerScript.PlaySound("walking");
                 pos.y += panSpeed * Time.deltaTime;
             }
             if (Input.GetKey("s"))
             {
+                SoundManagerScript.PlaySound("walking");
                 pos.y -= panSpeed * Time.deltaTime;
             }
             if (Input.GetKey("d"))
             {
+                SoundManagerScript.PlaySound("walking");
                 pos.x += panSpeed * Time.deltaTime;
             }
             if (Input.GetKey("a"))
             {
+                SoundManagerScript.PlaySound("walking");
                 pos.x -= panSpeed * Time.deltaTime;
             }
             transform.position = pos;
