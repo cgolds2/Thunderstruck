@@ -9,7 +9,7 @@ public class BaseSprite : MonoBehaviour {
 
     // Use this for initialization
     public void BaseStart () {
-        spriteSize = GetComponent<Renderer>().bounds.size;
+        spriteSize = GetComponent<Collider2D>().bounds.size;
     }
 	public static void SetBounds(float xBound, float yBound)
     {

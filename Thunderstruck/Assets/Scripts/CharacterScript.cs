@@ -11,12 +11,17 @@ public class CharacterScript : BaseSprite
     public GameObject spherePrefab;
     public Rigidbody2D bodyMC;
     public GameObject shieldUmberella;
+    public GameObject head;
+    public GameObject body;
+    public GameObject feet;
+    PlayerBodyScript bodyScript;
 
     // I don't know how to get the camera object to grab the resolution from it
     //Camera maincam = (Camera)GameObject.Find("MainCamera").GetComponent("Camera");
     // Use this for initialization
     void Start()
     {
+        bodyScript = body.GetComponent<PlayerBodyScript>();
         panSpeed = 10;
         health = 5;
         iFrames = 0;
@@ -45,6 +50,7 @@ public class CharacterScript : BaseSprite
             // Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
 
             //  bodyMC.velocity = new Vector2(movement.x *panSpeed, movement.y * panSpeed);
+            bool idle = true;
             if (Input.GetMouseButtonDown(0))
             {
                 Fire(pos,5);
@@ -52,23 +58,35 @@ public class CharacterScript : BaseSprite
             }
             if (Input.GetKey("w"))
             {
+                idle = false;
                 SoundManagerScript.PlaySound("walking");
                 pos.y += panSpeed * Time.deltaTime;
             }
             if (Input.GetKey("s"))
             {
+                idle = false;
                 SoundManagerScript.PlaySound("walking");
                 pos.y -= panSpeed * Time.deltaTime;
             }
             if (Input.GetKey("d"))
             {
+                idle = false;
+                bodyScript.Walk(0);
+
                 SoundManagerScript.PlaySound("walking");
                 pos.x += panSpeed * Time.deltaTime;
             }
             if (Input.GetKey("a"))
             {
+                idle = false;
+                bodyScript.Walk(2);
+
                 SoundManagerScript.PlaySound("walking");
                 pos.x -= panSpeed * Time.deltaTime;
+            }
+            if(idle)
+            {
+                bodyScript.Walk(-1);
             }
             transform.position = pos;
         }
@@ -142,7 +160,7 @@ public class CharacterScript : BaseSprite
         shootDirection = Camera.main.ScreenToWorldPoint(shootDirection);
         float angle = 90 + Mathf.Atan2(origin.x - shootDirection.x, origin.y - shootDirection.y) * Mathf.Rad2Deg;
         angle = angle * Mathf.PI / -180;
-        Debug.Log(angle);
+       // Debug.Log(angle);
 
 
         float xUnit = Mathf.Cos(angle);
