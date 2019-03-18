@@ -10,6 +10,7 @@ public class CharacterScript : BaseSprite
     public int iFrames;
     public GameObject spherePrefab;
     public Rigidbody2D bodyMC;
+    public GameObject shieldUmberella;
 
     // I don't know how to get the camera object to grab the resolution from it
     //Camera maincam = (Camera)GameObject.Find("MainCamera").GetComponent("Camera");
@@ -20,6 +21,9 @@ public class CharacterScript : BaseSprite
         health = 5;
         iFrames = 0;
         spherePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/sphere.prefab");
+        Physics2D.IgnoreCollision(shieldUmberella.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), shieldUmberella.GetComponent<Collider2D>());
+
         base.BaseStart();
     }
 
@@ -33,6 +37,7 @@ public class CharacterScript : BaseSprite
     {
         if (IsAlive())
         {
+            shieldUmberella.transform.position = transform.position;
 
             bodyMC.velocity = new Vector3(0, 0, 0);
             Vector3 pos = transform.position;
@@ -124,6 +129,7 @@ public class CharacterScript : BaseSprite
         GameObject shot = Instantiate(spherePrefab, transform.position, Quaternion.identity);
         shot.tag = "PlayerBullet";
         Physics2D.IgnoreCollision(shot.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(shot.GetComponent<Collider2D>(), shieldUmberella. GetComponent<Collider2D>());
 
         Vector3 shootDirection;
         shootDirection = Input.mousePosition;
