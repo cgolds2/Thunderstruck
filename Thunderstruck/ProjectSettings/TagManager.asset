@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Enemy
   - Door
+  - projectile
+  - PlayerBullet
+  - EnemyBullet
+  - Umbrella
   layers:
   - Default
   - TransparentFX
