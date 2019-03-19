@@ -511,7 +511,7 @@ GameObject:
   - component: {fileID: 114897979}
   - component: {fileID: 114897981}
   - component: {fileID: 114897980}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Resume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -751,13 +751,13 @@ GameObject:
   - component: {fileID: 251805151}
   - component: {fileID: 251805150}
   - component: {fileID: 251805149}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MainMenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &251805148
 RectTransform:
   m_ObjectHideFlags: 0
@@ -964,7 +964,7 @@ GameObject:
   - component: {fileID: 276262151}
   - component: {fileID: 276262153}
   - component: {fileID: 276262152}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: HowToPlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1280,7 +1280,7 @@ GameObject:
   - component: {fileID: 459026381}
   - component: {fileID: 459026380}
   - component: {fileID: 459026379}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1300,7 +1300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
+  m_BlockingObjects: 3
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1725,7 +1725,7 @@ GameObject:
   - component: {fileID: 834857558}
   - component: {fileID: 834857560}
   - component: {fileID: 834857559}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1804,7 +1804,7 @@ GameObject:
   - component: {fileID: 925060214}
   - component: {fileID: 925060216}
   - component: {fileID: 925060215}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Umbrella
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1878,7 +1878,7 @@ GameObject:
   - component: {fileID: 1090221276}
   - component: {fileID: 1090221278}
   - component: {fileID: 1090221277}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Quit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2179,7 +2179,7 @@ GameObject:
   - component: {fileID: 1177543367}
   - component: {fileID: 1177543369}
   - component: {fileID: 1177543368}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2399,6 +2399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 459026382}
+  button: {fileID: 251805147}
 --- !u!1 &1221399379
 GameObject:
   m_ObjectHideFlags: 0
@@ -2410,7 +2411,7 @@ GameObject:
   - component: {fileID: 1221399380}
   - component: {fileID: 1221399382}
   - component: {fileID: 1221399381}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: PauseMenuPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2485,7 +2486,7 @@ GameObject:
   - component: {fileID: 1235133984}
   - component: {fileID: 1235133983}
   - component: {fileID: 1235133982}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ResumeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2693,7 +2694,7 @@ GameObject:
   - component: {fileID: 1351836532}
   - component: {fileID: 1351836531}
   - component: {fileID: 1351836530}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: QuitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2939,7 +2940,7 @@ GameObject:
   - component: {fileID: 1609903505}
   - component: {fileID: 1609903507}
   - component: {fileID: 1609903506}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MainMenuText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3346,7 +3347,7 @@ GameObject:
   - component: {fileID: 1939800966}
   - component: {fileID: 1939800965}
   - component: {fileID: 1939800964}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: HowToPlayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3553,7 +3554,7 @@ GameObject:
   - component: {fileID: 2017172209}
   - component: {fileID: 2017172211}
   - component: {fileID: 2017172210}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Main Character
   m_TagString: Untagged
   m_Icon: {fileID: 0}
