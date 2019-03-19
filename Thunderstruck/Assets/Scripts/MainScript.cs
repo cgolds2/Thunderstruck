@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using Assets.Scripts;
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -10,6 +10,7 @@ public class MainScript : MonoBehaviour
     static int seed;
     public static Dictionary<Point, Room> map = new Dictionary<Point, Room>();
     public static Random r;
+    public static Random otherR;
     public static float mapWidth;
     public static float mapHeight;
     public static float mapBorderWidth;
@@ -38,7 +39,7 @@ public class MainScript : MonoBehaviour
         placementWidthBuffer = 10;
         placementHeightBuffer = 10;
 
-       
+
         var assetDoor = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/door.prefab");
 
         //GameObject door = GameObject.Find("door");
@@ -49,11 +50,12 @@ public class MainScript : MonoBehaviour
         seed = (int)System.DateTime.Now.Ticks;
         //seed = 1;
         r = new Random(seed);
+        otherR = new Random();
         int maxRooms = 10;
         int minRooms = 6;
-        int numRooms = r.Next(minRooms,maxRooms);
+        int numRooms = r.Next(minRooms, maxRooms);
 
-        map[new Point(0, 0)] = new Room(0, new Point(0, 0),1);
+        map[new Point(0, 0)] = new Room(0, new Point(0, 0), 1);
         map[new Point(0, 0)].SpawnNewRoom(numRooms);
         SetRoom(GetRoomFromCoord(0, 0));
         //currentRoom = GetRoomFromCoord(0,0);
@@ -74,10 +76,10 @@ public class MainScript : MonoBehaviour
             string test = string.Format("Point at {0},{1}", x, y);
             Debug.Log(test);
             var assetRoom = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/room.prefab");
-             GameObject newBox = Instantiate(assetRoom);
-           // GameObject newBox = Instantiate(mapPic);
+            GameObject newBox = Instantiate(assetRoom);
+            // GameObject newBox = Instantiate(mapPic);
             newBox.name = "madeBox";
-            float placementX = x * (mapWidth + placementWidthBuffer );
+            float placementX = x * (mapWidth + placementWidthBuffer);
             float placementY = y * (mapHeight + placementHeightBuffer);
             float placementZ = mapRend.z;
 
@@ -121,9 +123,13 @@ public class MainScript : MonoBehaviour
                         default:
                             throw new Exception("Something went wrong");
                     }
+                    entry.Value.AddDoor(newDoor);
                 }
 
             }
+            entry.Value.SetDoors(true);
+
+
 
         }
         GameObject.Find("templateRoom").SetActive(false);
@@ -200,13 +206,17 @@ public class MainScript : MonoBehaviour
     public static void SetRoom(Room room)
     {
         currentRoom = room;
-       
-            var xBound = (MainScript.mapWidth / 2) - MainScript.mapBorderWidth;
-                
-            var yBound = (MainScript.mapHeight / 2) - MainScript.mapBorderHeight;
+        if (currentRoom.numEnemies > 0)
+        {
+            currentRoom.SetDoors(false);
+            currentRoom.SpawnEnemies();
+        }
+        var xBound = (MainScript.mapWidth / 2) - MainScript.mapBorderWidth;
 
-        
-        BaseSprite.SetBounds(xBound,yBound);
+        var yBound = (MainScript.mapHeight / 2) - MainScript.mapBorderHeight;
+
+
+        BaseSprite.SetBounds(xBound, yBound);
 
         float placementX = room.point.x * (mapWidth + placementWidthBuffer);
         float placementY = room.point.y * (mapHeight + placementHeightBuffer);
@@ -232,112 +242,23 @@ public class MainScript : MonoBehaviour
         killEmAll = GameObject.FindGameObjectsWithTag("projectile");
         for (int i = 0; i < killEmAll.Length; i++)
         {
-            if(killEmAll[i].gameObject.name == "sphere(Clone)")
-                Destroy(killEmAll[i].gameObject);
-        }
-    }
-
-}
-
-public class Room
-{
-    public Point point;
-    //right is 0, top is 1, etc
-    private readonly int previousDirection;
-    public int numEnemies;
-    public int difficulty;
-
-    public Room(int previousDirection, Point point, int difficulty)
-    {
-        this.previousDirection = previousDirection;
-        this.point = point;
-        this.difficulty = difficulty;
-        SpawnEnemies();
-        
-    }
-
-    public void SpawnEnemies()
-    {
-        int minEnemies = 1;
-        int maxEnemies = 5 + difficulty * 2;
-        numEnemies = MainScript.r.Next(minEnemies,maxEnemies);
-        for (int i = 0; i < numEnemies; i++)
-        {
-
-        }
-    }
-
-
-
-    public Room GetRoomInt(int i)
-    {
-        switch (i)
-        {
-            case 0:
-                return GetRoomRight();
-            case 1:
-                return GetRoomUp();
-            case 2:
-                return GetRoomLeft();
-            case 3:
-                return GetRoomDown();
-            default:
-                throw new Exception("Room out of bounds");
-
-        }
-
-    }
-    public Room GetRoomRight()
-    {
-        Point pt = MainScript.GetNeighborByInt(point, 0);
-        return MainScript.map.ContainsKey(pt) ? MainScript.map[pt] : null;
-    }
-    public Room GetRoomUp()
-    {
-        Point pt = MainScript.GetNeighborByInt(point, 1);
-        return MainScript.map.ContainsKey(pt) ? MainScript.map[pt] : null;
-    }
-    public Room GetRoomLeft()
-    {
-        Point pt = MainScript.GetNeighborByInt(point, 2);
-        return MainScript.map.ContainsKey(pt) ? MainScript.map[pt] : null;
-    }
-    public Room GetRoomDown()
-    {
-        Point pt = MainScript.GetNeighborByInt(point, 3);
-        return MainScript.map.ContainsKey(pt) ? MainScript.map[pt] : null;
-    }
-    public void SpawnNewRoom(int roomsToSpawn)
-    {
-        int dir = MainScript.r.Next(6);
-
-        //give a higher chance to spawn in the same direction
-        if (dir > 3)
-        {
-            dir = previousDirection;
-        }
-
-        if (GetRoomInt(dir) != null)
-        {
-            GetRoomInt(dir).SpawnNewRoom(roomsToSpawn);
-        }
-        else
-        {
-            //spawn the room on dir
-            //0 is 2, 1 is 3, 2 is 0, 3 is 1
-            Point pointOfNewRoom = MainScript.GetNeighborByInt(point, dir);
-            MainScript.map[pointOfNewRoom] = new Room((previousDirection + 2) % 4, pointOfNewRoom,1);
-            if (roomsToSpawn > 1)
+            if (killEmAll[i].gameObject.name == "sphere(Clone)")
             {
-                GetRoomInt(dir).SpawnNewRoom(roomsToSpawn - 1);
+                Destroy(killEmAll[i].gameObject);
             }
         }
 
-
-
+  
+    }
+    public static void DecreaseEnemyCount()
+    {
+        currentRoom.numEnemies--;
+        if (currentRoom.numEnemies <1)
+        {
+            currentRoom.SetDoors(true);
+        }
     }
 }
-
 
 public struct Point
 {
