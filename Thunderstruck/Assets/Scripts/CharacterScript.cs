@@ -6,7 +6,7 @@ using UnityEngine;
 public class CharacterScript : BaseSprite
 {
     public float panSpeed;
-    public float health;
+    private float health;
     public int iFrames;
     public GameObject spherePrefab;
     public Rigidbody2D bodyMC;
@@ -15,14 +15,18 @@ public class CharacterScript : BaseSprite
     public GameObject body;
     public GameObject feet;
     PlayerBodyScript bodyScript;
-    Quaternion startRotation;
-    Vector3 umbrellaOffset;
+    PlayerFeetScript feetScript;
+    PlayerHeadScript headScript;
+
     // I don't know how to get the camera object to grab the resolution from it
     //Camera maincam = (Camera)GameObject.Find("MainCamera").GetComponent("Camera");
     // Use this for initialization
     void Start()
     {
         bodyScript = body.GetComponent<PlayerBodyScript>();
+        feetScript = feet.GetComponent<PlayerFeetScript>();
+        headScript = head.GetComponent<PlayerHeadScript>();
+
         panSpeed = 10;
         health = 5;
         iFrames = 0;
@@ -37,7 +41,20 @@ public class CharacterScript : BaseSprite
         umbrellaOffset = new Vector3(umbrellaXOffset,umbrellaYOffset);
         base.BaseStart();
     }
-
+    public float GetHeath()
+    {
+        return health;
+    }
+    public void SetHealth(float health)
+    {
+        this.health = health;
+        if (health <= 0)
+        {
+            health = 0;
+            //here
+        }
+    }
+   
     public bool IsAlive()
     {
         return health > 0;
@@ -64,12 +81,14 @@ public class CharacterScript : BaseSprite
             }
             if (Input.GetKey("w"))
             {
+                WalkDirection(1);
                 idle = false;
                 SoundManagerScript.PlaySound("walking");
                 pos.y += panSpeed * Time.deltaTime;
             }
             if (Input.GetKey("s"))
             {
+                WalkDirection(3);
                 idle = false;
                 SoundManagerScript.PlaySound("walking");
                 pos.y -= panSpeed * Time.deltaTime;
@@ -77,7 +96,7 @@ public class CharacterScript : BaseSprite
             if (Input.GetKey("d"))
             {
                 idle = false;
-                bodyScript.Walk(0);
+                WalkDirection(0);
 
                 SoundManagerScript.PlaySound("walking");
                 pos.x += panSpeed * Time.deltaTime;
@@ -85,36 +104,25 @@ public class CharacterScript : BaseSprite
             if (Input.GetKey("a"))
             {
                 idle = false;
-                bodyScript.Walk(2);
+                WalkDirection(2);
 
                 SoundManagerScript.PlaySound("walking");
                 pos.x -= panSpeed * Time.deltaTime;
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                shieldUmberella.SetActive(true);
-            }
-            if (Input.GetKey(KeyCode.Space))
-            {
-                shieldUmberella.transform.Rotate(Vector3.forward * 2);
-            }
-            if (Input.GetKeyUp(KeyCode.Space))
-            {
-                shieldUmberella.SetActive(false);
-                shieldUmberella.transform.rotation = startRotation;
-            }
-            if (idle)
-            {
-                bodyScript.Walk(-1);
+                WalkDirection(-1);
             }
             transform.position = pos;
         }
         base.BaseUpdate();
 
-        //else
-        //{
-        //    bodyMC.velocity = new Vector2(0, 0);
-        // }
+    }
+    public void WalkDirection(int direction)
+    {
+        bodyScript.Walk(direction);
+        feetScript.Walk(direction);
+        headScript.Walk(direction);
 
     }
     void OnCollisionEnter2D(Collision2D col)
@@ -123,7 +131,7 @@ public class CharacterScript : BaseSprite
         {
             health--;
         }
-        else if (col.gameObject.tag == "Door")
+        else if (col.gameObject.tag == "Door" && MainScript.currentRoom.numEnemies==0)
         {
             var direction = col.gameObject.GetComponent<DoorScript>().Direction;
             MainScript.SetRoom(MainScript.currentRoom.GetRoomInt(direction));

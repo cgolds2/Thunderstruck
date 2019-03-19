@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBodyScript : MonoBehaviour
+public class PlayerFeetScript : MonoBehaviour
 {
 
     Animator animator;
@@ -15,12 +15,12 @@ public class PlayerBodyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void Walk(int direction)
     {
-     
+  
         Debug.Log(direction);
         animator.SetInteger("WalkState", direction);
     }
