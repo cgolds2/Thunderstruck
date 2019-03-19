@@ -102,10 +102,10 @@ public class CharacterScript : BaseSprite
             }
             if (Input.GetKey(KeyCode.Space))
             {
-                if (shieldUmberella.transform.rotation.z < .7)
-                {
+                //if (shieldUmberella.transform.rotation.z < .7)
+                //{
                     shieldUmberella.transform.Rotate(Vector3.forward * 2);
-                }
+                //}
                 //shieldUmberella.transform.RotateAround(umbrellaPivotPoint.transform.position, Vector3.forward, 1f * Time.deltaTime);
             }
             if (Input.GetKeyUp(KeyCode.Space))
