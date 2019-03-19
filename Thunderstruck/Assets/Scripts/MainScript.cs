@@ -206,7 +206,7 @@ public class MainScript : MonoBehaviour
     public static void SetRoom(Room room)
     {
         if(currentRoom!=null){
-            currentRoom.mapIconSpriteRenderer.color = Color.grey;
+            currentRoom.mapIconSpriteRenderer.color = Color.black;
 
         }
         currentRoom = room;

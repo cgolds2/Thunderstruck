@@ -39,7 +39,8 @@ namespace Assets.Scripts
                 -1);
             mapIconRenderer = mapIcon.GetComponent<Renderer>();
             mapIconSpriteRenderer = mapIcon.GetComponent<SpriteRenderer>();
-            mapIconSpriteRenderer.color= Color.grey;
+            //mapIconSpriteRenderer.color = new Color(210f / 255f, 210f / 255f, 210f / 255f);
+            mapIconSpriteRenderer.color = Color.grey;
             mapIconRenderer.enabled = false;
             mapIcon.transform.parent = HUDScript.MapAnchor.transform;
 
