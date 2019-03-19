@@ -17,7 +17,7 @@ public class HUDScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        HUD = GameObject.Find("HUD");
+        HUD = gameObject;
         Score  = GameObject.Find("Score");
         ScoreText = Score.GetComponent<Text>();
         Time = GameObject.Find("Time");

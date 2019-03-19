@@ -23,7 +23,7 @@ public class PlayerBulletScript : BaseSprite
         //    Destroy(gameObject);
         //}
         //lastPos = curPos;
-        if (null != gameObject && gameObject.name == "sphere(Clone)")
+        if (null != gameObject && gameObject.tag == "PlayerBullet")
         {
             //base.BaseUpdate_DestroyOnBoundsCheck(gameObject);
             base.BaseUpdate_ReflectOnBoundsCheck(rb);

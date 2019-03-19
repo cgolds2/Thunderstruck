@@ -1,9 +1,20 @@
 fileFormatVersion: 2
 guid: d63b6b83cee3f486ab8963b9461ed374
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: RightBodyWalkSpriteSheet_0
+    21300002: RightBodyWalkSpriteSheet_1
+    21300004: RightBodyWalkSpriteSheet_2
+    21300006: RightBodyWalkSpriteSheet_3
+    21300008: RightBodyWalkSpriteSheet_4
+    21300010: RightBodyWalkSpriteSheet_5
+    21300012: RightBodyWalkSpriteSheet_6
+    21300014: RightBodyWalkSpriteSheet_7
+    21300016: RightBodyWalkSpriteSheet_8
+    21300018: RightBodyWalkSpriteSheet_9
+    21300020: RightBodyWalkSpriteSheet_10
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 9
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -40,7 +51,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -82,7 +93,227 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: RightBodyWalkSpriteSheet_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 3
+        width: 41
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 289e9fc41264b4e59a39d38eb14f718c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RightBodyWalkSpriteSheet_1
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 3
+        width: 41
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70ed3a4c8b6384d45aae57a55785ec75
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RightBodyWalkSpriteSheet_2
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 3
+        width: 41
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c61bd884ac674f57838b803de3e24bb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RightBodyWalkSpriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 3
+        width: 41
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 904a779ae3de74ec59f78b6981de0704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RightBodyWalkSpriteSheet_4
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 3
+        width: 41
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f03665682f9de472c99eecd209c16d56
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RightBodyWalkSpriteSheet_5
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 3
+        width: 41
+        height: 45
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e80e9e4dfec34f1c86777a8943f552a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RightBodyWalkSpriteSheet_6
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 3
+        width: 41
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 966e4aec885bb41e69a0b905ae0f3b68
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RightBodyWalkSpriteSheet_7
+      rect:
+        serializedVersion: 2
+        x: 317
+        y: 3
+        width: 41
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a26e7dfb7cf94e89b8724c24dfb8498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RightBodyWalkSpriteSheet_8
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 3
+        width: 41
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0851f5b0bbc9d46d2b15c6ba9530ae53
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RightBodyWalkSpriteSheet_9
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 3
+        width: 41
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34f840aa6c2f84ee09566433d65db973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RightBodyWalkSpriteSheet_10
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 3
+        width: 41
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51a1a2145a8d0495fbc925b5d5961875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

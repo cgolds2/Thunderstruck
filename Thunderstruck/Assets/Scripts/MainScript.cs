@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -10,6 +9,7 @@ public class MainScript : MonoBehaviour
     static int seed;
     public static Dictionary<Point, Room> map = new Dictionary<Point, Room>();
     public static Random r;
+    public static Random otherR;
     public static float mapWidth;
     public static float mapHeight;
     public static float mapBorderWidth;
@@ -38,7 +38,7 @@ public class MainScript : MonoBehaviour
         placementWidthBuffer = 10;
         placementHeightBuffer = 10;
 
-       
+
         var assetDoor = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/door.prefab");
 
         //GameObject door = GameObject.Find("door");
@@ -49,11 +49,12 @@ public class MainScript : MonoBehaviour
         seed = (int)System.DateTime.Now.Ticks;
         //seed = 1;
         r = new Random(seed);
+        otherR = new Random();
         int maxRooms = 10;
         int minRooms = 6;
-        int numRooms = r.Next(minRooms,maxRooms);
+        int numRooms = r.Next(minRooms, maxRooms);
 
-        map[new Point(0, 0)] = new Room(0, new Point(0, 0),1);
+        map[new Point(0, 0)] = new Room(0, new Point(0, 0), 1);
         map[new Point(0, 0)].SpawnNewRoom(numRooms);
         SetRoom(GetRoomFromCoord(0, 0));
         //currentRoom = GetRoomFromCoord(0,0);
@@ -74,10 +75,10 @@ public class MainScript : MonoBehaviour
             string test = string.Format("Point at {0},{1}", x, y);
             Debug.Log(test);
             var assetRoom = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/room.prefab");
-             GameObject newBox = Instantiate(assetRoom);
-           // GameObject newBox = Instantiate(mapPic);
+            GameObject newBox = Instantiate(assetRoom);
+            // GameObject newBox = Instantiate(mapPic);
             newBox.name = "madeBox";
-            float placementX = x * (mapWidth + placementWidthBuffer );
+            float placementX = x * (mapWidth + placementWidthBuffer);
             float placementY = y * (mapHeight + placementHeightBuffer);
             float placementZ = mapRend.z;
 
@@ -200,13 +201,13 @@ public class MainScript : MonoBehaviour
     public static void SetRoom(Room room)
     {
         currentRoom = room;
-       
-            var xBound = (MainScript.mapWidth / 2) - MainScript.mapBorderWidth;
-                
-            var yBound = (MainScript.mapHeight / 2) - MainScript.mapBorderHeight;
 
-        
-        BaseSprite.SetBounds(xBound,yBound);
+        var xBound = (MainScript.mapWidth / 2) - MainScript.mapBorderWidth;
+
+        var yBound = (MainScript.mapHeight / 2) - MainScript.mapBorderHeight;
+
+
+        BaseSprite.SetBounds(xBound, yBound);
 
         float placementX = room.point.x * (mapWidth + placementWidthBuffer);
         float placementY = room.point.y * (mapHeight + placementHeightBuffer);
@@ -232,8 +233,16 @@ public class MainScript : MonoBehaviour
         killEmAll = GameObject.FindGameObjectsWithTag("projectile");
         for (int i = 0; i < killEmAll.Length; i++)
         {
-            if(killEmAll[i].gameObject.name == "sphere(Clone)")
+            if (killEmAll[i].gameObject.name == "sphere(Clone)")
+            {
                 Destroy(killEmAll[i].gameObject);
+            }
+        }
+
+        if (currentRoom.numEnemies > 0)
+        {
+            //spawn the enemies
+            currentRoom.SpawnEnemies();
         }
     }
 
@@ -252,18 +261,38 @@ public class Room
         this.previousDirection = previousDirection;
         this.point = point;
         this.difficulty = difficulty;
-        SpawnEnemies();
-        
+        CalculateEnemies();
+
+    }
+
+    public void CalculateEnemies()
+    {
+        if (point.x == 0 && point.y == 0)
+        {
+            return;
+        }
+        int minEnemies = 1;
+        int maxEnemies = 5 + difficulty * 2;
+        numEnemies = MainScript.r.Next(minEnemies, maxEnemies);
+
     }
 
     public void SpawnEnemies()
     {
-        int minEnemies = 1;
-        int maxEnemies = 5 + difficulty * 2;
-        numEnemies = MainScript.r.Next(minEnemies,maxEnemies);
+        var enemyAsset = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/EnemyCloudLevel1.prefab");
         for (int i = 0; i < numEnemies; i++)
         {
+            float xLoc = UnityEngine.Random.Range(-1 * MainScript.mapWidth/2, MainScript.mapWidth/2);
+            float yLoc = UnityEngine.Random.Range(-1 * MainScript.mapHeight / 2, MainScript.mapHeight/ 2);
+            xLoc += point.x * (MainScript.mapWidth+ MainScript.placementWidthBuffer);
+            yLoc += point.y * (MainScript.mapHeight+MainScript.placementHeightBuffer);
+            GameObject newEnemy = MainScript.Instantiate(enemyAsset);
+            Vector3 position = new Vector3(
+              xLoc,
+              yLoc,
+              0);
 
+            newEnemy.transform.position = position;
         }
     }
 
@@ -326,7 +355,7 @@ public class Room
             //spawn the room on dir
             //0 is 2, 1 is 3, 2 is 0, 3 is 1
             Point pointOfNewRoom = MainScript.GetNeighborByInt(point, dir);
-            MainScript.map[pointOfNewRoom] = new Room((previousDirection + 2) % 4, pointOfNewRoom,1);
+            MainScript.map[pointOfNewRoom] = new Room((previousDirection + 2) % 4, pointOfNewRoom, 1);
             if (roomsToSpawn > 1)
             {
                 GetRoomInt(dir).SpawnNewRoom(roomsToSpawn - 1);

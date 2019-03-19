@@ -10,16 +10,30 @@ public class CharacterScript : BaseSprite
     public int iFrames;
     public GameObject spherePrefab;
     public Rigidbody2D bodyMC;
+    public GameObject shieldUmberella;
+    public GameObject head;
+    public GameObject body;
+    public GameObject feet;
+    PlayerBodyScript bodyScript;
+    PlayerFeetScript feetScript;
+    PlayerHeadScript headScript;
 
     // I don't know how to get the camera object to grab the resolution from it
     //Camera maincam = (Camera)GameObject.Find("MainCamera").GetComponent("Camera");
     // Use this for initialization
     void Start()
     {
+        bodyScript = body.GetComponent<PlayerBodyScript>();
+        feetScript = feet.GetComponent<PlayerFeetScript>();
+        headScript = head.GetComponent<PlayerHeadScript>();
+
         panSpeed = 10;
         health = 5;
         iFrames = 0;
         spherePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/sphere.prefab");
+        Physics2D.IgnoreCollision(shieldUmberella.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), shieldUmberella.GetComponent<Collider2D>());
+
         base.BaseStart();
     }
 
@@ -33,6 +47,7 @@ public class CharacterScript : BaseSprite
     {
         if (IsAlive())
         {
+            shieldUmberella.transform.position = transform.position;
 
             bodyMC.velocity = new Vector3(0, 0, 0);
             Vector3 pos = transform.position;
@@ -40,6 +55,7 @@ public class CharacterScript : BaseSprite
             // Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
 
             //  bodyMC.velocity = new Vector2(movement.x *panSpeed, movement.y * panSpeed);
+            bool idle = true;
             if (Input.GetMouseButtonDown(0))
             {
                 Fire(pos,5);
@@ -47,32 +63,48 @@ public class CharacterScript : BaseSprite
             }
             if (Input.GetKey("w"))
             {
+                WalkDirection(1);
+                idle = false;
                 SoundManagerScript.PlaySound("walking");
                 pos.y += panSpeed * Time.deltaTime;
             }
             if (Input.GetKey("s"))
             {
+                WalkDirection(3);
+                idle = false;
                 SoundManagerScript.PlaySound("walking");
                 pos.y -= panSpeed * Time.deltaTime;
             }
             if (Input.GetKey("d"))
             {
+                idle = false;
+                WalkDirection(0);
+
                 SoundManagerScript.PlaySound("walking");
                 pos.x += panSpeed * Time.deltaTime;
             }
             if (Input.GetKey("a"))
             {
+                idle = false;
+                WalkDirection(2);
+
                 SoundManagerScript.PlaySound("walking");
                 pos.x -= panSpeed * Time.deltaTime;
+            }
+            if(idle)
+            {
+                WalkDirection(-1);
             }
             transform.position = pos;
         }
         base.BaseUpdate();
 
-        //else
-        //{
-        //    bodyMC.velocity = new Vector2(0, 0);
-        // }
+    }
+    public void WalkDirection(int direction)
+    {
+        bodyScript.Walk(direction);
+        feetScript.Walk(direction);
+        headScript.Walk(direction);
 
     }
     void OnCollisionEnter2D(Collision2D col)
@@ -129,6 +161,7 @@ public class CharacterScript : BaseSprite
         GameObject shot = Instantiate(spherePrefab, transform.position, Quaternion.identity);
         shot.tag = "PlayerBullet";
         Physics2D.IgnoreCollision(shot.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(shot.GetComponent<Collider2D>(), shieldUmberella. GetComponent<Collider2D>());
 
         Vector3 shootDirection;
         shootDirection = Input.mousePosition;
@@ -136,7 +169,7 @@ public class CharacterScript : BaseSprite
         shootDirection = Camera.main.ScreenToWorldPoint(shootDirection);
         float angle = 90 + Mathf.Atan2(origin.x - shootDirection.x, origin.y - shootDirection.y) * Mathf.Rad2Deg;
         angle = angle * Mathf.PI / -180;
-        Debug.Log(angle);
+       // Debug.Log(angle);
 
 
         float xUnit = Mathf.Cos(angle);
