@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBodyScript : MonoBehaviour
+public class PlayerHeadScript : MonoBehaviour
 {
-
     Animator animator;
     // Start is called before the first frame update
     void Start()
@@ -15,12 +14,12 @@ public class PlayerBodyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void Walk(int direction)
     {
-     
+
         Debug.Log(direction);
         animator.SetInteger("WalkState", direction);
     }

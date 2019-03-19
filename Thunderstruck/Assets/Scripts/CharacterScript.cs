@@ -15,6 +15,8 @@ public class CharacterScript : BaseSprite
     public GameObject body;
     public GameObject feet;
     PlayerBodyScript bodyScript;
+    PlayerFeetScript feetScript;
+    PlayerHeadScript headScript;
 
     // I don't know how to get the camera object to grab the resolution from it
     //Camera maincam = (Camera)GameObject.Find("MainCamera").GetComponent("Camera");
@@ -22,6 +24,9 @@ public class CharacterScript : BaseSprite
     void Start()
     {
         bodyScript = body.GetComponent<PlayerBodyScript>();
+        feetScript = feet.GetComponent<PlayerFeetScript>();
+        headScript = head.GetComponent<PlayerHeadScript>();
+
         panSpeed = 10;
         health = 5;
         iFrames = 0;
@@ -58,12 +63,14 @@ public class CharacterScript : BaseSprite
             }
             if (Input.GetKey("w"))
             {
+                WalkDirection(1);
                 idle = false;
                 SoundManagerScript.PlaySound("walking");
                 pos.y += panSpeed * Time.deltaTime;
             }
             if (Input.GetKey("s"))
             {
+                WalkDirection(3);
                 idle = false;
                 SoundManagerScript.PlaySound("walking");
                 pos.y -= panSpeed * Time.deltaTime;
@@ -71,7 +78,7 @@ public class CharacterScript : BaseSprite
             if (Input.GetKey("d"))
             {
                 idle = false;
-                bodyScript.Walk(0);
+                WalkDirection(0);
 
                 SoundManagerScript.PlaySound("walking");
                 pos.x += panSpeed * Time.deltaTime;
@@ -79,23 +86,25 @@ public class CharacterScript : BaseSprite
             if (Input.GetKey("a"))
             {
                 idle = false;
-                bodyScript.Walk(2);
+                WalkDirection(2);
 
                 SoundManagerScript.PlaySound("walking");
                 pos.x -= panSpeed * Time.deltaTime;
             }
             if(idle)
             {
-                bodyScript.Walk(-1);
+                WalkDirection(-1);
             }
             transform.position = pos;
         }
         base.BaseUpdate();
 
-        //else
-        //{
-        //    bodyMC.velocity = new Vector2(0, 0);
-        // }
+    }
+    public void WalkDirection(int direction)
+    {
+        bodyScript.Walk(direction);
+        feetScript.Walk(direction);
+        headScript.Walk(direction);
 
     }
     void OnCollisionEnter2D(Collision2D col)
