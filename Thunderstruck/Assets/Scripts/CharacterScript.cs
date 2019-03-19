@@ -80,8 +80,11 @@ public class CharacterScript : BaseSprite
             bool idle = true;
             if (Input.GetMouseButtonDown(0))
             {
-                Fire(pos,5);
-                SoundManagerScript.PlaySound("fire");
+                if (!Input.GetKey(KeyCode.Space))
+                {
+                    Fire(pos, 5);
+                    SoundManagerScript.PlaySound("fire");
+                }
             }
             if (Input.GetKey("w"))
             {
@@ -116,14 +119,20 @@ public class CharacterScript : BaseSprite
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 shieldUmberella.SetActive(true);
+
+                //Vector3 shootDirection;
+                //shootDirection = Input.mousePosition;
+                //shootDirection.z = 0.0f;
+                //shootDirection = Camera.main.ScreenToWorldPoint(shootDirection);
+                //float angle = -1 * Mathf.Atan2(shieldUmberella.transform.position.x - shootDirection.x, shieldUmberella.transform.position.y - shootDirection.y) * Mathf.Rad2Deg;
+                ////angle = angle * Mathf.PI / -180;
+                ////float xUnit = Mathf.Cos(angle);
+                ////float yUnit = Mathf.Sin(angle);
+                //shieldUmberella.transform.rotation = Quaternion.Euler(shieldUmberella.transform.rotation.x , shieldUmberella.transform.rotation.x, angle);
             }
             if (Input.GetKey(KeyCode.Space))
             {
-                //if (shieldUmberella.transform.rotation.z < .7)
-                //{
-                    shieldUmberella.transform.Rotate(Vector3.forward * 2);
-                //}
-                //shieldUmberella.transform.RotateAround(umbrellaPivotPoint.transform.position, Vector3.forward, 1f * Time.deltaTime);
+                shieldUmberella.transform.Rotate(Vector3.forward * 3);
             }
             if (Input.GetKeyUp(KeyCode.Space))
             {
@@ -216,6 +225,6 @@ public class CharacterScript : BaseSprite
 
         Rigidbody2D rigidBody = shot.GetComponent<Rigidbody2D>();
         rigidBody.velocity = new Vector2(xUnit * speed, yUnit * speed);
-        Destroy(shot, 5f);
+        Destroy(shot, 3f);
     }
 }
