@@ -31,6 +31,7 @@ namespace Assets.Scripts
         {
             if (point.x == 0 && point.y == 0)
             {
+                numEnemies = 0;
                 return;
             }
             int minEnemies = 1;

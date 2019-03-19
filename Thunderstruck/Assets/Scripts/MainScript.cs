@@ -252,7 +252,8 @@ public class MainScript : MonoBehaviour
     }
     public static void DecreaseEnemyCount()
     {
-        if (--currentRoom.numEnemies <1)
+        currentRoom.numEnemies--;
+        if (currentRoom.numEnemies <1)
         {
             currentRoom.SetDoors(true);
         }

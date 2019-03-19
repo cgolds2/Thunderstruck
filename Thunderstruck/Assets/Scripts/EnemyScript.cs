@@ -78,8 +78,9 @@ public class EnemyScript : BaseSprite {
             health--;
             Destroy(col.gameObject);
             if(health<1){
-                Destroy(gameObject);
                 MainScript.DecreaseEnemyCount();
+
+                Destroy(gameObject);
             }
         }
     }
