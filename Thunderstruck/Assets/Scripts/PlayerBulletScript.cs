@@ -41,23 +41,12 @@ public class PlayerBulletScript : BaseSprite
         else
         {
             //if (null != gameObject && gameObject.name == "sphere(Clone)")
-            if (null != gameObject && collision.otherCollider.gameObject.tag == "PlayerBullet")
+            if (collision.gameObject.tag == "EnemyBullet" || collision.gameObject.tag == "PlayerBullet")
             {
                 Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
                 return;
-                //if (reflections > 0)
-                //{
-                //    //relfect
-                //    //base.Reflect(collision);
-                //    //reflections--;
-                //}
-                //else
-                //{
-                //    Destroy(gameObject);
-                //}
-                
             }
-                
+
         }
 
     }

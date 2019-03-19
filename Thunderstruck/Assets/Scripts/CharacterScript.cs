@@ -15,6 +15,8 @@ public class CharacterScript : BaseSprite
     public GameObject head;
     public GameObject body;
     public GameObject feet;
+    PlayerFeetScript feetScript;
+    PlayerHeadScript headScript;
     PlayerBodyScript bodyScript;
     Quaternion startRotation;
     Vector3 umbrellaOffset;
