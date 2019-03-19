@@ -17,13 +17,27 @@ public class HUDScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        HUD = GameObject.Find("HUD");
+        HUD = gameObject;
         Score  = GameObject.Find("Score");
         ScoreText = Score.GetComponent<Text>();
         Time = GameObject.Find("Time");
         TimeText = Time.GetComponent<Text>();
+        //AddSecondToTimer();
+        StartTimer();
+    }
+    public void PauseTimer(){
+        CancelInvoke();
+    }
+    public void StartTimer(){
+        InvokeRepeating("CallRepeat", 1, 1);
+    }
+    public void ResetTimer(){
+        _time = new TimeSpan();
     }
 
+    public void CallRepeat(){
+        AddSecondToTimer();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -50,6 +64,11 @@ public class HUDScript : MonoBehaviour
     public static TimeSpan GetTime()
     {
         return _time;
+    }
+
+    public static void AddSecondToTimer(){
+        _time += TimeSpan.FromSeconds(1);
+        SetTime(_time);
     }
 
     public static void MoveObjects(Vector3 location)
