@@ -16,7 +16,8 @@ public class CharacterScript : BaseSprite
     public GameObject body;
     public GameObject feet;
     PlayerBodyScript bodyScript;
-
+    Quaternion startRotation;
+    Vector3 umbrellaOffset;
     // I don't know how to get the camera object to grab the resolution from it
     //Camera maincam = (Camera)GameObject.Find("MainCamera").GetComponent("Camera");
     // Use this for initialization
