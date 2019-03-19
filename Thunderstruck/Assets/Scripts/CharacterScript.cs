@@ -19,6 +19,7 @@ public class CharacterScript : BaseSprite
     PlayerHeadScript headScript;
     public Quaternion startRotation;
     public Vector3 umbrellaOffset;
+    PlayerBodyScript bodyScript;
 
     // I don't know how to get the camera object to grab the resolution from it
     //Camera maincam = (Camera)GameObject.Find("MainCamera").GetComponent("Camera");
@@ -53,7 +54,7 @@ public class CharacterScript : BaseSprite
         if (health <= 0)
         {
             health = 0;
-            //here
+            SoundManagerScript.PlaySound("death");
         }
     }
    
@@ -150,6 +151,7 @@ public class CharacterScript : BaseSprite
         if (col.gameObject.tag == "Enemy")
         {
             health--;
+            SoundManagerScript.PlaySound("hit");
         }
         else if (col.gameObject.tag == "Door" && MainScript.currentRoom.numEnemies==0)
         {

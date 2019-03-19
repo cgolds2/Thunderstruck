@@ -49,7 +49,6 @@ public class SoundManagerScript : MonoBehaviour
                 break;
         }
 
-        isPlaying = false;
 
 
     }
