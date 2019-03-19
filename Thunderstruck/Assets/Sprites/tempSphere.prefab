@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2906207687345083582}
   - component: {fileID: 4475071015331467392}
   - component: {fileID: 5240039478739509166}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: tempSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}

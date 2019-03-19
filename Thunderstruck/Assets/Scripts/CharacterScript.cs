@@ -11,13 +11,15 @@ public class CharacterScript : BaseSprite
     public GameObject spherePrefab;
     public Rigidbody2D bodyMC;
     public GameObject shieldUmberella;
+    public GameObject umbrellaPivotPoint;
     public GameObject head;
     public GameObject body;
     public GameObject feet;
-    PlayerBodyScript bodyScript;
     PlayerFeetScript feetScript;
     PlayerHeadScript headScript;
-
+    PlayerBodyScript bodyScript;
+    Quaternion startRotation;
+    Vector3 umbrellaOffset;
     // I don't know how to get the camera object to grab the resolution from it
     //Camera maincam = (Camera)GameObject.Find("MainCamera").GetComponent("Camera");
     // Use this for initialization
@@ -33,7 +35,12 @@ public class CharacterScript : BaseSprite
         spherePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/sphere.prefab");
         Physics2D.IgnoreCollision(shieldUmberella.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         Physics2D.IgnoreCollision(GetComponent<Collider2D>(), shieldUmberella.GetComponent<Collider2D>());
-
+        shieldUmberella.SetActive(false);
+        startRotation = new Quaternion(0,0,0,0);
+        shieldUmberella.transform.rotation = startRotation;
+        float umbrellaXOffset = -.25f;
+        float umbrellaYOffset = .25f;
+        umbrellaOffset = new Vector3(umbrellaXOffset,umbrellaYOffset);
         base.BaseStart();
     }
     public float GetHeath()
@@ -60,7 +67,8 @@ public class CharacterScript : BaseSprite
     {
         if (IsAlive())
         {
-            shieldUmberella.transform.position = transform.position;
+            shieldUmberella.transform.position = transform.position + umbrellaOffset;
+            
 
             bodyMC.velocity = new Vector3(0, 0, 0);
             Vector3 pos = transform.position;
@@ -104,7 +112,24 @@ public class CharacterScript : BaseSprite
                 SoundManagerScript.PlaySound("walking");
                 pos.x -= panSpeed * Time.deltaTime;
             }
-            if(idle)
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                shieldUmberella.SetActive(true);
+            }
+            if (Input.GetKey(KeyCode.Space))
+            {
+                //if (shieldUmberella.transform.rotation.z < .7)
+                //{
+                    shieldUmberella.transform.Rotate(Vector3.forward * 2);
+                //}
+                //shieldUmberella.transform.RotateAround(umbrellaPivotPoint.transform.position, Vector3.forward, 1f * Time.deltaTime);
+            }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                shieldUmberella.SetActive(false);
+                shieldUmberella.transform.rotation = startRotation;
+            }
+            if (idle)
             {
                 WalkDirection(-1);
             }

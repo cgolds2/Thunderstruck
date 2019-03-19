@@ -30,6 +30,10 @@ public class EnemyBulletScript : BaseSprite
         if (collision.gameObject.tag == "Player")
         {
         }
-
+        else if (collision.gameObject.tag == "EnemyBullet" || collision.gameObject.tag == "PlayerBullet")
+        {
+            Physics2D.IgnoreCollision(collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            return;
+        }
     }
 }
