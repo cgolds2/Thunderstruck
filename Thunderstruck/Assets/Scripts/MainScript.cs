@@ -205,7 +205,16 @@ public class MainScript : MonoBehaviour
 
     public static void SetRoom(Room room)
     {
+        if(currentRoom!=null){
+            currentRoom.mapIconSpriteRenderer.color = Color.grey;
+
+        }
         currentRoom = room;
+        currentRoom.mapIconRenderer.enabled = true;
+        currentRoom.mapIconSpriteRenderer.color = Color.red;
+        currentRoom.TurnOnNeighborIcons();
+
+
         if (currentRoom.numEnemies > 0)
         {
             currentRoom.SetDoors(false);
@@ -227,6 +236,15 @@ public class MainScript : MonoBehaviour
             placementX - (float)1.22,
             placementY,
             mainCamera.transform.position.z);
+
+        //HUDScript.MapAnchor.transform.position = new Vector3(
+          //   (Room.baseX + room.point.x * Room.mult),
+          //(Room.baseY + room.point.y * Room.mult),
+                          //-1);
+        HUDScript.MapAnchor.transform.localPosition = new Vector3(
+         (-0.215f * room.point.x) +HUDScript.mapStartingPos.x ,
+        (-0.215f * room.point.y) +HUDScript.mapStartingPos.y,
+                      -1);
 
         HUDScript.MoveObjects(new Vector3(placementX, placementY, 0));
 

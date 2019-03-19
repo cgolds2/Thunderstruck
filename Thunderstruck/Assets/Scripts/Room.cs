@@ -17,16 +17,44 @@ namespace Assets.Scripts
         public int numEnemies;
         public int difficulty;
         private List<GameObject> doors = new List<GameObject>();
+        public GameObject mapIcon;
+        public Renderer mapIconRenderer;
+        public SpriteRenderer mapIconSpriteRenderer;
+        public static float baseX = -8.434f;
+        public static float baseY = -3.409f;
+        public static float mult = 0.6f;
 
         public Room(int previousDirection, Point point, int difficulty)
         {
+
             this.previousDirection = previousDirection;
             this.point = point;
             this.difficulty = difficulty;
             CalculateEnemies();
+            var iconAsset= AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/RoomIcon.prefab");
+            mapIcon = UnityEngine.Object.Instantiate(iconAsset);
+            mapIcon.transform.position = new Vector3(
+                (float) (baseX + point.x * mult), 
+                (float) (baseY + point.y * mult), 
+                -1);
+            mapIconRenderer = mapIcon.GetComponent<Renderer>();
+            mapIconSpriteRenderer = mapIcon.GetComponent<SpriteRenderer>();
+            mapIconSpriteRenderer.color= Color.grey;
+            mapIconRenderer.enabled = false;
+            mapIcon.transform.parent = HUDScript.MapAnchor.transform;
 
         }
+        public void TurnOnNeighborIcons(){
+            for (int i = 0; i < 4; i++)
+            {
+                var neighbor = GetRoomInt(i);
+                if(neighbor!=null){
+                    neighbor.mapIconRenderer.enabled = true;
 
+                }
+
+            }
+        }
         public void CalculateEnemies()
         {
             if (point.x == 0 && point.y == 0)

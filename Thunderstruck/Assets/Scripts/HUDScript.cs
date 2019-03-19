@@ -10,16 +10,24 @@ public class HUDScript : MonoBehaviour
     public static GameObject HUD;
     public static GameObject Score;
     public static GameObject Time;
+    public static GameObject MapAnchor;
     private static Text ScoreText;
     private static Text TimeText;
     private static int _score;
     private static TimeSpan _time;
     private static GameObject[] healthbars;
+    public static Vector3 mapStartingPos;
 
+    private void Awake()
+    {
+        HUD = gameObject;
+        MapAnchor = GameObject.Find("MapAnchor");
+        mapStartingPos = MapAnchor.transform.localPosition;
+
+    }
     // Start is called before the first frame update
     void Start()
     {
-        HUD = gameObject;
         Score  = GameObject.Find("Score");
         ScoreText = Score.GetComponent<Text>();
         Time = GameObject.Find("Time");
@@ -102,6 +110,7 @@ public class HUDScript : MonoBehaviour
         if (HUD == null) { return; }
         location.x -= (float)1.22;
         HUD.transform.position = location;
+
         //SetTime(new TimeSpan(1,2,3));
         //Score.transform.position = location;
         //Time.transform.position = location;
