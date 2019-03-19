@@ -11,6 +11,7 @@ public class CharacterScript : BaseSprite
     public GameObject spherePrefab;
     public Rigidbody2D bodyMC;
     public GameObject shieldUmberella;
+    public GameObject umbrellaPivotPoint;
     public GameObject head;
     public GameObject body;
     public GameObject feet;
@@ -32,10 +33,10 @@ public class CharacterScript : BaseSprite
         Physics2D.IgnoreCollision(shieldUmberella.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         Physics2D.IgnoreCollision(GetComponent<Collider2D>(), shieldUmberella.GetComponent<Collider2D>());
         shieldUmberella.SetActive(false);
-        startRotation = shieldUmberella.transform.rotation;
-        var size = shieldUmberella.GetComponent<PolygonCollider2D>().bounds.size;
-        float umbrellaXOffset = size.x / 2;
-        float umbrellaYOffset = size.y / 2;
+        startRotation = new Quaternion(0,0,0,0);
+        shieldUmberella.transform.rotation = startRotation;
+        float umbrellaXOffset = -.25f;
+        float umbrellaYOffset = .25f;
         umbrellaOffset = new Vector3(umbrellaXOffset,umbrellaYOffset);
         base.BaseStart();
     }
@@ -51,6 +52,7 @@ public class CharacterScript : BaseSprite
         if (IsAlive())
         {
             shieldUmberella.transform.position = transform.position + umbrellaOffset;
+            
 
             bodyMC.velocity = new Vector3(0, 0, 0);
             Vector3 pos = transform.position;
@@ -100,7 +102,11 @@ public class CharacterScript : BaseSprite
             }
             if (Input.GetKey(KeyCode.Space))
             {
-                shieldUmberella.transform.Rotate(Vector3.forward * 2);
+                if (shieldUmberella.transform.rotation.z < .7)
+                {
+                    shieldUmberella.transform.Rotate(Vector3.forward * 2);
+                }
+                //shieldUmberella.transform.RotateAround(umbrellaPivotPoint.transform.position, Vector3.forward, 1f * Time.deltaTime);
             }
             if (Input.GetKeyUp(KeyCode.Space))
             {
