@@ -19,4 +19,14 @@ public class MainMenu : MonoBehaviour
     {
         Application.OpenURL("https://umbrellastudios.azurewebsites.net/Home/Leaderboards");
     }
+
+    public void HowToPlay()
+    {
+        SceneManager.LoadScene("How To Play");
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }
