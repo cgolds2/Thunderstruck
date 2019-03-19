@@ -1,16 +1,11 @@
 fileFormatVersion: 2
-guid: ee5c76552b994418486cf5421fbe25e0
+guid: 65f921a52fcdff947b4ebd7efb8a44a3
 TextureImporter:
   fileIDToRecycleName:
-    21300000: WalkBackSpriteSheet_0
-    21300002: WalkBackSpriteSheet_1
-    21300004: WalkBackSpriteSheet_2
-    21300006: WalkBackSpriteSheet_3
-    21300008: WalkBackSpriteSheet_4
-    21300010: WalkBackSpriteSheet_5
-    21300012: WalkBackSpriteSheet_6
-    21300014: WalkBackSpriteSheet_7
-    21300016: WalkBackSpriteSheet_8
+    21300000: HeadSpriteSheet1_0
+    21300002: HeadSpriteSheet1_1
+    21300004: HeadSpriteSheet1_2
+    21300006: HeadSpriteSheet1_3
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -93,13 +88,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WalkBackSpriteSheet_0
+      name: HeadSpriteSheet1_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 2
-        width: 51
-        height: 23
+        x: 0
+        y: 73
+        width: 142
+        height: 119
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -107,19 +102,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0ccaaf265d17854a8ce75e5b7aabc8e
+      spriteID: 52398d157cfdaef48a85623cb4402fb5
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WalkBackSpriteSheet_1
+      name: HeadSpriteSheet1_1
       rect:
         serializedVersion: 2
-        x: 56
-        y: 2
-        width: 51
-        height: 23
+        x: 158
+        y: 42
+        width: 134
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,19 +122,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0bbba561972b8684fb350188fb760826
+      spriteID: 39e757af7fb67fb49a9663894a71c961
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WalkBackSpriteSheet_2
+      name: HeadSpriteSheet1_2
       rect:
         serializedVersion: 2
-        x: 111
-        y: 2
-        width: 51
-        height: 23
+        x: 302
+        y: 46
+        width: 146
+        height: 143
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,19 +142,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c759eccd96c2d4743a9a931cb77dcc5f
+      spriteID: ffe1b0d5c09af5f458963f66f4edf454
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WalkBackSpriteSheet_3
+      name: HeadSpriteSheet1_3
       rect:
         serializedVersion: 2
-        x: 166
-        y: 2
-        width: 51
-        height: 23
+        x: 458
+        y: 42
+        width: 134
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -167,107 +162,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3167f7136af3057479777275235bb157
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WalkBackSpriteSheet_4
-      rect:
-        serializedVersion: 2
-        x: 221
-        y: 2
-        width: 51
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2858c7029f5240a4981eea35c3db69b5
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WalkBackSpriteSheet_5
-      rect:
-        serializedVersion: 2
-        x: 276
-        y: 0
-        width: 51
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8dfc1494530d863449ea166d880d56b2
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WalkBackSpriteSheet_6
-      rect:
-        serializedVersion: 2
-        x: 331
-        y: 2
-        width: 51
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 12cee89c0d31d554d8372def88be3ad0
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WalkBackSpriteSheet_7
-      rect:
-        serializedVersion: 2
-        x: 386
-        y: 2
-        width: 51
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7107af858cbea8040a819ae0085ed86c
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: WalkBackSpriteSheet_8
-      rect:
-        serializedVersion: 2
-        x: 441
-        y: 2
-        width: 51
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e348f97aaaad8ec488d058b5602523f2
+      spriteID: 54daf356f860da246a925279afc5176b
       vertices: []
       indices: 
       edges: []
@@ -275,7 +170,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 374caf3401a3543358134562154d4c0a
+    spriteID: 0099d168cfb81844dac41adddde530a5
     vertices: []
     indices: 
     edges: []
