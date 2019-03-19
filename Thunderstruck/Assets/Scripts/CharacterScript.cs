@@ -6,7 +6,7 @@ using UnityEngine;
 public class CharacterScript : BaseSprite
 {
     public float panSpeed;
-    public float health;
+    private float health;
     public int iFrames;
     public GameObject spherePrefab;
     public Rigidbody2D bodyMC;
@@ -36,7 +36,20 @@ public class CharacterScript : BaseSprite
 
         base.BaseStart();
     }
-
+    public float GetHeath()
+    {
+        return health;
+    }
+    public void SetHealth(float health)
+    {
+        this.health = health;
+        if (health <= 0)
+        {
+            health = 0;
+            //here
+        }
+    }
+   
     public bool IsAlive()
     {
         return health > 0;
