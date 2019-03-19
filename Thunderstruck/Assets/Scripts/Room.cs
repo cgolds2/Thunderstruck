@@ -53,6 +53,7 @@ namespace Assets.Scripts
                 xLoc += point.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
                 yLoc += point.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
                 GameObject newEnemy = MainScript.Instantiate(enemyAsset);
+                newEnemy.tag = "Enemy";
                 Vector3 position = new Vector3(
                   xLoc,
                   yLoc,
