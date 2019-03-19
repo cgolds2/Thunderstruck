@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,7 @@ public class HUDScript : MonoBehaviour
     private static Text TimeText;
     private static int _score;
     private static TimeSpan _time;
+    private static GameObject[] healthbars;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,15 @@ public class HUDScript : MonoBehaviour
         TimeText = Time.GetComponent<Text>();
         //AddSecondToTimer();
         StartTimer();
+        healthbars = new GameObject[8];
+        var barAsset = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/HealthSquare.prefab");
+        var offset = barAsset.GetComponent<Renderer>().bounds.size.x;
+        for (int i = 0; i < healthbars.Length; i++)
+        {
+            healthbars[i] = MainScript.Instantiate(barAsset);
+            healthbars[i].transform.position = new Vector3((float)-5.058 + offset*i, (float) 4.594, (float) -0.6);
+            healthbars[i].transform.parent = HUD.transform;
+        }
     }
     public void PauseTimer(){
         CancelInvoke();
@@ -61,6 +72,21 @@ public class HUDScript : MonoBehaviour
         var ui = Time.GetComponent<Text>();
         ui.text = "TIME: " + time.ToString("hh\\:mm\\:ss");
     }
+
+    internal static void SetHealth(int health)
+    {
+        for (int i = 0; i < health; i++)
+        {
+            healthbars[i].GetComponent<Renderer>().enabled = true;
+        }
+        for (int i = health; i < 8; i++)
+        {
+            healthbars[i].GetComponent<Renderer>().enabled = false;
+
+        }
+
+    }
+
     public static TimeSpan GetTime()
     {
         return _time;

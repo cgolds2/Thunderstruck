@@ -30,7 +30,7 @@ public class CharacterScript : BaseSprite
         headScript = head.GetComponent<PlayerHeadScript>();
 
         panSpeed = 10;
-        health = 5;
+        health = 8;
         iFrames = 0;
         spherePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/sphere.prefab");
         Physics2D.IgnoreCollision(shieldUmberella.GetComponent<Collider2D>(), GetComponent<Collider2D>());
@@ -55,6 +55,7 @@ public class CharacterScript : BaseSprite
             health = 0;
             //here
         }
+        HUDScript.SetHealth((int)health);
     }
    
     public bool IsAlive()
@@ -149,7 +150,7 @@ public class CharacterScript : BaseSprite
     {
         if (col.gameObject.tag == "Enemy")
         {
-            health--;
+            SetHealth(health - 1);
         }
         else if (col.gameObject.tag == "Door" && MainScript.currentRoom.numEnemies==0)
         {
