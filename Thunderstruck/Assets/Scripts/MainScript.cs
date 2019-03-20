@@ -312,11 +312,13 @@ public class MainScript : MonoBehaviour
             placementY,
             player.transform.position.z);
 
-        GameObject[] killEmAll;
-        killEmAll = GameObject.FindGameObjectsWithTag("projectile");
-        for (int i = 0; i < killEmAll.Length; i++)
+        List<GameObject> killEmAll = new List<GameObject>();
+        killEmAll.AddRange(GameObject.FindGameObjectsWithTag("PlayerBullet"));
+        killEmAll.AddRange(GameObject.FindGameObjectsWithTag("EnemyBullet"));
+
+        for (int i = 0; i < killEmAll.Count; i++)
         {
-            if (killEmAll[i].gameObject.name == "sphere(Clone)")
+            if (null != killEmAll[i])
             {
                 Destroy(killEmAll[i].gameObject);
             }
