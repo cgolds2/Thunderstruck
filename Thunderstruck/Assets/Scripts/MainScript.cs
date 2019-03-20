@@ -43,6 +43,10 @@ public class MainScript : MonoBehaviour
     }
     void Awake()
     {
+        if (r == null)
+        {
+            CalcSeed(null);
+        }
         mainCamera = GameObject.Find("MainCamera");
         currentRoom = null;
         GameObject mapPic = GameObject.Find("templateRoom");
