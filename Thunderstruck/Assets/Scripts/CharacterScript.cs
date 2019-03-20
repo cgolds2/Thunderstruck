@@ -10,6 +10,8 @@ public class CharacterScript : BaseSprite
     public int iFrames;
     public float fireRate;
     public float lastShot;
+    public float damageGracePeriod;
+    public float lastHitTaken;
     public GameObject spherePrefab;
     public Rigidbody2D bodyMC;
     public GameObject shieldUmberella;
@@ -37,6 +39,8 @@ public class CharacterScript : BaseSprite
         iFrames = 0;
         fireRate = .5f;
         lastShot = 0f;
+        damageGracePeriod = .6f;
+        lastHitTaken = 0f;
         spherePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/sphere.prefab");
         Physics2D.IgnoreCollision(shieldUmberella.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         Physics2D.IgnoreCollision(GetComponent<Collider2D>(), shieldUmberella.GetComponent<Collider2D>());
@@ -165,9 +169,13 @@ public class CharacterScript : BaseSprite
     }
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Enemy")
+        if (col.gameObject.tag == "Enemy" || col.gameObject.tag == "EnemyBullet")
         {
-            SetHealth(health - 1);
+            if (Time.time > damageGracePeriod + lastHitTaken)
+            {
+                SetHealth(health - 1);
+                lastHitTaken = Time.time;
+            }
         }
         else if (col.gameObject.tag == "Door" && MainScript.currentRoom.numEnemies<=0)
         {
@@ -234,4 +242,6 @@ public class CharacterScript : BaseSprite
 
         lastShot = Time.time;
     }
+
+
 }
