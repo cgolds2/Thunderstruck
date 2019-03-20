@@ -100,5 +100,9 @@ public class EnemyScript : BaseSprite {
                 Destroy(gameObject);
             }
         }
+        else if (col.gameObject.tag == "EnemyBullet")
+        {
+            Physics2D.IgnoreCollision(col.collider, GetComponent<Collider2D>());
+        }
     }
 }
