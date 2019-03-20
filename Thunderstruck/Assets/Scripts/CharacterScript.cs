@@ -17,6 +17,7 @@ public class CharacterScript : BaseSprite
     public GameObject head;
     public GameObject body;
     public GameObject feet;
+    public GameObject idleUmberella;
     PlayerFeetScript feetScript;
     PlayerHeadScript headScript;
     PlayerBodyScript bodyScript;
@@ -123,6 +124,7 @@ public class CharacterScript : BaseSprite
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 shieldUmberella.SetActive(true);
+                idleUmberella.SetActive(false);
 
                 //Vector3 shootDirection;
                 //shootDirection = Input.mousePosition;
@@ -142,6 +144,8 @@ public class CharacterScript : BaseSprite
             {
                 shieldUmberella.SetActive(false);
                 shieldUmberella.transform.rotation = startRotation;
+                idleUmberella.SetActive(true);
+
             }
             if (idle)
             {
