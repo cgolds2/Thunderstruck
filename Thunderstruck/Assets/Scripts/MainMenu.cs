@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
    public void PlayGame()
     {
         MainScript.CalcSeed(null);
+        HUDScript.SetScore(0);
         SceneManager.LoadScene("MainGame");
     }
     public void NextLevel()

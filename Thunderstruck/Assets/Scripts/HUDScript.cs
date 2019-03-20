@@ -75,7 +75,11 @@ public class HUDScript : MonoBehaviour
     {
         _score = score;
         var ui = ScoreText;
-        ui.text = "SCORE: " +score.ToString();
+        if (ScoreText != null)
+        {
+            ui.text = "SCORE: " + score.ToString();
+
+        }
     }
     public static int GetScore()
     {

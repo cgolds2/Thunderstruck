@@ -26,6 +26,8 @@ public class EnemyBossScript : EnemyScript
             Destroy(col.gameObject);
             if (Health < 1)
             {
+                HUDScript.SetScore(HUDScript.GetScore() + 1000);
+
                 SceneManager.LoadScene("Level Complete");
                 
             }
