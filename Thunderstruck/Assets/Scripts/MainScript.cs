@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = System.Random;
 
 public class MainScript : MonoBehaviour
 {
     static int seed;
-    public static Dictionary<Point, Room> map = new Dictionary<Point, Room>();
+    public static Dictionary<Point, Room> map;
     public static Random r;
     public static Random otherR;
     public static float mapWidth;
@@ -21,15 +22,29 @@ public class MainScript : MonoBehaviour
     public static GameObject mainCamera;
     public static float currentRoomX;
     public static bool gameOver;
-
     public static float currentRoomY;
+    public static int level;
 
     // Start is called before the first frame update
+  public static void CalcSeed(int? _seed)
+    {
+        level = 0;
+        if (_seed == null)
+        {
+            seed = (int)System.DateTime.Now.Ticks;
 
+        }
+        else
+        {
+            seed = (int)_seed;
+        }
+        r = new Random(seed);
+
+    }
     void Awake()
     {
         mainCamera = GameObject.Find("MainCamera");
-
+        currentRoom = null;
         GameObject mapPic = GameObject.Find("templateRoom");
         Vector3 mapRend = mapPic.GetComponent<Renderer>().bounds.size;
         mapWidth = mapRend.x;
@@ -40,19 +55,12 @@ public class MainScript : MonoBehaviour
         mapBorderHeight = (float)0;
         placementWidthBuffer = 10;
         placementHeightBuffer = 10;
-
-
-
-        //GameObject door = GameObject.Find("door");
-
+        map =   new Dictionary<Point, Room>();
 
         var assetDoor = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/door.prefab");
         var assetRoom = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/room.prefab");
 
 
-        seed = (int)System.DateTime.Now.Ticks;
-        seed = 1531922522;
-        r = new Random(seed);
         otherR = new Random();
         int maxRooms = 10;
         int minRooms = 6;
@@ -64,7 +72,6 @@ public class MainScript : MonoBehaviour
 
 
         SetRoom(GetRoomFromCoord(0, 0));
-        //currentRoom = GetRoomFromCoord(0,0);
 
         int xMin = 0;
         int yMin = 0;

@@ -7,7 +7,14 @@ public class MainMenu : MonoBehaviour
 {
    public void PlayGame()
     {
+        MainScript.CalcSeed(null);
         SceneManager.LoadScene("MainGame");
+    }
+    public void NextLevel()
+    {
+        MainScript.level++;
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainGame");
+
     }
 
     public void QuitGame()
