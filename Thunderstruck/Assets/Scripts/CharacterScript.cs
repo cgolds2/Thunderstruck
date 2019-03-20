@@ -8,6 +8,8 @@ public class CharacterScript : BaseSprite
     public float panSpeed;
     private float health;
     public int iFrames;
+    public float fireRate;
+    public float lastShot;
     public GameObject spherePrefab;
     public Rigidbody2D bodyMC;
     public GameObject shieldUmberella;
@@ -32,6 +34,8 @@ public class CharacterScript : BaseSprite
         panSpeed = 10;
         health = 8;
         iFrames = 0;
+        fireRate = .5f;
+        lastShot = 0f;
         spherePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/sphere.prefab");
         Physics2D.IgnoreCollision(shieldUmberella.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         Physics2D.IgnoreCollision(GetComponent<Collider2D>(), shieldUmberella.GetComponent<Collider2D>());
@@ -78,7 +82,7 @@ public class CharacterScript : BaseSprite
 
             //  bodyMC.velocity = new Vector2(movement.x *panSpeed, movement.y * panSpeed);
             bool idle = true;
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0) && (Time.time > fireRate + lastShot))
             {
                 if (!Input.GetKey(KeyCode.Space))
                 {
@@ -202,10 +206,7 @@ public class CharacterScript : BaseSprite
     }
 
     public void Fire(Vector2 origin, float speed)
-    {
-
-
-
+    {       
         GameObject shot = Instantiate(spherePrefab, transform.position, Quaternion.identity);
         shot.tag = "PlayerBullet";
         Physics2D.IgnoreCollision(shot.GetComponent<Collider2D>(), GetComponent<Collider2D>());
@@ -226,5 +227,7 @@ public class CharacterScript : BaseSprite
         Rigidbody2D rigidBody = shot.GetComponent<Rigidbody2D>();
         rigidBody.velocity = new Vector2(xUnit * speed, yUnit * speed);
         Destroy(shot, 3f);
+
+        lastShot = Time.time;
     }
 }
