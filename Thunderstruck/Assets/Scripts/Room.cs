@@ -8,15 +8,29 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-
+    public enum RoomType
+    {
+        Normal,
+        Boss
+    }
     public class Room
     {
         public Point point;
+        public RoomType roomType;
         //right is 0, top is 1, etc
-        private readonly int previousDirection;
+        public readonly int previousDirection;
         public int numEnemies;
         public int difficulty;
         private List<GameObject> doors = new List<GameObject>();
+
+        public List<GameObject> Doors
+        {
+            get
+            {
+                return doors;
+            }
+        }
+
         public GameObject mapIcon;
         public Renderer mapIconRenderer;
         public SpriteRenderer mapIconSpriteRenderer;
@@ -55,6 +69,9 @@ namespace Assets.Scripts
                 }
 
             }
+        }
+        public int GetDoorCount(){
+            return doors.Count;
         }
         public void CalculateEnemies()
         {
