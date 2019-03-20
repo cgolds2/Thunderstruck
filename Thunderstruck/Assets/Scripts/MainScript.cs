@@ -24,6 +24,7 @@ public class MainScript : MonoBehaviour
     public static float currentRoomY;
 
     // Start is called before the first frame update
+
     void Awake()
     {
         mainCamera = GameObject.Find("MainCamera");
@@ -40,11 +41,12 @@ public class MainScript : MonoBehaviour
         placementHeightBuffer = 10;
 
 
-        var assetDoor = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/door.prefab");
 
         //GameObject door = GameObject.Find("door");
 
 
+        var assetDoor = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/door.prefab");
+        var assetRoom = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/room.prefab");
 
 
         seed = (int)System.DateTime.Now.Ticks;
@@ -57,6 +59,9 @@ public class MainScript : MonoBehaviour
 
         map[new Point(0, 0)] = new Room(0, new Point(0, 0), 1);
         map[new Point(0, 0)].SpawnNewRoom(numRooms);
+        MakeBossRoom();
+
+
         SetRoom(GetRoomFromCoord(0, 0));
         //currentRoom = GetRoomFromCoord(0,0);
 
@@ -64,6 +69,8 @@ public class MainScript : MonoBehaviour
         int yMin = 0;
         int xMax = 0;
         int yMax = 0;
+
+        GameObject finalRoom = Instantiate(assetRoom);
 
         foreach (KeyValuePair<Point, Room> entry in map)
         {
@@ -75,7 +82,6 @@ public class MainScript : MonoBehaviour
             if (y > yMax) { yMax = y; };
             string test = string.Format("Point at {0},{1}", x, y);
             Debug.Log(test);
-            var assetRoom = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/room.prefab");
             GameObject newBox = Instantiate(assetRoom);
             // GameObject newBox = Instantiate(mapPic);
             newBox.name = "madeBox";
@@ -132,6 +138,7 @@ public class MainScript : MonoBehaviour
 
 
         }
+
         GameObject.Find("templateRoom").SetActive(false);
         GameObject.Find("templateDoor").SetActive(false);
 
@@ -177,6 +184,41 @@ public class MainScript : MonoBehaviour
     private void Start()
     {
     }
+
+    void MakeBossRoom(){
+        var assetRoom = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/room.prefab");
+  
+        int x = 0;
+        int y = 0;
+        double longestPath = 0;
+        foreach (KeyValuePair<Point, Room> entry in map)
+        {
+            if(entry.Value.GetDoorCount()==4){
+                continue;
+            }
+            double diff = distance(0, 0, entry.Key.x, entry.Key.y);
+            if(diff>longestPath){
+                x = entry.Key.x;
+                y = entry.Key.y;
+                longestPath = diff;
+            }
+        }
+        int dirToSpawn = (map[new Point(x, y)].previousDirection + 2) % 4;
+
+        Point ret = GetNeighborByInt(new Point(x, y), dirToSpawn);
+        map[ret] = new Room((dirToSpawn + 2) % 4, ret, 0)
+        {
+            roomType = RoomType.Boss,
+            numEnemies=0
+        };
+    }
+    static double distance(int x1, int y1, int x2, int y2)
+    {
+        // Calculating distance 
+        return Math.Sqrt(Math.Pow(x2 - x1, 2) +
+                      Math.Pow(y2 - y1, 2) * 1.0);
+    }
+
 
     public static Point GetNeighborByInt(Point point, int i)
     {
@@ -237,7 +279,7 @@ public class MainScript : MonoBehaviour
             placementY,
             mainCamera.transform.position.z);
 
-        //HUDScript.MapAnchor.transform.position = new Vector3(
+          //HUDScript.MapAnchor.transform.position = new Vector3(
           //   (Room.baseX + room.point.x * Room.mult),
           //(Room.baseY + room.point.y * Room.mult),
                           //-1);
