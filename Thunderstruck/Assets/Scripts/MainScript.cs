@@ -20,6 +20,7 @@ public class MainScript : MonoBehaviour
     public static Room currentRoom;
     public static GameObject mainCamera;
     public static float currentRoomX;
+    public static bool gameOver;
 
     public static float currentRoomY;
 

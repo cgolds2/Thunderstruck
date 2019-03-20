@@ -19,11 +19,13 @@ public class CharacterScript : BaseSprite
     public GameObject body;
     public GameObject feet;
     public GameObject idleUmberella;
+    public GameObject playerDeath;
     PlayerFeetScript feetScript;
     PlayerHeadScript headScript;
     PlayerBodyScript bodyScript;
     Quaternion startRotation;
     Vector3 umbrellaOffset;
+    bool played;
     // I don't know how to get the camera object to grab the resolution from it
     //Camera maincam = (Camera)GameObject.Find("MainCamera").GetComponent("Camera");
     // Use this for initialization
@@ -32,7 +34,7 @@ public class CharacterScript : BaseSprite
         bodyScript = body.GetComponent<PlayerBodyScript>();
         feetScript = feet.GetComponent<PlayerFeetScript>();
         headScript = head.GetComponent<PlayerHeadScript>();
-
+        played = false;
         panSpeed = 10;
         health = 8;
         iFrames = 0;
@@ -48,10 +50,25 @@ public class CharacterScript : BaseSprite
         float umbrellaYOffset = .25f;
         umbrellaOffset = new Vector3(umbrellaXOffset,umbrellaYOffset);
         base.BaseStart();
+        playerDeath.GetComponent<Renderer>().enabled = false;
+
     }
     public float GetHeath()
     {
         return health;
+    }
+    public void KillPlayer()
+    {
+        playerDeath.transform.position = transform.position;
+        MainScript.gameOver = true;
+        head.SetActive(false);
+        body.SetActive(false);
+        feet.SetActive(false);
+        idleUmberella.SetActive(false);
+        playerDeath.SetActive(true);
+        playerDeath.GetComponent<Animator>().SetTrigger("KillPlayer");
+        playerDeath.GetComponent<Renderer>().enabled = true;
+
     }
     public void SetHealth(float health)
     {
@@ -59,7 +76,8 @@ public class CharacterScript : BaseSprite
         if (health <= 0)
         {
             health = 0;
-            SceneManager.LoadScene("Game Over");
+            KillPlayer();
+            //SceneManager.LoadScene("Game Over");
 
             //here
         }
@@ -74,7 +92,7 @@ public class CharacterScript : BaseSprite
     // Update is called once per frame
     void Update()
     {
-        if (IsAlive())
+        if (!MainScript.gameOver)
         {
             shieldUmberella.transform.position = transform.position + umbrellaOffset;
             
@@ -156,6 +174,23 @@ public class CharacterScript : BaseSprite
             }
             transform.position = pos;
         }
+        else
+        {
+            if(playerDeath.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("PlayerDeath")){
+                //
+                Debug.Log("Playing");
+                played = true;
+            }
+            else
+            {
+                if (played)
+                {
+                    SceneManager.LoadScene("Game Over");
+                }
+                Debug.Log("NotPlaying");
+
+            }
+        }
         base.BaseUpdate();
 
     }
@@ -168,7 +203,7 @@ public class CharacterScript : BaseSprite
     }
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.tag == "Enemy")
+        if (col.gameObject.tag == "Enemy" && GetHeath()>0)
         {
             SetHealth(health - 1);
         }

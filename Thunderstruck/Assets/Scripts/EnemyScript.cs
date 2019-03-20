@@ -68,6 +68,10 @@ public class EnemyScript : BaseSprite {
 
     public void CallRepeat()
     {
+        if (MainScript.gameOver)
+        {
+            return;
+        }
         FireAtPlayer();
     }
     // Update is called once per frame
@@ -76,6 +80,10 @@ public class EnemyScript : BaseSprite {
 
     // Update is called once per frame
     void Update () {
+        if (MainScript.gameOver)
+        {
+            return;
+        }
         float step = speed * Time.deltaTime; // calculate distance to move
         transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
         base.BaseUpdate();
