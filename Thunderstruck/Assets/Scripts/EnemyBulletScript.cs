@@ -21,6 +21,9 @@ public class EnemyBulletScript : BaseSprite
             base.BaseUpdate_DestroyOnBoundsCheck(gameObject);
             //base.BaseUpdate_ReflectOnBoundsCheck(rb);
             base.BaseUpdate();
+
+
+            if (rb.velocity == new Vector2(0, 0) ){ Destroy(gameObject); }
         }
 
     }
