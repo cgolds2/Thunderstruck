@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -22,9 +22,9 @@ public class CharacterScript : BaseSprite
     public GameObject playerDeath;
     PlayerFeetScript feetScript;
     PlayerHeadScript headScript;
+    public Quaternion startRotation;
+    public Vector3 umbrellaOffset;
     PlayerBodyScript bodyScript;
-    Quaternion startRotation;
-    Vector3 umbrellaOffset;
     bool played;
     // I don't know how to get the camera object to grab the resolution from it
     //Camera maincam = (Camera)GameObject.Find("MainCamera").GetComponent("Camera");
@@ -206,6 +206,7 @@ public class CharacterScript : BaseSprite
         if (col.gameObject.tag == "Enemy" && GetHeath()>0)
         {
             SetHealth(health - 1);
+            SoundManagerScript.PlaySound("hit");
         }
         else if (col.gameObject.tag == "Door" && MainScript.currentRoom.numEnemies<=0)
         {
