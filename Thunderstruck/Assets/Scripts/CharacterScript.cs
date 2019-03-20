@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterScript : BaseSprite
 {
@@ -58,6 +59,8 @@ public class CharacterScript : BaseSprite
         if (health <= 0)
         {
             health = 0;
+            SceneManager.LoadScene("Game Over");
+
             //here
         }
         HUDScript.SetHealth((int)health);
