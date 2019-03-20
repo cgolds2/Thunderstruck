@@ -50,7 +50,7 @@ public class MainScript : MonoBehaviour
 
 
         seed = (int)System.DateTime.Now.Ticks;
-        //seed = 1;
+        seed = 1531922522;
         r = new Random(seed);
         otherR = new Random();
         int maxRooms = 10;
@@ -203,13 +203,27 @@ public class MainScript : MonoBehaviour
                 longestPath = diff;
             }
         }
-        int dirToSpawn = (map[new Point(x, y)].previousDirection + 2) % 4;
-
-        Point ret = GetNeighborByInt(new Point(x, y), dirToSpawn);
-        map[ret] = new Room((dirToSpawn + 2) % 4, ret, 0)
+        Room previous = map[new Point(x, y)];
+        longestPath = 0;
+        Point spawnAt = new Point(0,0);
+        int dirToSpawn = -1;
+        for (int i = 0; i < 4; i++)
+        {
+           var next =  GetNeighborByInt(previous.point, i);
+            var dist = distance(
+                previous.point.x, previous.point.y,
+                next.x, next.y
+            );
+            if(dist>longestPath){
+                longestPath = dist;
+                spawnAt = next;
+                dirToSpawn = i;
+            }
+        }
+        map[spawnAt] = new Room((dirToSpawn + 2) % 4, spawnAt, 0)
         {
             roomType = RoomType.Boss,
-            numEnemies=0
+            numEnemies = 1
         };
     }
     static double distance(int x1, int y1, int x2, int y2)

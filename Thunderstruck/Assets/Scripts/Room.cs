@@ -81,7 +81,7 @@ namespace Assets.Scripts
                 return;
             }
             int minEnemies = 1;
-            int maxEnemies = 5 + difficulty * 2;
+            int maxEnemies = 1 + difficulty * 2;
             numEnemies = MainScript.r.Next(minEnemies, maxEnemies);
 
         }
@@ -89,16 +89,39 @@ namespace Assets.Scripts
         {
             doors.Add(door);
         }
-        public void SpawnEnemies()
+        public
+        void SpawnEnemies()
         {
-            var enemyAsset = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/EnemyCloudLevel1.prefab");
+            GameObject enemyAsset;
+            float rateOfFire = 1.5f;
+            switch (roomType)
+            {
+                case RoomType.Boss:
+
+                     enemyAsset = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/EnemyCloudBoss.prefab");
+                    break;
+                case RoomType.Normal:
+                    enemyAsset = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/EnemyCloudLevel1.prefab");
+                    break;
+                default:
+                    throw new Exception("What type of room is this...");
+            }
+
+            if(roomType==RoomType.Boss){
+                rateOfFire = 3f;
+            }
             for (int i = 0; i < numEnemies; i++)
             {
                 float xLoc = UnityEngine.Random.Range(-1 * MainScript.mapWidth / 2, MainScript.mapWidth / 2);
                 float yLoc = UnityEngine.Random.Range(-1 * MainScript.mapHeight / 2, MainScript.mapHeight / 2);
+                if(numEnemies==1){
+                    xLoc = 0;
+                    yLoc = 0;
+                }
                 xLoc += point.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
                 yLoc += point.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
-                GameObject newEnemy = MainScript.Instantiate(enemyAsset);
+                GameObject newEnemy = UnityEngine.Object.Instantiate(enemyAsset);
+                newEnemy.GetComponent<EnemyScript>().RateOfFire = rateOfFire;
                 newEnemy.tag = "Enemy";
                 Vector3 position = new Vector3(
                   xLoc,
