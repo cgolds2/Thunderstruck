@@ -32,6 +32,7 @@ public class EnemyBulletScript : BaseSprite
     {
         if (collision.gameObject.tag == "Player")
         {
+            Destroy(gameObject);
         }
         else if (collision.gameObject.tag == "EnemyBullet" || collision.gameObject.tag == "PlayerBullet")
         {

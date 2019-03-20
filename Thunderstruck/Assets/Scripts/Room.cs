@@ -75,8 +75,7 @@ namespace Assets.Scripts
         }
         public void CalculateEnemies()
         {
-            numEnemies= 0;
-            return;
+          
             if (point.x == 0 && point.y == 0)
             {
                 numEnemies = 0;
