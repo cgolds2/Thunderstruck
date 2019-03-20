@@ -95,6 +95,7 @@ public class EnemyScript : BaseSprite {
             Health--;
             Destroy(col.gameObject);
             if(Health<1){
+                HUDScript.SetScore(HUDScript.GetScore() + 100);
                 MainScript.DecreaseEnemyCount();
 
                 Destroy(gameObject);

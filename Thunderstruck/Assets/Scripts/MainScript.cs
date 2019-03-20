@@ -27,6 +27,7 @@ public class MainScript : MonoBehaviour
     // Start is called before the first frame update
   public static void CalcSeed(int? _seed)
     {
+        MainScript.gameOver = false;
         HUDScript.SetLevel(1);
         if (_seed == null)
         {

@@ -6,11 +6,13 @@ using UnityEngine.UI;
 public class LevelCompletedScript : MonoBehaviour
 {
     public Text LevelCompleted;
+    public Text Score;
     public GameObject NextLevelButton;
 
     // Start is called before the first frame update
     void Start()
     {
+        Score.text = "Score = " + HUDScript.GetScore().ToString();
         if (HUDScript.GetLevel() >= 2)
         {
             NextLevelButton.SetActive(false);
