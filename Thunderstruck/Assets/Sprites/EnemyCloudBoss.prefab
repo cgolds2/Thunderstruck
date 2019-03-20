@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2361770768521291046}
   - component: {fileID: 7555518928765042361}
   - component: {fileID: 1499451408505503307}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: EnemyCloudBoss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
