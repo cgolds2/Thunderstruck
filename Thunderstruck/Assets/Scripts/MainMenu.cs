@@ -12,7 +12,8 @@ public class MainMenu : MonoBehaviour
     }
     public void NextLevel()
     {
-        MainScript.level++;
+        HUDScript.SetLevel(HUDScript.GetLevel() + 1);
+        
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainGame");
 
     }

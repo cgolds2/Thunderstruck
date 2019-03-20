@@ -10,9 +10,13 @@ public class HUDScript : MonoBehaviour
     public static GameObject HUD;
     public static GameObject Score;
     public static GameObject Time;
+    public static GameObject Level;
     public static GameObject MapAnchor;
     private static Text ScoreText;
     private static Text TimeText;
+    private static Text LevelText;
+
+    private static int _level;
     private static int _score;
     private static TimeSpan _time;
     private static GameObject[] healthbars;
@@ -23,15 +27,19 @@ public class HUDScript : MonoBehaviour
         HUD = gameObject;
         MapAnchor = GameObject.Find("MapAnchor");
         mapStartingPos = MapAnchor.transform.localPosition;
+        Score = GameObject.Find("Score");
+        ScoreText = Score.GetComponent<Text>();
+        Time = GameObject.Find("Time");
+        TimeText = Time.GetComponent<Text>();
+        Level = GameObject.Find("Level");
+        LevelText = Level.GetComponent<Text>();
+        LevelText.text = "Level: " + _level.ToString();
 
     }
     // Start is called before the first frame update
     void Start()
     {
-        Score  = GameObject.Find("Score");
-        ScoreText = Score.GetComponent<Text>();
-        Time = GameObject.Find("Time");
-        TimeText = Time.GetComponent<Text>();
+   
         //AddSecondToTimer();
         StartTimer();
         healthbars = new GameObject[8];
@@ -66,7 +74,7 @@ public class HUDScript : MonoBehaviour
     public static void SetScore(int score)
     {
         _score = score;
-        var ui = Score.GetComponent<Text>();
+        var ui = ScoreText;
         ui.text = "SCORE: " +score.ToString();
     }
     public static int GetScore()
@@ -74,10 +82,20 @@ public class HUDScript : MonoBehaviour
         return _score;
     }
 
+    public static void SetLevel(int level)
+    {
+        _level = level;
+     
+    }
+    public static int GetLevel()
+    {
+        return _level;
+    }
+
     public static void SetTime(TimeSpan time)
     {
         _time = time;
-        var ui = Time.GetComponent<Text>();
+        var ui = TimeText;
         ui.text = "TIME: " + time.ToString("hh\\:mm\\:ss");
     }
 

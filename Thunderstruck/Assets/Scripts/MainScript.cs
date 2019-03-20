@@ -23,12 +23,11 @@ public class MainScript : MonoBehaviour
     public static float currentRoomX;
     public static bool gameOver;
     public static float currentRoomY;
-    public static int level;
 
     // Start is called before the first frame update
   public static void CalcSeed(int? _seed)
     {
-        level = 0;
+        HUDScript.SetLevel(1);
         if (_seed == null)
         {
             seed = (int)System.DateTime.Now.Ticks;
@@ -45,6 +44,7 @@ public class MainScript : MonoBehaviour
     {
         if (r == null)
         {
+
             CalcSeed(null);
         }
         mainCamera = GameObject.Find("MainCamera");
