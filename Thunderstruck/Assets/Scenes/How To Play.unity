@@ -1372,8 +1372,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -232, y: 180.5}
-  m_SizeDelta: {x: 710, y: 81}
+  m_AnchoredPosition: {x: -232, y: 176}
+  m_SizeDelta: {x: 710, y: 100.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1612394762
 MonoBehaviour:
@@ -1397,7 +1397,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 652f7165b7c30ab46af6c4aad90a639b, type: 2}
-    m_FontSize: 25
+    m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 2
@@ -1408,11 +1408,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '- Complete each room by killing all enemies.
-
-    - Complete each level by completing all rooms.
-
-    - Complete the game by completing each level.'
+  m_Text: "- Complete each room by killing all enemies.\n- Complete each level by
+    finding the mini \nboss room and killing him.\n- Complete the game by completing
+    each level."
 --- !u!222 &1612394763
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1529,8 +1527,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -232.00002, y: 257}
-  m_SizeDelta: {x: 710, y: 52.6}
+  m_AnchoredPosition: {x: -233, y: 254}
+  m_SizeDelta: {x: 710, y: 75.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1909696794
 MonoBehaviour:
@@ -1554,11 +1552,11 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 652f7165b7c30ab46af6c4aad90a639b, type: 2}
-    m_FontSize: 50
+    m_FontSize: 75
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
-    m_MaxSize: 50
+    m_MaxSize: 75
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
