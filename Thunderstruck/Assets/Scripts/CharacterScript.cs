@@ -136,7 +136,7 @@ public class CharacterScript : BaseSprite
             }
             if (Input.GetKey(KeyCode.Space))
             {
-                shieldUmberella.transform.Rotate(Vector3.forward * 3);
+                shieldUmberella.transform.Rotate(Vector3.forward * 5);
             }
             if (Input.GetKeyUp(KeyCode.Space))
             {
