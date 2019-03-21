@@ -81,6 +81,8 @@ public class CharacterScript : BaseSprite
         {
             health = 0;
             KillPlayer();
+            SoundManagerScript.PlaySound("death");
+
             //SceneManager.LoadScene("Game Over");
 
             //here
