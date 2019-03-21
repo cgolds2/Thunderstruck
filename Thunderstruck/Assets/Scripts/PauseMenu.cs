@@ -7,7 +7,6 @@ public class PauseMenu : MonoBehaviour
 {
 
     public Transform canvas;
-    public GameObject button;
     //push comment
 
 
@@ -21,7 +20,6 @@ public class PauseMenu : MonoBehaviour
             if (canvas.gameObject.activeInHierarchy == false)
             {
                 canvas.gameObject.SetActive(true);
-                button.gameObject.SetActive(true);
                 GameObject script = GameObject.FindGameObjectWithTag("Player");
                 script.GetComponent<CharacterScript>().enabled = false;
                 Time.timeScale = 0;
@@ -51,6 +49,7 @@ public class PauseMenu : MonoBehaviour
 
     public void MainMenu()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
     }
 
