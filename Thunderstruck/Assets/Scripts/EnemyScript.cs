@@ -8,9 +8,18 @@ public class EnemyScript : BaseSprite {
     float speed;
     int health = 5;
     public GameObject spherePrefab;
+    float rateOfFire = 1f;
+
+    public int Health { get => health; set => health = value; }
+    public float RateOfFire { get => rateOfFire; set => rateOfFire = value; }
 
     // Use this for initialization
-
+    public void EnemyStart(){
+        Start();
+    }
+    public void EnemyUpdate(){
+        Update();
+    }
     void Start()
     {
         player = GameObject.FindWithTag("Player");
@@ -23,7 +32,7 @@ public class EnemyScript : BaseSprite {
 
     public void StartTimer()
     {
-        InvokeRepeating("CallRepeat", 1, 1);
+        InvokeRepeating("CallRepeat", rateOfFire, 1);
     }
     public void FireAtPlayer()
     {
@@ -59,6 +68,10 @@ public class EnemyScript : BaseSprite {
 
     public void CallRepeat()
     {
+        if (MainScript.gameOver)
+        {
+            return;
+        }
         FireAtPlayer();
     }
     // Update is called once per frame
@@ -67,6 +80,10 @@ public class EnemyScript : BaseSprite {
 
     // Update is called once per frame
     void Update () {
+        if (MainScript.gameOver)
+        {
+            return;
+        }
         float step = speed * Time.deltaTime; // calculate distance to move
         transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
         base.BaseUpdate();
@@ -75,13 +92,18 @@ public class EnemyScript : BaseSprite {
     void OnCollisionEnter2D(Collision2D col)
     {
         if(col.gameObject.tag=="PlayerBullet"){
-            health--;
+            Health--;
             Destroy(col.gameObject);
-            if(health<1){
+            if(Health<1){
+                HUDScript.SetScore(HUDScript.GetScore() + 100);
                 MainScript.DecreaseEnemyCount();
 
                 Destroy(gameObject);
             }
+        }
+        else if (col.gameObject.tag == "EnemyBullet")
+        {
+            Physics2D.IgnoreCollision(col.collider, GetComponent<Collider2D>());
         }
     }
 }

@@ -3,12 +3,13 @@ using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = System.Random;
 
 public class MainScript : MonoBehaviour
 {
     static int seed;
-    public static Dictionary<Point, Room> map = new Dictionary<Point, Room>();
+    public static Dictionary<Point, Room> map;
     public static Random r;
     public static Random otherR;
     public static float mapWidth;
@@ -20,14 +21,35 @@ public class MainScript : MonoBehaviour
     public static Room currentRoom;
     public static GameObject mainCamera;
     public static float currentRoomX;
-
+    public static bool gameOver;
     public static float currentRoomY;
 
     // Start is called before the first frame update
+  public static void CalcSeed(int? _seed)
+    {
+        MainScript.gameOver = false;
+        HUDScript.SetLevel(1);
+        if (_seed == null)
+        {
+            seed = (int)System.DateTime.Now.Ticks;
+
+        }
+        else
+        {
+            seed = (int)_seed;
+        }
+        r = new Random(seed);
+
+    }
     void Awake()
     {
-        mainCamera = GameObject.Find("MainCamera");
+        if (r == null)
+        {
 
+            CalcSeed(null);
+        }
+        mainCamera = GameObject.Find("MainCamera");
+        currentRoom = null;
         GameObject mapPic = GameObject.Find("templateRoom");
         Vector3 mapRend = mapPic.GetComponent<Renderer>().bounds.size;
         mapWidth = mapRend.x;
@@ -38,18 +60,12 @@ public class MainScript : MonoBehaviour
         mapBorderHeight = (float)0;
         placementWidthBuffer = 10;
         placementHeightBuffer = 10;
-
+        map =   new Dictionary<Point, Room>();
 
         var assetDoor = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/door.prefab");
-
-        //GameObject door = GameObject.Find("door");
-
+        var assetRoom = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/room.prefab");
 
 
-
-        seed = (int)System.DateTime.Now.Ticks;
-        //seed = 1;
-        r = new Random(seed);
         otherR = new Random();
         int maxRooms = 10;
         int minRooms = 6;
@@ -57,13 +73,17 @@ public class MainScript : MonoBehaviour
 
         map[new Point(0, 0)] = new Room(0, new Point(0, 0), 1);
         map[new Point(0, 0)].SpawnNewRoom(numRooms);
+        MakeBossRoom();
+
+
         SetRoom(GetRoomFromCoord(0, 0));
-        //currentRoom = GetRoomFromCoord(0,0);
 
         int xMin = 0;
         int yMin = 0;
         int xMax = 0;
         int yMax = 0;
+
+        GameObject finalRoom = Instantiate(assetRoom);
 
         foreach (KeyValuePair<Point, Room> entry in map)
         {
@@ -75,7 +95,6 @@ public class MainScript : MonoBehaviour
             if (y > yMax) { yMax = y; };
             string test = string.Format("Point at {0},{1}", x, y);
             Debug.Log(test);
-            var assetRoom = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/room.prefab");
             GameObject newBox = Instantiate(assetRoom);
             // GameObject newBox = Instantiate(mapPic);
             newBox.name = "madeBox";
@@ -132,6 +151,7 @@ public class MainScript : MonoBehaviour
 
 
         }
+
         GameObject.Find("templateRoom").SetActive(false);
         GameObject.Find("templateDoor").SetActive(false);
 
@@ -178,6 +198,55 @@ public class MainScript : MonoBehaviour
     {
     }
 
+    void MakeBossRoom(){
+        var assetRoom = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/room.prefab");
+  
+        int x = 0;
+        int y = 0;
+        double longestPath = 0;
+        foreach (KeyValuePair<Point, Room> entry in map)
+        {
+            if(entry.Value.GetDoorCount()==4){
+                continue;
+            }
+            double diff = distance(0, 0, entry.Key.x, entry.Key.y);
+            if(diff>longestPath){
+                x = entry.Key.x;
+                y = entry.Key.y;
+                longestPath = diff;
+            }
+        }
+        Room previous = map[new Point(x, y)];
+        longestPath = 0;
+        Point spawnAt = new Point(0,0);
+        int dirToSpawn = -1;
+        for (int i = 0; i < 4; i++)
+        {
+           var next =  GetNeighborByInt(previous.point, i);
+            var dist = distance(
+                previous.point.x, previous.point.y,
+                next.x, next.y
+            );
+            if(dist>longestPath){
+                longestPath = dist;
+                spawnAt = next;
+                dirToSpawn = i;
+            }
+        }
+        map[spawnAt] = new Room((dirToSpawn + 2) % 4, spawnAt, 0)
+        {
+            roomType = RoomType.Boss,
+            numEnemies = 1
+        };
+    }
+    static double distance(int x1, int y1, int x2, int y2)
+    {
+        // Calculating distance 
+        return Math.Sqrt(Math.Pow(x2 - x1, 2) +
+                      Math.Pow(y2 - y1, 2) * 1.0);
+    }
+
+
     public static Point GetNeighborByInt(Point point, int i)
     {
         switch (i)
@@ -205,7 +274,16 @@ public class MainScript : MonoBehaviour
 
     public static void SetRoom(Room room)
     {
+        if(currentRoom!=null){
+            currentRoom.mapIconSpriteRenderer.color = Color.black;
+
+        }
         currentRoom = room;
+        currentRoom.mapIconRenderer.enabled = true;
+        currentRoom.mapIconSpriteRenderer.color = Color.red;
+        currentRoom.TurnOnNeighborIcons();
+
+
         if (currentRoom.numEnemies > 0)
         {
             currentRoom.SetDoors(false);
@@ -228,6 +306,15 @@ public class MainScript : MonoBehaviour
             placementY,
             mainCamera.transform.position.z);
 
+          //HUDScript.MapAnchor.transform.position = new Vector3(
+          //   (Room.baseX + room.point.x * Room.mult),
+          //(Room.baseY + room.point.y * Room.mult),
+                          //-1);
+        HUDScript.MapAnchor.transform.localPosition = new Vector3(
+         (-0.215f * room.point.x) +HUDScript.mapStartingPos.x ,
+        (-0.215f * room.point.y) +HUDScript.mapStartingPos.y,
+                      -1);
+
         HUDScript.MoveObjects(new Vector3(placementX, placementY, 0));
 
 
@@ -238,11 +325,13 @@ public class MainScript : MonoBehaviour
             placementY,
             player.transform.position.z);
 
-        GameObject[] killEmAll;
-        killEmAll = GameObject.FindGameObjectsWithTag("projectile");
-        for (int i = 0; i < killEmAll.Length; i++)
+        List<GameObject> killEmAll = new List<GameObject>();
+        killEmAll.AddRange(GameObject.FindGameObjectsWithTag("PlayerBullet"));
+        killEmAll.AddRange(GameObject.FindGameObjectsWithTag("EnemyBullet"));
+
+        for (int i = 0; i < killEmAll.Count; i++)
         {
-            if (killEmAll[i].gameObject.name == "sphere(Clone)")
+            if (null != killEmAll[i])
             {
                 Destroy(killEmAll[i].gameObject);
             }

@@ -8,34 +8,81 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-
+    public enum RoomType
+    {
+        Normal,
+        Boss
+    }
     public class Room
     {
         public Point point;
+        public RoomType roomType;
         //right is 0, top is 1, etc
-        private readonly int previousDirection;
+        public readonly int previousDirection;
         public int numEnemies;
         public int difficulty;
         private List<GameObject> doors = new List<GameObject>();
 
+        public List<GameObject> Doors
+        {
+            get
+            {
+                return doors;
+            }
+        }
+
+        public GameObject mapIcon;
+        public Renderer mapIconRenderer;
+        public SpriteRenderer mapIconSpriteRenderer;
+        public static float baseX = -8.434f;
+        public static float baseY = -3.409f;
+        public static float mult = 0.6f;
+
         public Room(int previousDirection, Point point, int difficulty)
         {
+
             this.previousDirection = previousDirection;
             this.point = point;
             this.difficulty = difficulty;
             CalculateEnemies();
+            var iconAsset= AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/RoomIcon.prefab");
+            mapIcon = UnityEngine.Object.Instantiate(iconAsset);
+            mapIcon.transform.position = new Vector3(
+                (float) (baseX + point.x * mult), 
+                (float) (baseY + point.y * mult), 
+                -1);
+            mapIconRenderer = mapIcon.GetComponent<Renderer>();
+            mapIconSpriteRenderer = mapIcon.GetComponent<SpriteRenderer>();
+            //mapIconSpriteRenderer.color = new Color(210f / 255f, 210f / 255f, 210f / 255f);
+            mapIconSpriteRenderer.color = Color.grey;
+            mapIconRenderer.enabled = false;
+            mapIcon.transform.parent = HUDScript.MapAnchor.transform;
 
         }
+        public void TurnOnNeighborIcons(){
+            for (int i = 0; i < 4; i++)
+            {
+                var neighbor = GetRoomInt(i);
+                if(neighbor!=null){
+                    neighbor.mapIconRenderer.enabled = true;
 
+                }
+
+            }
+        }
+        public int GetDoorCount(){
+            return doors.Count;
+        }
         public void CalculateEnemies()
         {
+          
             if (point.x == 0 && point.y == 0)
             {
                 numEnemies = 0;
                 return;
             }
             int minEnemies = 1;
-            int maxEnemies = 5 + difficulty * 2;
+            int maxEnemies = 1 + difficulty * 2;
             numEnemies = MainScript.r.Next(minEnemies, maxEnemies);
 
         }
@@ -43,16 +90,40 @@ namespace Assets.Scripts
         {
             doors.Add(door);
         }
-        public void SpawnEnemies()
+        public
+        void SpawnEnemies()
         {
-            var enemyAsset = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/EnemyCloudLevel1.prefab");
+            GameObject enemyAsset;
+            float rateOfFire = 1.5f;
+            switch (roomType)
+            {
+                case RoomType.Boss:
+
+                     enemyAsset = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/EnemyCloudBoss.prefab");
+                    break;
+                case RoomType.Normal:
+                    enemyAsset = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/EnemyCloudLevel1.prefab");
+                    break;
+                default:
+                    throw new Exception("What type of room is this...");
+            }
+
+            if(roomType==RoomType.Boss){
+                rateOfFire = 3f;
+            }
             for (int i = 0; i < numEnemies; i++)
             {
                 float xLoc = UnityEngine.Random.Range(-1 * MainScript.mapWidth / 2, MainScript.mapWidth / 2);
                 float yLoc = UnityEngine.Random.Range(-1 * MainScript.mapHeight / 2, MainScript.mapHeight / 2);
+                if(numEnemies==1){
+                    xLoc = 0;
+                    yLoc = 0;
+                }
                 xLoc += point.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
                 yLoc += point.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
-                GameObject newEnemy = MainScript.Instantiate(enemyAsset);
+                GameObject newEnemy = UnityEngine.Object.Instantiate(enemyAsset);
+                newEnemy.GetComponent<EnemyScript>().RateOfFire = rateOfFire;
+                newEnemy.tag = "Enemy";
                 Vector3 position = new Vector3(
                   xLoc,
                   yLoc,

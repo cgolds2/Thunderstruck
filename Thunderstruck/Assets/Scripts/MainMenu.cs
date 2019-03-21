@@ -7,7 +7,16 @@ public class MainMenu : MonoBehaviour
 {
    public void PlayGame()
     {
+        MainScript.CalcSeed(null);
+        HUDScript.SetScore(0);
         SceneManager.LoadScene("MainGame");
+    }
+    public void NextLevel()
+    {
+        HUDScript.SetLevel(HUDScript.GetLevel() + 1);
+        
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainGame");
+
     }
 
     public void QuitGame()
