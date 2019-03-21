@@ -77,6 +77,8 @@ public class CharacterScript : BaseSprite
         {
             health = 0;
             KillPlayer();
+            SoundManagerScript.PlaySound("death");
+
             //SceneManager.LoadScene("Game Over");
 
             //here
@@ -206,7 +208,10 @@ public class CharacterScript : BaseSprite
         if (col.gameObject.tag == "Enemy" && GetHeath()>0)
         {
             SetHealth(health - 1);
-            SoundManagerScript.PlaySound("hit");
+            if(health != 0)
+            {
+                SoundManagerScript.PlaySound("hit");
+            }
         }
         else if (col.gameObject.tag == "Door" && MainScript.currentRoom.numEnemies<=0)
         {
