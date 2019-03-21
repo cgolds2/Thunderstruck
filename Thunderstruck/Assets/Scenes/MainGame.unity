@@ -3234,7 +3234,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Score: 12345'
+  m_Text: 'Score: 0'
 --- !u!222 &1845988329
 CanvasRenderer:
   m_ObjectHideFlags: 0
