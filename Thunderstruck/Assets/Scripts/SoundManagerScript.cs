@@ -7,7 +7,9 @@ public class SoundManagerScript : MonoBehaviour
 
     public static AudioClip playerShootSound, playerHitSound, playerWalkingSound, playerDeathSound;
     public static bool isPlaying;
-    static AudioSource audioSrc; 
+    static AudioSource audioSrc;
+    //public CharacterScript playerScript;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,22 +32,27 @@ public class SoundManagerScript : MonoBehaviour
 
     public static void PlaySound(string clip)
     {
+
         switch (clip)
         {
             case "fire":
                 audioSrc.PlayOneShot(playerShootSound);
                 break;
             case "death":
-                if(audioSrc.isPlaying == false)
-                    audioSrc.PlayOneShot(playerDeathSound);
+                Debug.Log("DEATH SOUND");
+                audioSrc.PlayOneShot(playerDeathSound);
                 break;
             case "walking":
                 if(audioSrc.isPlaying == false)
                     audioSrc.PlayOneShot(playerWalkingSound);
                 break;
             case "hit":
-                if(audioSrc.isPlaying == false)
-                    audioSrc.PlayOneShot(playerHitSound);
+                Debug.Log("HIT SOUND");
+                //GameObject thePlayer = GameObject.Find("ThePlayer");
+                //CharacterScript playerScript = thePlayer.GetComponent<CharacterScript>();
+                audioSrc.PlayOneShot(playerHitSound);
+
+                
                 break;
         }
 
