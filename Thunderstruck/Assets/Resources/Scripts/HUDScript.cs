@@ -43,7 +43,7 @@ public class HUDScript : MonoBehaviour
         //AddSecondToTimer();
         StartTimer();
         healthbars = new GameObject[8];
-        var barAsset = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/HealthSquare.prefab");
+        var barAsset = Resources.Load<GameObject>("Sprites/HealthSquare");
         var offset = barAsset.GetComponent<Renderer>().bounds.size.x;
         for (int i = 0; i < healthbars.Length; i++)
         {
