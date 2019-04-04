@@ -23,7 +23,7 @@ public class EnemyScript : BaseSprite {
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-        spherePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/tempSphere.prefab");
+        spherePrefab = Resources.Load<GameObject>("Sprites/tempSphere");
 
         speed = 2;
         base.BaseStart();

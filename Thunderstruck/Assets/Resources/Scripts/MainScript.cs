@@ -62,8 +62,8 @@ public class MainScript : MonoBehaviour
         placementHeightBuffer = 10;
         map =   new Dictionary<Point, Room>();
 
-        var assetDoor = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/door.prefab");
-        var assetRoom = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/room.prefab");
+        var assetDoor = Resources.Load<GameObject>("Sprites/door");
+        var assetRoom = Resources.Load<GameObject>("Sprites/room");
 
 
         otherR = new Random();
@@ -199,7 +199,7 @@ public class MainScript : MonoBehaviour
     }
 
     void MakeBossRoom(){
-        var assetRoom = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/room.prefab");
+        var assetRoom = Resources.Load<GameObject>("Sprites/room");
   
         int x = 0;
         int y = 0;
