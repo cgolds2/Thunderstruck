@@ -23,12 +23,12 @@ public class MainScript : MonoBehaviour
     public static float currentRoomX;
     public static bool gameOver;
     public static float currentRoomY;
-    public static int level;
 
     // Start is called before the first frame update
   public static void CalcSeed(int? _seed)
     {
-        level = 0;
+        MainScript.gameOver = false;
+        HUDScript.SetLevel(1);
         if (_seed == null)
         {
             seed = (int)System.DateTime.Now.Ticks;
@@ -45,6 +45,7 @@ public class MainScript : MonoBehaviour
     {
         if (r == null)
         {
+
             CalcSeed(null);
         }
         mainCamera = GameObject.Find("MainCamera");
@@ -61,8 +62,8 @@ public class MainScript : MonoBehaviour
         placementHeightBuffer = 10;
         map =   new Dictionary<Point, Room>();
 
-        var assetDoor = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/door.prefab");
-        var assetRoom = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/room.prefab");
+        var assetDoor = Resources.Load<GameObject>("Sprites/door");
+        var assetRoom = Resources.Load<GameObject>("Sprites/room");
 
 
         otherR = new Random();
@@ -198,7 +199,7 @@ public class MainScript : MonoBehaviour
     }
 
     void MakeBossRoom(){
-        var assetRoom = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/room.prefab");
+        var assetRoom = Resources.Load<GameObject>("Sprites/room");
   
         int x = 0;
         int y = 0;
@@ -324,11 +325,13 @@ public class MainScript : MonoBehaviour
             placementY,
             player.transform.position.z);
 
-        GameObject[] killEmAll;
-        killEmAll = GameObject.FindGameObjectsWithTag("projectile");
-        for (int i = 0; i < killEmAll.Length; i++)
+        List<GameObject> killEmAll = new List<GameObject>();
+        killEmAll.AddRange(GameObject.FindGameObjectsWithTag("PlayerBullet"));
+        killEmAll.AddRange(GameObject.FindGameObjectsWithTag("EnemyBullet"));
+
+        for (int i = 0; i < killEmAll.Count; i++)
         {
-            if (killEmAll[i].gameObject.name == "sphere(Clone)")
+            if (null != killEmAll[i])
             {
                 Destroy(killEmAll[i].gameObject);
             }

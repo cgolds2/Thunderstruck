@@ -23,7 +23,7 @@ public class EnemyScript : BaseSprite {
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-        spherePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/tempSphere.prefab");
+        spherePrefab = Resources.Load<GameObject>("Sprites/tempSphere");
 
         speed = 2;
         base.BaseStart();
@@ -95,10 +95,15 @@ public class EnemyScript : BaseSprite {
             Health--;
             Destroy(col.gameObject);
             if(Health<1){
+                HUDScript.SetScore(HUDScript.GetScore() + 100);
                 MainScript.DecreaseEnemyCount();
 
                 Destroy(gameObject);
             }
+        }
+        else if (col.gameObject.tag == "EnemyBullet")
+        {
+            Physics2D.IgnoreCollision(col.collider, GetComponent<Collider2D>());
         }
     }
 }

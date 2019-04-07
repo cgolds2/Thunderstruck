@@ -45,7 +45,7 @@ namespace Assets.Scripts
             this.point = point;
             this.difficulty = difficulty;
             CalculateEnemies();
-            var iconAsset= AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/RoomIcon.prefab");
+            var iconAsset= Resources.Load<GameObject>("Sprites/RoomIcon");
             mapIcon = UnityEngine.Object.Instantiate(iconAsset);
             mapIcon.transform.position = new Vector3(
                 (float) (baseX + point.x * mult), 
@@ -75,8 +75,7 @@ namespace Assets.Scripts
         }
         public void CalculateEnemies()
         {
-            numEnemies= 0;
-            return;
+          
             if (point.x == 0 && point.y == 0)
             {
                 numEnemies = 0;
@@ -100,10 +99,10 @@ namespace Assets.Scripts
             {
                 case RoomType.Boss:
 
-                     enemyAsset = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/EnemyCloudBoss.prefab");
+                     enemyAsset = Resources.Load<GameObject>("Sprites/EnemyCloudBoss");
                     break;
                 case RoomType.Normal:
-                    enemyAsset = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/EnemyCloudLevel1.prefab");
+                    enemyAsset = Resources.Load<GameObject>("Sprites/EnemyCloudLevel1");
                     break;
                 default:
                     throw new Exception("What type of room is this...");
@@ -136,8 +135,8 @@ namespace Assets.Scripts
 
         public void SetDoors(bool isOpen)
         {
-            var open = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Artwork/Long Stone Grass Path.png");
-            var closed = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Artwork/Long Grass Path.png");
+            var open = Resources.Load<Sprite>("Artwork/Long Stone Grass Path");
+            var closed = Resources.Load<Sprite>("Artwork/Long Grass Path");
 
             foreach (GameObject door in doors)
             {
