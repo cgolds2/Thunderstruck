@@ -5,7 +5,7 @@ using UnityEngine;
 public class SoundManagerScript : MonoBehaviour
 {
 
-    public static AudioClip playerShootSound, playerHitSound, playerWalkingSound, playerDeathSound;
+    public static AudioClip playerShootSound, playerHitSound, playerWalkingSound, playerDeathSound,playerReflectSound;
     public static bool isPlaying;
     static AudioSource audioSrc;
     //public CharacterScript playerScript;
@@ -17,6 +17,7 @@ public class SoundManagerScript : MonoBehaviour
         playerWalkingSound = Resources.Load<AudioClip>("footstep");
         playerShootSound = Resources.Load<AudioClip>("shoot");
         playerHitSound =  Resources.Load<AudioClip>("splah");
+        playerReflectSound = Resources.Load<AudioClip>("Reflecting");
 
         audioSrc = GetComponent<AudioSource>();
 
@@ -51,9 +52,11 @@ public class SoundManagerScript : MonoBehaviour
                 //GameObject thePlayer = GameObject.Find("ThePlayer");
                 //CharacterScript playerScript = thePlayer.GetComponent<CharacterScript>();
                 audioSrc.PlayOneShot(playerHitSound);
-
-                
                 break;
+            case "reflect":
+                audioSrc.PlayOneShot(playerReflectSound);
+                break;
+
         }
 
 
