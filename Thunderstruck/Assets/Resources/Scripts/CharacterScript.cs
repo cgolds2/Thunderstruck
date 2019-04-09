@@ -44,7 +44,8 @@ public class CharacterScript : BaseSprite
         lastShot = 0f;
         damageGracePeriod = .6f;
         lastHitTaken = 0f;
-        spherePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/sphere.prefab");
+        spherePrefab = Resources.Load<GameObject>("Sprites/sphere");
+
         Physics2D.IgnoreCollision(shieldUmberella.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         Physics2D.IgnoreCollision(GetComponent<Collider2D>(), shieldUmberella.GetComponent<Collider2D>());
         shieldUmberella.SetActive(false);
