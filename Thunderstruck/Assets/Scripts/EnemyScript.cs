@@ -9,6 +9,7 @@ public class EnemyScript : BaseSprite {
     int health = 5;
     public GameObject spherePrefab;
     float rateOfFire = 1f;
+    IEnumerator blinkRoutine;
 
     public int Health { get => health; set => health = value; }
     public float RateOfFire { get => rateOfFire; set => rateOfFire = value; }
@@ -28,6 +29,7 @@ public class EnemyScript : BaseSprite {
         speed = 2;
         base.BaseStart();
         StartTimer();
+        blinkRoutine = base.BlinkGameObject(gameObject, 2, .2f);
     }
 
     public void StartTimer()
@@ -99,6 +101,11 @@ public class EnemyScript : BaseSprite {
                 MainScript.DecreaseEnemyCount();
 
                 Destroy(gameObject);
+            }
+            else
+            {
+                var croutine = base.BlinkGameObject(gameObject, 2, .1f);
+                StartCoroutine(croutine);
             }
         }
         else if (col.gameObject.tag == "EnemyBullet")
