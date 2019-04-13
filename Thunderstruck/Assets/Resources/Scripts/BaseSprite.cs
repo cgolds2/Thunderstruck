@@ -135,5 +135,20 @@ public class BaseSprite : MonoBehaviour {
         //}
     }
 
+    public IEnumerator BlinkGameObject(GameObject Target, int blinks, float blinkRate)
+    {
+        Component[] a = Target.GetComponentsInChildren(typeof(Renderer));
+
+        for (int i = 0; i < blinks * 2; i++)
+        {
+            foreach (Component b in a)
+            {
+                Renderer c = (Renderer)b;
+                c.enabled = !c.enabled;
+            }
+            yield return new WaitForSeconds(blinkRate);
+
+        }
+    }
 
 }
