@@ -5,7 +5,8 @@ using UnityEngine;
 public class SoundManagerScript : MonoBehaviour
 {
 
-    public static AudioClip playerShootSound, playerHitSound, playerWalkingSound, playerDeathSound,playerReflectSound;
+    public static AudioClip playerShootSound, playerHitSound, playerWalkingSound, playerDeathSound,playerReflectSound,
+        playerPickupSound, playerPowerupSound;
     public static bool isPlaying;
     static AudioSource audioSrc;
     //public CharacterScript playerScript;
@@ -18,6 +19,10 @@ public class SoundManagerScript : MonoBehaviour
         playerShootSound = Resources.Load<AudioClip>("shoot");
         playerHitSound =  Resources.Load<AudioClip>("splah");
         playerReflectSound = Resources.Load<AudioClip>("Reflecting");
+        playerPickupSound = Resources.Load<AudioClip>("pickup");
+        playerPowerupSound = Resources.Load<AudioClip>("powerup");
+
+
 
         audioSrc = GetComponent<AudioSource>();
 
@@ -54,7 +59,14 @@ public class SoundManagerScript : MonoBehaviour
                 audioSrc.PlayOneShot(playerHitSound);
                 break;
             case "reflect":
+                Debug.Log("Reflect");
                 audioSrc.PlayOneShot(playerReflectSound);
+                break;
+            case "pickup":
+                audioSrc.PlayOneShot(playerPickupSound);
+                break;
+            case "powerup":
+                audioSrc.PlayOneShot(playerPowerupSound);
                 break;
 
         }
