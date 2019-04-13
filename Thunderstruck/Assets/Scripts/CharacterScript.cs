@@ -103,6 +103,8 @@ public class CharacterScript : BaseSprite
             shieldUmberella.transform.position = transform.position + umbrellaOffset;
             
 
+
+
             bodyMC.velocity = new Vector3(0, 0, 0);
             Vector3 pos = transform.position;
 
@@ -216,6 +218,12 @@ public class CharacterScript : BaseSprite
                 SetHealth(health - 1);
                 SoundManagerScript.PlaySound("hit");
                 lastHitTaken = Time.time;
+
+                if (GetHeath() > 0)
+                {
+                    var croutine = base.BlinkGameObject(gameObject, 4, damageGracePeriod / 6);
+                    StartCoroutine(croutine);
+                }
             }
         }
         else if (col.gameObject.tag == "Door" && MainScript.currentRoom.numEnemies<=0)
@@ -283,6 +291,5 @@ public class CharacterScript : BaseSprite
 
         lastShot = Time.time;
     }
-
 
 }
