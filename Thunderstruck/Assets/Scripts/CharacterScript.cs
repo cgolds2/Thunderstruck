@@ -8,6 +8,7 @@ public class CharacterScript : BaseSprite
 {
     public float panSpeed;
     private float health;
+    private float maxHealth;
     public int iFrames;
     public float fireRate;
     public float lastShot;
@@ -39,6 +40,7 @@ public class CharacterScript : BaseSprite
         played = false;
         panSpeed = 10;
         health = 8;
+        maxHealth = health;
         iFrames = 0;
         fireRate = .5f;
         lastShot = 0f;
@@ -263,6 +265,12 @@ public class CharacterScript : BaseSprite
                 default:
                     throw new System.Exception("Something went wrong with player door management");
             }
+        }
+        else if(col.gameObject.tag == "Heart")
+        {
+            HeartScript HS = col.gameObject.GetComponent<HeartScript>();
+            SetHealth(Mathf.Min(health + HS.restoreValue, maxHealth)); //never go over max hp
+            Destroy(col.gameObject);
         }
     }
 
