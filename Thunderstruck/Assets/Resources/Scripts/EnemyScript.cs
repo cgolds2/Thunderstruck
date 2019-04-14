@@ -9,6 +9,7 @@ public class EnemyScript : BaseSprite {
     int health = 5;
     public GameObject spherePrefab;
     float rateOfFire = 1f;
+    int heartDropRate = 10;
     IEnumerator blinkRoutine;
 
     public int Health { get => health; set => health = value; }
@@ -24,8 +25,7 @@ public class EnemyScript : BaseSprite {
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-        spherePrefab = Resources.Load<GameObject>("Sprites/tempSphere");
-
+        spherePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/tempSphere.prefab");
         speed = 2;
         base.BaseStart();
         StartTimer();
@@ -100,6 +100,10 @@ public class EnemyScript : BaseSprite {
                 HUDScript.SetScore(HUDScript.GetScore() + 100);
                 MainScript.DecreaseEnemyCount();
 
+                if (Random.Range(0, 100) < heartDropRate) // heartDropRate % chance to spawn heart
+                {
+                    SpawnHeart(2, gameObject.transform.position.x, gameObject.transform.position.y);
+                }
                 Destroy(gameObject);
             }
             else
@@ -112,5 +116,20 @@ public class EnemyScript : BaseSprite {
         {
             Physics2D.IgnoreCollision(col.collider, GetComponent<Collider2D>());
         }
+    }
+
+    public void SpawnHeart(int restoreValue, float xLoc, float yLoc)
+    {
+        GameObject heartAsset;
+        heartAsset = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/heart.prefab");
+        GameObject heart = UnityEngine.Object.Instantiate(heartAsset);
+        heart.tag = "Heart";
+        HeartScript HS = heart.GetComponent<HeartScript>();
+        HS.restoreValue = restoreValue;
+        Vector3 position = new Vector3(
+                 xLoc,
+                 yLoc,
+                 0);
+        heart.transform.position = position;
     }
 }

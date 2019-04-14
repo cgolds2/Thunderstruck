@@ -2,22 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class sphereScript : MonoBehaviour
+public class HeartScript : MonoBehaviour
 {
-    public Rigidbody2D proj;
-    public GameObject spherePrefab;
     // Start is called before the first frame update
+   public int restoreValue = 2;
+
     void Start()
     {
-
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
-
+        
     }
-
 }

@@ -14,7 +14,7 @@ public class UmbrellaScript : BaseSprite
     {
         rb = GetComponent<Rigidbody2D>();
         vel = new Vector2(0, 0);
-        spherePrefab = Resources.Load<GameObject>("Sprites/sphere");
+        spherePrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Sprites/sphere.prefab");
     }
 
     // Update is called once per frame
