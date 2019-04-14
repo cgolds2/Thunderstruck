@@ -10,6 +10,7 @@ TagManager:
   - PlayerBullet
   - EnemyBullet
   - Umbrella
+  - Heart
   layers:
   - Default
   - TransparentFX
