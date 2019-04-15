@@ -8,6 +8,7 @@ public class CharacterScript : BaseSprite
 {
     public float panSpeed;
     private float health;
+    private float maxHealth;
     public int iFrames;
     public float fireRate;
     public float lastShot;
@@ -39,6 +40,7 @@ public class CharacterScript : BaseSprite
         played = false;
         panSpeed = 10;
         health = 8;
+        maxHealth = health;
         iFrames = 0;
         fireRate = .5f;
         lastShot = 0f;
@@ -104,6 +106,8 @@ public class CharacterScript : BaseSprite
             shieldUmberella.transform.position = transform.position + umbrellaOffset;
             
 
+
+
             bodyMC.velocity = new Vector3(0, 0, 0);
             Vector3 pos = transform.position;
 
@@ -166,7 +170,7 @@ public class CharacterScript : BaseSprite
             }
             if (Input.GetKey(KeyCode.Space))
             {
-                shieldUmberella.transform.Rotate(Vector3.forward * 5);
+                shieldUmberella.transform.Rotate(Vector3.forward * 230 * Time.deltaTime);
             }
             if (Input.GetKeyUp(KeyCode.Space))
             {
@@ -217,6 +221,12 @@ public class CharacterScript : BaseSprite
                 SetHealth(health - 1);
                 SoundManagerScript.PlaySound("hit");
                 lastHitTaken = Time.time;
+
+                if (GetHeath() > 0)
+                {
+                    var croutine = base.BlinkGameObject(gameObject, 4, damageGracePeriod / 6);
+                    StartCoroutine(croutine);
+                }
             }
         }
         else if (col.gameObject.tag == "Door" && MainScript.currentRoom.numEnemies<=0)
@@ -257,6 +267,12 @@ public class CharacterScript : BaseSprite
                     throw new System.Exception("Something went wrong with player door management");
             }
         }
+        else if(col.gameObject.tag == "Heart")
+        {
+            HeartScript HS = col.gameObject.GetComponent<HeartScript>();
+            SetHealth(Mathf.Min(health + HS.restoreValue, maxHealth)); //never go over max hp
+            Destroy(col.gameObject);
+        }
     }
 
     public void Fire(Vector2 origin, float speed)
@@ -284,6 +300,5 @@ public class CharacterScript : BaseSprite
 
         lastShot = Time.time;
     }
-
 
 }

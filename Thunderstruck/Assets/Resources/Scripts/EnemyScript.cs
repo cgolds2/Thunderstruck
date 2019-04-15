@@ -9,6 +9,9 @@ public class EnemyScript : BaseSprite {
     int health = 5;
     public GameObject spherePrefab;
     float rateOfFire = 1f;
+    IEnumerator blinkRoutine;
+    int heartDropRate = 100;
+    int heartDropRestoreValue = 2;
 
     public int Health { get => health; set => health = value; }
     public float RateOfFire { get => rateOfFire; set => rateOfFire = value; }
@@ -28,6 +31,7 @@ public class EnemyScript : BaseSprite {
         speed = 2;
         base.BaseStart();
         StartTimer();
+        blinkRoutine = base.BlinkGameObject(gameObject, 2, .2f);
     }
 
     public void StartTimer()
@@ -98,12 +102,35 @@ public class EnemyScript : BaseSprite {
                 HUDScript.SetScore(HUDScript.GetScore() + 100);
                 MainScript.DecreaseEnemyCount();
 
+                if (Random.Range(0, 100) < heartDropRate) // heartDropRate % chance to spawn heart
+                {
+                    SpawnHeart(heartDropRestoreValue, gameObject.transform.position.x, gameObject.transform.position.y);
+                }
                 Destroy(gameObject);
+            }
+            else
+            {
+                var croutine = base.BlinkGameObject(gameObject, 2, .1f);
+                StartCoroutine(croutine);
             }
         }
         else if (col.gameObject.tag == "EnemyBullet")
         {
             Physics2D.IgnoreCollision(col.collider, GetComponent<Collider2D>());
         }
+    }
+
+    public void SpawnHeart(int restoreValue, float xLoc, float yLoc)
+    {
+        var heartAsset = Resources.Load<GameObject>("Sprites/heart");
+        GameObject heart = UnityEngine.Object.Instantiate(heartAsset);
+        heart.tag = "Heart";
+        HeartScript HS = heart.GetComponent<HeartScript>();
+        HS.restoreValue = restoreValue;
+        Vector3 position = new Vector3(
+                 xLoc,
+                 yLoc,
+                 0);
+        heart.transform.position = position;
     }
 }

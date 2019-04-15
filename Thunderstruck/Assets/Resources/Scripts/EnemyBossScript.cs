@@ -31,6 +31,11 @@ public class EnemyBossScript : EnemyScript
                 SceneManager.LoadScene("Level Complete");
                 
             }
+            else
+            {
+                var croutine = base.BlinkGameObject(gameObject, 2, .1f);
+                StartCoroutine(croutine);
+            }
         }
     }
 }
