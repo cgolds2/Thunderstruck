@@ -28,7 +28,11 @@ public class CharacterScript : BaseSprite
     public Quaternion startRotation;
     public Vector3 umbrellaOffset;
     PlayerBodyScript bodyScript;
+    public Sprite forwaredBody;
+    public Sprite holdingHand;
     bool played;
+    float umbrellaXOffset = -.02f;
+    float umbrellaYOffset = -0.28f;
     // I don't know how to get the camera object to grab the resolution from it
     //Camera maincam = (Camera)GameObject.Find("MainCamera").GetComponent("Camera");
     // Use this for initialization
@@ -53,9 +57,8 @@ public class CharacterScript : BaseSprite
         shieldUmberella.SetActive(false);
         startRotation = new Quaternion(0,0,0,0);
         shieldUmberella.transform.rotation = startRotation;
-        float umbrellaXOffset = -.25f;
-        float umbrellaYOffset = .25f;
-        umbrellaOffset = new Vector3(umbrellaXOffset,umbrellaYOffset);
+     
+        umbrellaOffset = new Vector3(umbrellaXOffset,umbrellaYOffset, -1);
         base.BaseStart();
         playerDeath.GetComponent<Renderer>().enabled = false;
 
@@ -99,11 +102,11 @@ public class CharacterScript : BaseSprite
 
     }
     // Update is called once per frame
+    
     void Update()
     {
         if (!MainScript.gameOver)
         {
-            shieldUmberella.transform.position = transform.position + umbrellaOffset;
             
 
 
@@ -114,7 +117,8 @@ public class CharacterScript : BaseSprite
             // Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
 
             //  bodyMC.velocity = new Vector2(movement.x *panSpeed, movement.y * panSpeed);
-            bool idle = true;
+            bool isIdle = true;
+            bool isUmbrellaActive = false;
             if (Input.GetMouseButton(0) && (Time.time > fireRate + lastShot))
             {
                 if (!Input.GetKey(KeyCode.Space))
@@ -126,20 +130,20 @@ public class CharacterScript : BaseSprite
             if (Input.GetKey("w"))
             {
                 WalkDirection(1);
-                idle = false;
+                isIdle = false;
                 SoundManagerScript.PlaySound("walking");
                 pos.y += panSpeed * Time.deltaTime;
             }
             if (Input.GetKey("s"))
             {
                 WalkDirection(3);
-                idle = false;
+                isIdle = false;
                 SoundManagerScript.PlaySound("walking");
                 pos.y -= panSpeed * Time.deltaTime;
             }
             if (Input.GetKey("d"))
             {
-                idle = false;
+                isIdle = false;
                 WalkDirection(0);
 
                 SoundManagerScript.PlaySound("walking");
@@ -147,7 +151,7 @@ public class CharacterScript : BaseSprite
             }
             if (Input.GetKey("a"))
             {
-                idle = false;
+                isIdle = false;
                 WalkDirection(2);
 
                 SoundManagerScript.PlaySound("walking");
@@ -157,6 +161,8 @@ public class CharacterScript : BaseSprite
             {
                 shieldUmberella.SetActive(true);
                 idleUmberella.SetActive(false);
+                isUmbrellaActive = true;
+                //body.GetComponent<SpriteRenderer>().sprite = holdingHand;
 
                 //Vector3 shootDirection;
                 //shootDirection = Input.mousePosition;
@@ -171,17 +177,35 @@ public class CharacterScript : BaseSprite
             if (Input.GetKey(KeyCode.Space))
             {
                 shieldUmberella.transform.Rotate(Vector3.forward * 230 * Time.deltaTime);
+                isUmbrellaActive = true;
             }
             if (Input.GetKeyUp(KeyCode.Space))
             {
                 shieldUmberella.SetActive(false);
                 shieldUmberella.transform.rotation = startRotation;
                 idleUmberella.SetActive(true);
+                isUmbrellaActive = false ;
 
             }
-            if (idle)
+            if (isIdle)
             {
-                WalkDirection(-1);
+                umbrellaOffset = new Vector3(umbrellaXOffset, umbrellaYOffset, -1);
+
+                if (isUmbrellaActive)
+                {
+                    WalkDirection(5);
+
+                }
+                else
+                {
+                    WalkDirection(-1);
+
+                }
+            }
+            else
+            {
+                umbrellaOffset = new Vector3(umbrellaXOffset, umbrellaYOffset, 0);
+
             }
             transform.position = pos;
         }
@@ -202,11 +226,15 @@ public class CharacterScript : BaseSprite
 
             }
         }
+        
+        shieldUmberella.transform.position = transform.position + umbrellaOffset;
+
         base.BaseUpdate();
 
     }
     public void WalkDirection(int direction)
     {
+
         bodyScript.Walk(direction);
         feetScript.Walk(direction);
         headScript.Walk(direction);

@@ -296,6 +296,18 @@ PrefabInstance:
       propertyPath: playerDeath
       value: 
       objectReference: {fileID: 77669564}
+    - target: {fileID: 114401712832998442, guid: 66345d00bd126274e825f3f01b9de314,
+        type: 3}
+      propertyPath: holdingHand
+      value: 
+      objectReference: {fileID: 21300000, guid: 4494a675decd8ed45aa80daefe2bcabf,
+        type: 3}
+    - target: {fileID: 114401712832998442, guid: 66345d00bd126274e825f3f01b9de314,
+        type: 3}
+      propertyPath: forwaredBody
+      value: 
+      objectReference: {fileID: 21300000, guid: aafa8ae5758abb64e9f3b21a2bd2430e,
+        type: 3}
     - target: {fileID: 212752660831652006, guid: 66345d00bd126274e825f3f01b9de314,
         type: 3}
       propertyPath: m_Enabled
@@ -617,7 +629,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 70039c425973c4a8caa8b3a195221758, type: 3}
+  m_Sprite: {fileID: 21300000, guid: aafa8ae5758abb64e9f3b21a2bd2430e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3860,7 +3872,7 @@ PrefabInstance:
     - target: {fileID: 5197835460430580927, guid: 79516de878650184d916dcf0daebafb2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.93
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5197835460430580927, guid: 79516de878650184d916dcf0daebafb2,
         type: 3}
