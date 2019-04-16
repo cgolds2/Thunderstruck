@@ -11,6 +11,7 @@ TagManager:
   - EnemyBullet
   - Umbrella
   - Heart
+  - Key
   layers:
   - Default
   - TransparentFX

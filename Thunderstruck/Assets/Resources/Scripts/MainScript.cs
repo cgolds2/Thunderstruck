@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,6 +24,7 @@ public class MainScript : MonoBehaviour
     public static float currentRoomX;
     public static bool gameOver;
     public static float currentRoomY;
+  
 
     // Start is called before the first frame update
   public static void CalcSeed(int? _seed)
@@ -73,6 +75,9 @@ public class MainScript : MonoBehaviour
 
         map[new Point(0, 0)] = new Room(0, new Point(0, 0), 1);
         map[new Point(0, 0)].SpawnNewRoom(numRooms);
+
+        var keyRoom = RandomValues(map).Take(1).First();
+        keyRoom.isKeyRoom = r.Next(keyRoom.numEnemies+1);
         MakeBossRoom();
 
 
@@ -117,17 +122,21 @@ public class MainScript : MonoBehaviour
                     {
 
                         case 0:
+                            newDoor.transform.Rotate(Vector3.forward * 0);
+
                             newDoor.transform.position = new Vector3(placementX + mapWidth / 2 - (MainScript.mapBorderWidth / 2 - doorRend.x / 2),
                                                                   placementY,
                                                                   placementZ);
                             break;
                         case 1:
-                            newDoor.transform.Rotate(Vector3.forward * -90);
+                            newDoor.transform.Rotate(Vector3.forward * 90);
                             newDoor.transform.position = new Vector3(placementX,
                                                               placementY + mapHeight / 2 - (MainScript.mapBorderHeight / 2 - doorRend.x / 2),
                                                               placementZ);
                             break;
                         case 2:
+                            newDoor.transform.Rotate(Vector3.forward * 180);
+
                             newDoor.transform.position = new Vector3(placementX - mapWidth / 2 + (MainScript.mapBorderWidth / 2 - doorRend.x / 2),
                                                               placementY,
                                                               placementZ);
@@ -193,7 +202,16 @@ public class MainScript : MonoBehaviour
     {
 
     }
-
+    public IEnumerable<TValue> RandomValues<TKey, TValue>(IDictionary<TKey, TValue> dict)
+    {
+        
+        List<TValue> values = Enumerable.ToList(dict.Values);
+        int size = dict.Count;
+        while (true)
+        {
+            yield return values[r.Next(size)];
+        }
+    }
     private void Start()
     {
     }

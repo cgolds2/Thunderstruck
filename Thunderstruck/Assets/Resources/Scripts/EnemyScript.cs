@@ -13,7 +13,7 @@ public class EnemyScript : BaseSprite {
     int heartDropRate = 50;
     int heartDropRestoreValue = 2;
     Animator animator;
-
+    public bool isKeyEnemy = false;
 
     public int Health { get => health; set => health = value; }
     public float RateOfFire { get => rateOfFire; set => rateOfFire = value; }
@@ -143,15 +143,31 @@ public class EnemyScript : BaseSprite {
     {
         HUDScript.SetScore(HUDScript.GetScore() + 100);
         MainScript.DecreaseEnemyCount();
-
-        if (Random.Range(0, 100) < heartDropRate) // heartDropRate % chance to spawn heart
+        if (isKeyEnemy)
         {
-            SpawnHeart(heartDropRestoreValue, gameObject.transform.position.x, gameObject.transform.position.y);
+            SpawnKey( gameObject.transform.position.x, gameObject.transform.position.y);
         }
+        else
+        {
+            if (Random.Range(0, 100) < heartDropRate) // heartDropRate % chance to spawn heart
+            {
+                SpawnHeart(heartDropRestoreValue, gameObject.transform.position.x, gameObject.transform.position.y);
+            }
+        }
+     
         animator.SetTrigger("KillCloud");
 
     }
-
+    public void SpawnKey(float xLoc, float yLoc)
+    {
+        var keyAsset = Resources.Load<GameObject>("Sprites/keyPlaceHolder");
+        GameObject key = UnityEngine.Object.Instantiate(keyAsset);
+        Vector3 position = new Vector3(
+                 xLoc,
+                 yLoc,
+                 0);
+        key.transform.position = position;
+    }
     public void SpawnHeart(int restoreValue, float xLoc, float yLoc)
     {
         var heartAsset = Resources.Load<GameObject>("Sprites/heart");
