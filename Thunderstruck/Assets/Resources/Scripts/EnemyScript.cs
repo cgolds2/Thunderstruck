@@ -10,8 +10,10 @@ public class EnemyScript : BaseSprite {
     public GameObject spherePrefab;
     float rateOfFire = 1f;
     IEnumerator blinkRoutine;
-    int heartDropRate = 100;
+    int heartDropRate = 50;
     int heartDropRestoreValue = 2;
+    Animator animator;
+
 
     public int Health { get => health; set => health = value; }
     public float RateOfFire { get => rateOfFire; set => rateOfFire = value; }
@@ -27,6 +29,7 @@ public class EnemyScript : BaseSprite {
     {
         player = GameObject.FindWithTag("Player");
         spherePrefab = Resources.Load<GameObject>("Sprites/tempSphere");
+        animator = GetComponent<Animator>();
 
         speed = 2;
         base.BaseStart();
@@ -80,7 +83,7 @@ public class EnemyScript : BaseSprite {
     }
     // Update is called once per frame
 
-
+    bool played = false;
 
     // Update is called once per frame
     void Update () {
@@ -88,9 +91,31 @@ public class EnemyScript : BaseSprite {
         {
             return;
         }
-        float step = speed * Time.deltaTime; // calculate distance to move
-        transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
-        base.BaseUpdate();
+        if (Health > 0)
+        {
+            float step = speed * Time.deltaTime; // calculate distance to move
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, step);
+            base.BaseUpdate();
+        }
+        else
+        {
+            if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("EnemyCloudDeath"))
+            {
+                //
+                Debug.Log("Playing");
+                played = true;
+            }
+            else
+            {
+                if (played)
+                {
+                    Destroy(gameObject);
+                }
+                Debug.Log("NotPlaying");
+
+            }
+        }
+      
     }
     // base.BaseUpdate_DestroyOnBoundsCheck(gameObject);
     void OnCollisionEnter2D(Collision2D col)
@@ -99,14 +124,8 @@ public class EnemyScript : BaseSprite {
             Health--;
             Destroy(col.gameObject);
             if(Health<1){
-                HUDScript.SetScore(HUDScript.GetScore() + 100);
-                MainScript.DecreaseEnemyCount();
-
-                if (Random.Range(0, 100) < heartDropRate) // heartDropRate % chance to spawn heart
-                {
-                    SpawnHeart(heartDropRestoreValue, gameObject.transform.position.x, gameObject.transform.position.y);
-                }
-                Destroy(gameObject);
+             
+                KillObject();
             }
             else
             {
@@ -118,6 +137,19 @@ public class EnemyScript : BaseSprite {
         {
             Physics2D.IgnoreCollision(col.collider, GetComponent<Collider2D>());
         }
+    }
+
+    public void KillObject()
+    {
+        HUDScript.SetScore(HUDScript.GetScore() + 100);
+        MainScript.DecreaseEnemyCount();
+
+        if (Random.Range(0, 100) < heartDropRate) // heartDropRate % chance to spawn heart
+        {
+            SpawnHeart(heartDropRestoreValue, gameObject.transform.position.x, gameObject.transform.position.y);
+        }
+        animator.SetTrigger("KillCloud");
+
     }
 
     public void SpawnHeart(int restoreValue, float xLoc, float yLoc)
