@@ -66,7 +66,6 @@ public class CharacterScript : BaseSprite
         umbrellaOffset = new Vector3(umbrellaXOffset,umbrellaYOffset, -1);
         base.BaseStart();
         playerDeath.GetComponent<Renderer>().enabled = false;
-
     }
     public float GetHeath()
     {
@@ -91,6 +90,14 @@ public class CharacterScript : BaseSprite
         if (health <= 0)
         {
             health = 0;
+            if (CharacterScript.hat == true) //dont die if wearing the hat
+            {
+                CharacterScript.hat = false;
+                this.health = 1;
+                FireInACircle(transform.position, 7, 9);
+                HUDScript.SetHealth(this.health);
+                return;
+            }
             KillPlayer();
             SoundManagerScript.PlaySound("death");
 
@@ -98,7 +105,7 @@ public class CharacterScript : BaseSprite
 
             //here
         }
-        HUDScript.SetHealth((int)health);
+        HUDScript.SetHealth(health);
     }
    
     public bool IsAlive()
@@ -247,11 +254,17 @@ public class CharacterScript : BaseSprite
     }
     void OnCollisionEnter2D(Collision2D col)
     {
-        if ((col.gameObject.tag == "Enemy" || col.gameObject.tag == "EnemyBullet") && GetHeath()>0)
+        if ((col.gameObject.tag == "Enemy" || col.gameObject.tag == "EnemyBullet") && GetHeath() > 0)
         {
             if (Time.time > damageGracePeriod + lastHitTaken)
             {
-                SetHealth(health - 1);
+                float damage = 1;
+                if (CharacterScript.blueUmbrella || CharacterScript.redUmbrella)
+                    damage = damage * 1.25f;
+                if (CharacterScript.blueCoat)
+                    damage = damage * .75f;
+
+                SetHealth(health - damage);
                 SoundManagerScript.PlaySound("hit");
                 lastHitTaken = Time.time;
 
@@ -334,4 +347,28 @@ public class CharacterScript : BaseSprite
         lastShot = Time.time;
     }
 
+    public void FireInACircle(Vector2 origin, float speed, int numBullets)
+    {
+        int[] shots = new int[numBullets];
+        int step = 360 / numBullets;
+        for (int i = 0; i <= 360; i += step)
+        {
+            GameObject shot = Instantiate(spherePrefab, transform.position, Quaternion.identity);
+            shot.tag = "PlayerBullet";
+            Physics2D.IgnoreCollision(shot.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            Physics2D.IgnoreCollision(shot.GetComponent<Collider2D>(), shieldUmberella.GetComponent<Collider2D>());
+
+            float angle = i;
+            angle = angle * Mathf.PI / -180;
+            float xUnit = Mathf.Cos(angle);
+            float yUnit = Mathf.Sin(angle);
+
+            Rigidbody2D rigidBody = shot.GetComponent<Rigidbody2D>();
+            rigidBody.velocity = new Vector2(xUnit * speed, yUnit * speed);
+            Destroy(shot, 3f);
+            lastShot = Time.time;
+
+            numBullets--;
+        }
+    }
 }

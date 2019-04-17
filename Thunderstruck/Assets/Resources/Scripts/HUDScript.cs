@@ -112,18 +112,20 @@ public class HUDScript : MonoBehaviour
         ui.text = "TIME: " + time.ToString("hh\\:mm\\:ss");
     }
 
-    internal static void SetHealth(int health)
+    internal static void SetHealth(float health)
     {
         for (int i = 0; i < health; i++)
         {
             healthbars[i].GetComponent<Renderer>().enabled = true;
         }
-        for (int i = health; i < 8; i++)
+        for (int i = (int)health; i < 8; i++)
         {
             healthbars[i].GetComponent<Renderer>().enabled = false;
-
         }
-
+        //if(health > 0)
+        //{
+        //    healthbars[0].GetComponent<Renderer>().enabled = true;
+        //}
     }
 
     public static TimeSpan GetTime()

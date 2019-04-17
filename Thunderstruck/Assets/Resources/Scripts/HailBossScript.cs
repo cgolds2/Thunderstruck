@@ -24,9 +24,9 @@ public class HailBossScript : EnemyScript
 
         if (col.gameObject.tag == "PlayerBullet")
         {
-            Health--;
+            TakeDamage();
             Destroy(col.gameObject);
-            if (Health < 1)
+            if (Health <= 0)
             {
                 HUDScript.AddToScore(1000);
                 SceneManager.LoadScene("Level Complete");
@@ -36,7 +36,7 @@ public class HailBossScript : EnemyScript
             {
                 var croutine = base.BlinkGameObject(gameObject, 2, .1f);
                 StartCoroutine(croutine);
-                if (Health % 2 == 0)
+                if ((int)Health % 2 == 0)
                 {
                     base.FireInACircle(transform.position, 7, 9);
                 }
