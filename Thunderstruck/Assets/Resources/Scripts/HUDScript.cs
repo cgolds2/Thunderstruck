@@ -36,7 +36,7 @@ public class HUDScript : MonoBehaviour
         LevelText = Level.GetComponent<Text>();
         LevelText.text = "Level: " + _level.ToString();
         Key = GameObject.Find("HUDKey");
-        SetKey(false);
+       
 
 
     }
@@ -75,9 +75,10 @@ public class HUDScript : MonoBehaviour
         
     }
 
-    public static void SetKey(bool vis)
+    public static void SetKey(bool keyStatus)
     {
-        Key.SetActive(vis);
+        hasKey = keyStatus;
+        Key.SetActive(keyStatus);
     }
 
     public static bool GetKeyStatus()

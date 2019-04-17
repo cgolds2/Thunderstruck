@@ -48,7 +48,7 @@ public class MainScript : MonoBehaviour
         if (r == null)
         {
 
-            CalcSeed(null);
+            CalcSeed(-1478172814);
         }
         mainCamera = GameObject.Find("MainCamera");
         currentRoom = null;
@@ -80,9 +80,9 @@ public class MainScript : MonoBehaviour
         keyRoom.isKeyRoom = r.Next(keyRoom.numEnemies+1);
         MakeBossRoom();
         MakeItemRoom();
-
         SetRoom(GetRoomFromCoord(0, 0));
-
+        currentRoom.SetDoors(true);
+        HUDScript.SetKey(false);
         int xMin = 0;
         int yMin = 0;
         int xMax = 0;
@@ -239,6 +239,7 @@ public class MainScript : MonoBehaviour
                         map[potential] = new Room(i, potential, 0)
                         {
                             roomType = RoomType.Item,
+                            isRoomLocked = true,
                             numEnemies = 0
                         };
                         return;
@@ -270,14 +271,13 @@ public class MainScript : MonoBehaviour
             }
         }
         Room previous = map[new Point(x, y)];
-        longestPath = 0;
         Point spawnAt = new Point(0,0);
         int dirToSpawn = -1;
         for (int i = 0; i < 4; i++)
         {
            var next =  GetNeighborByInt(previous.point, i);
             var dist = distance(
-                previous.point.x, previous.point.y,
+                0,0,
                 next.x, next.y
             );
             if(dist>longestPath){

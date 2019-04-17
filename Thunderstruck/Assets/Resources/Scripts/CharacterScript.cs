@@ -260,7 +260,24 @@ public class CharacterScript : BaseSprite
         else if (col.gameObject.tag == "Door" && MainScript.currentRoom.numEnemies<=0)
         {
             var direction = col.gameObject.GetComponent<DoorScript>().Direction;
-            MainScript.SetRoom(MainScript.currentRoom.GetRoomInt(direction));
+            var targetRoom = MainScript.currentRoom.GetRoomInt(direction);
+            if (targetRoom.isRoomLocked)
+            {
+                if (targetRoom.roomType == Assets.Scripts.RoomType.Item && HUDScript.GetKeyStatus() && targetRoom.numEnemies==0)
+                {
+                    HUDScript.SetKey(false);
+                    targetRoom.isRoomLocked = false;
+                    MainScript.currentRoom.SetDoors(true);
+                    //targetRoom.SetDoors(true);
+
+                }
+                else
+                {
+                    return;
+                }
+            }
+           
+            MainScript.SetRoom(targetRoom);
             switch (direction)
             {
                 case 0:

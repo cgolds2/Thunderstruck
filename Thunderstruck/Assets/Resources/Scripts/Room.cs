@@ -24,6 +24,7 @@ namespace Assets.Scripts
         public int difficulty;
         private List<GameObject> doors = new List<GameObject>();
         public int isKeyRoom = -1;
+        public bool isRoomLocked = false;
         public List<GameObject> Doors
         {
             get
@@ -160,12 +161,13 @@ namespace Assets.Scripts
           
             foreach (GameObject door in doors)
             {
-                var RoomType = GetRoomInt(door.GetComponent<DoorScript>().Direction).roomType;
+                var targetRoom = GetRoomInt(door.GetComponent<DoorScript>().Direction);
+                var RoomType =targetRoom.roomType;
                 if ( RoomType == RoomType.Boss)
                 {
                     opend = Resources.Load<Sprite>("Artwork/Long Stone Grass Path Boss");
                     closedd = Resources.Load<Sprite>("Artwork/Long Grass Path Boss");
-                }else if(RoomType == RoomType.Item)
+                }else if(RoomType == RoomType.Item && targetRoom.isRoomLocked)
                 {
                     opend = open;
                     closedd = Resources.Load<Sprite>("Artwork/Long Grass Path Lock");
@@ -175,10 +177,11 @@ namespace Assets.Scripts
                     opend = open;
                     closedd =closed;
                 }
-                if (isOpen && !(RoomType == RoomType.Item))
+                if (isOpen && !(RoomType == RoomType.Item && targetRoom.isRoomLocked))
                 {
-                    //Long Grass Path
+                    //Long stone Grass Path
                     door.GetComponent<SpriteRenderer>().sprite = opend;
+                    
                 }
                 else
                 {
