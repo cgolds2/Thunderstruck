@@ -46,6 +46,30 @@ public class EnemyScript : BaseSprite {
         Fire(transform.position, 7);
     }
 
+    public void FireInACircle(Vector2 origin, float speed, int numBullets)
+    {
+        int[] shots = new int[numBullets];
+        int step = 360 / numBullets;
+        for(int i = 0; i <= 360; i += step)
+        {
+            GameObject shot = Instantiate(spherePrefab, transform.position, Quaternion.identity);
+            shot.tag = "EnemyBullet";
+            Physics2D.IgnoreCollision(shot.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            float angle = i;
+            Debug.Log(angle);
+
+            angle = angle * Mathf.PI / -180;
+            float xUnit = Mathf.Cos(angle);
+            float yUnit = Mathf.Sin(angle);
+
+            Rigidbody2D rigidBody = shot.GetComponent<Rigidbody2D>();
+            rigidBody.velocity = new Vector2(xUnit * speed, yUnit * speed);
+            Destroy(shot, 5f);
+
+            numBullets--;
+        }
+    }
+
     public void Fire(Vector2 origin, float speed)
     {
 
