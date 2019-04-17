@@ -75,26 +75,6 @@ public class HUDScript : MonoBehaviour
         
     }
 
-    public static void SetKey(bool keyStatus)
-    {
-        hasKey = keyStatus;
-        Key.SetActive(keyStatus);
-    }
-
-    public static bool GetKeyStatus()
-    {
-        return hasKey;
-    }
-
-    public static void AddToScore(int points)
-    {
-        if (CharacterScript.blueUmbrella)
-        {
-            points =  (int)(points * 1.25);
-        }
-        SetScore(_score + points);
-    }
-
     public static void SetScore(int score)
     {
         _score = score;
@@ -164,3 +144,23 @@ public class HUDScript : MonoBehaviour
         //Time.transform.position = location;
     }
 }
+
+    public static void SetKey(bool keyStatus)
+    {
+        hasKey = keyStatus;
+        Key.SetActive(keyStatus);
+    }
+
+    public static bool GetKeyStatus()
+    {
+        return hasKey;
+    }
+
+    public static void AddToScore(int points)
+    {
+        if (CharacterScript.blueUmbrella)
+        {
+            points =  (int)(points * 1.25);
+        }
+        SetScore(_score + points);
+    }
