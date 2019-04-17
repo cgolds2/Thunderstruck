@@ -90,6 +90,20 @@ namespace Assets.Scripts
         {
             doors.Add(door);
         }
+        public GameObject GetBossPrefab()
+        {
+            switch (HUDScript.GetLevel())
+            {
+                case 1:
+                    return Resources.Load<GameObject>("Sprites/EnemyCloudBoss");
+                case 2:
+                    return Resources.Load<GameObject>("Sprites/BossHail");
+                case 3:
+                    return Resources.Load<GameObject>("Sprites/TornadoBoss");
+                default:
+                    throw new Exception("Shouldnt hit this level");
+            }
+        }
         public
         void SpawnEnemies()
         {
@@ -99,7 +113,7 @@ namespace Assets.Scripts
             {
                 case RoomType.Boss:
 
-                     enemyAsset = Resources.Load<GameObject>("Sprites/EnemyCloudBoss");
+                    enemyAsset = GetBossPrefab();
                     break;
                 case RoomType.Normal:
                     enemyAsset = Resources.Load<GameObject>("Sprites/EnemyCloudLevel1");
