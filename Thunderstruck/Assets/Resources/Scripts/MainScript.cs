@@ -48,7 +48,7 @@ public class MainScript : MonoBehaviour
         if (r == null)
         {
 
-            CalcSeed(1152084794);
+            CalcSeed(null);
         }
         mainCamera = GameObject.Find("MainCamera");
         currentRoom = null;
@@ -79,7 +79,7 @@ public class MainScript : MonoBehaviour
         var keyRoom = RandomValues(map).Take(1).First();
         keyRoom.isKeyRoom = r.Next(keyRoom.numEnemies+1);
         MakeBossRoom();
-
+        MakeItemRoom();
 
         SetRoom(GetRoomFromCoord(0, 0));
 
@@ -216,6 +216,41 @@ public class MainScript : MonoBehaviour
     {
     }
 
+    void MakeItemRoom()
+    {
+        var assetRoom = Resources.Load<GameObject>("Sprites/room");
+
+        foreach (int j in Enumerable.Range(0, map.Count).OrderBy(x => r.Next()))
+        {
+            var entry = map.ElementAt(j);
+            var itemKey = entry.Key;
+            var itemValue = entry.Value;
+            Console.WriteLine(j);
+
+
+            //if not all doors are filled, and this isnt the boss room
+            if (entry.Value.GetDoorCount() != 4 && map[entry.Key].roomType != RoomType.Boss)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    Point potential = GetNeighborByInt(entry.Key, i);
+                    if (!(map.ContainsKey(potential)))
+                    {
+                        map[potential] = new Room(i, potential, 0)
+                        {
+                            roomType = RoomType.Item,
+                            numEnemies = 0
+                        };
+                        return;
+                    }
+                }
+
+            }
+        }
+        
+  
+    
+    }
     void MakeBossRoom(){
         var assetRoom = Resources.Load<GameObject>("Sprites/room");
   

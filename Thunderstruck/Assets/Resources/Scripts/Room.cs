@@ -11,7 +11,8 @@ namespace Assets.Scripts
     public enum RoomType
     {
         Normal,
-        Boss
+        Boss,
+        Item
     }
     public class Room
     {
@@ -159,17 +160,22 @@ namespace Assets.Scripts
           
             foreach (GameObject door in doors)
             {
-                if (GetRoomInt(door.GetComponent<DoorScript>().Direction).roomType == RoomType.Boss)
+                var RoomType = GetRoomInt(door.GetComponent<DoorScript>().Direction).roomType;
+                if ( RoomType == RoomType.Boss)
                 {
                     opend = Resources.Load<Sprite>("Artwork/Long Stone Grass Path Boss");
                     closedd = Resources.Load<Sprite>("Artwork/Long Grass Path Boss");
+                }else if(RoomType == RoomType.Item)
+                {
+                    opend = open;
+                    closedd = Resources.Load<Sprite>("Artwork/Long Grass Path Lock");
                 }
                 else
                 {
                     opend = open;
                     closedd =closed;
                 }
-                if (isOpen)
+                if (isOpen && !(RoomType == RoomType.Item))
                 {
                     //Long Grass Path
                     door.GetComponent<SpriteRenderer>().sprite = opend;
