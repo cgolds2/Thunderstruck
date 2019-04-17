@@ -99,6 +99,7 @@ public class EnemyScript : BaseSprite {
         }
         else
         {
+            CancelInvoke(); //things that are dead usually can't shoot at you....
             if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("EnemyCloudDeath"))
             {
                 //
