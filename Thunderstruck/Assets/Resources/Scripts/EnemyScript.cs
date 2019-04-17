@@ -109,6 +109,8 @@ public class EnemyScript : BaseSprite {
             {
                 if (played)
                 {
+                    MainScript.DecreaseEnemyCount();
+
                     Destroy(gameObject);
                 }
                 Debug.Log("NotPlaying");

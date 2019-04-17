@@ -48,7 +48,7 @@ public class MainScript : MonoBehaviour
         if (r == null)
         {
 
-            CalcSeed(null);
+            CalcSeed(1152084794);
         }
         mainCamera = GameObject.Find("MainCamera");
         currentRoom = null;

@@ -32,7 +32,7 @@ public class CharacterScript : BaseSprite
     public Sprite holdingHand;
     bool played;
     float umbrellaXOffset = -.02f;
-    float umbrellaYOffset = -0.28f;
+    float umbrellaYOffset = -0.419f;
     // I don't know how to get the camera object to grab the resolution from it
     //Camera maincam = (Camera)GameObject.Find("MainCamera").GetComponent("Camera");
     // Use this for initialization
