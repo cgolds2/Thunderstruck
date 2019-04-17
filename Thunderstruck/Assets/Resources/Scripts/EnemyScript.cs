@@ -9,6 +9,7 @@ public class EnemyScript : BaseSprite {
     int health = 5;
     public GameObject spherePrefab;
     float rateOfFire = 1f;
+    float bulletSpeed = 7;
     IEnumerator blinkRoutine;
     int heartDropRate = 50;
     int heartDropRestoreValue = 2;
@@ -17,6 +18,7 @@ public class EnemyScript : BaseSprite {
 
     public int Health { get => health; set => health = value; }
     public float RateOfFire { get => rateOfFire; set => rateOfFire = value; }
+    public float BulletSpeed { get => bulletSpeed; set => bulletSpeed = value; }
 
     // Use this for initialization
     public void EnemyStart(){
@@ -43,7 +45,7 @@ public class EnemyScript : BaseSprite {
     }
     public void FireAtPlayer()
     {
-        Fire(transform.position, 7);
+        Fire(transform.position, bulletSpeed);
     }
 
     public void FireInACircle(Vector2 origin, float speed, int numBullets)
@@ -206,5 +208,37 @@ public class EnemyScript : BaseSprite {
                  yLoc,
                  0);
         heart.transform.position = position;
+    }
+
+    public void tornadoUpdate() {
+        if (MainScript.gameOver)
+        {
+            return;
+        }
+        if (Health > 0)
+        {
+            base.BaseUpdate();
+        }
+        else
+        {
+            CancelInvoke(); //things that are dead usually can't shoot at you....
+            if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("EnemyCloudDeath"))
+            {
+                //
+                Debug.Log("Playing");
+                played = true;
+            }
+            else
+            {
+                if (played)
+                {
+                    MainScript.DecreaseEnemyCount();
+
+                    Destroy(gameObject);
+                }
+                Debug.Log("NotPlaying");
+
+            }
+        }
     }
 }
