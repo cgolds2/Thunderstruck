@@ -22,9 +22,9 @@ public class EnemyBossScript : EnemyScript
 
         if (col.gameObject.tag == "PlayerBullet")
         {
-            Health--;
+            TakeDamage();
             Destroy(col.gameObject);
-            if (Health < 1)
+            if (Health <= 0)
             {
                 HUDScript.AddToScore(1000);
 

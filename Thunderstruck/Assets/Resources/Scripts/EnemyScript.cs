@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyScript : BaseSprite {
     GameObject player;
     float speed;
-    int health = 5;
+    float health = 5;
     public GameObject spherePrefab;
     float rateOfFire = 1f;
     float bulletSpeed = 7;
@@ -16,7 +16,7 @@ public class EnemyScript : BaseSprite {
     Animator animator;
     public bool isKeyEnemy = false;
 
-    public int Health { get => health; set => health = value; }
+    public float Health { get => health; set => health = value; }
     public float RateOfFire { get => rateOfFire; set => rateOfFire = value; }
     public float BulletSpeed { get => bulletSpeed; set => bulletSpeed = value; }
 
@@ -150,9 +150,9 @@ public class EnemyScript : BaseSprite {
     void OnCollisionEnter2D(Collision2D col)
     {
         if(col.gameObject.tag=="PlayerBullet"){
-            Health--;
+            TakeDamage();
             Destroy(col.gameObject);
-            if(Health<1){
+            if(Health<=0){
              
                 KillObject();
             }
@@ -177,7 +177,10 @@ public class EnemyScript : BaseSprite {
         }
         else
         {
-            if (Random.Range(0, 100) < heartDropRate) // heartDropRate % chance to spawn heart
+            int dropPercent = heartDropRate;
+            if (CharacterScript.redCoat)
+                dropPercent = (int)(dropPercent * 1.25);
+            if (Random.Range(0, 100) < dropPercent) // heartDropRate % chance to spawn heart
             {
                 SpawnHeart(heartDropRestoreValue, gameObject.transform.position.x, gameObject.transform.position.y);
             }
@@ -240,5 +243,11 @@ public class EnemyScript : BaseSprite {
 
             }
         }
+    }
+    public void TakeDamage()
+    {
+        Health--;
+        if (CharacterScript.redUmbrella)
+            Health-= .5f;
     }
 }

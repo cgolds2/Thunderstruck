@@ -25,9 +25,9 @@ public class TornadoBossScript : HailBossScript
 
         if (col.gameObject.tag == "PlayerBullet")
         {
-            Health--;
+            TakeDamage();
             Destroy(col.gameObject);
-            if (Health < 1)
+            if (Health <= 0)
             {
                 HUDScript.AddToScore(1000);
                 SceneManager.LoadScene("Level Complete");
