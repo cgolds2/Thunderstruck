@@ -19,7 +19,10 @@ public class PlayerHeadScript : MonoBehaviour
 
     public void Walk(int direction)
     {
-
+        if (direction == 5)
+        {
+            direction = -1;
+        }
         Debug.Log(direction);
         animator.SetInteger("WalkState", direction);
     }

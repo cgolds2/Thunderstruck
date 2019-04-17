@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,6 +24,7 @@ public class MainScript : MonoBehaviour
     public static float currentRoomX;
     public static bool gameOver;
     public static float currentRoomY;
+  
 
     // Start is called before the first frame update
   public static void CalcSeed(int? _seed)
@@ -46,7 +48,7 @@ public class MainScript : MonoBehaviour
         if (r == null)
         {
 
-            CalcSeed(null);
+            CalcSeed(-1478172814);
         }
         mainCamera = GameObject.Find("MainCamera");
         currentRoom = null;
@@ -73,11 +75,14 @@ public class MainScript : MonoBehaviour
 
         map[new Point(0, 0)] = new Room(0, new Point(0, 0), 1);
         map[new Point(0, 0)].SpawnNewRoom(numRooms);
+
+        var keyRoom = RandomValues(map).Take(1).First();
+        keyRoom.isKeyRoom = r.Next(keyRoom.numEnemies+1);
         MakeBossRoom();
-
-
+        MakeItemRoom();
         SetRoom(GetRoomFromCoord(0, 0));
-
+        currentRoom.SetDoors(true);
+        HUDScript.SetKey(false);
         int xMin = 0;
         int yMin = 0;
         int xMax = 0;
@@ -117,17 +122,21 @@ public class MainScript : MonoBehaviour
                     {
 
                         case 0:
+                            newDoor.transform.Rotate(Vector3.forward * 0);
+
                             newDoor.transform.position = new Vector3(placementX + mapWidth / 2 - (MainScript.mapBorderWidth / 2 - doorRend.x / 2),
                                                                   placementY,
                                                                   placementZ);
                             break;
                         case 1:
-                            newDoor.transform.Rotate(Vector3.forward * -90);
+                            newDoor.transform.Rotate(Vector3.forward * 90);
                             newDoor.transform.position = new Vector3(placementX,
                                                               placementY + mapHeight / 2 - (MainScript.mapBorderHeight / 2 - doorRend.x / 2),
                                                               placementZ);
                             break;
                         case 2:
+                            newDoor.transform.Rotate(Vector3.forward * 180);
+
                             newDoor.transform.position = new Vector3(placementX - mapWidth / 2 + (MainScript.mapBorderWidth / 2 - doorRend.x / 2),
                                                               placementY,
                                                               placementZ);
@@ -193,11 +202,57 @@ public class MainScript : MonoBehaviour
     {
 
     }
-
+    public IEnumerable<TValue> RandomValues<TKey, TValue>(IDictionary<TKey, TValue> dict)
+    {
+        
+        List<TValue> values = Enumerable.ToList(dict.Values);
+        int size = dict.Count;
+        while (true)
+        {
+            yield return values[r.Next(size)];
+        }
+    }
     private void Start()
     {
     }
 
+    void MakeItemRoom()
+    {
+        var assetRoom = Resources.Load<GameObject>("Sprites/room");
+
+        foreach (int j in Enumerable.Range(0, map.Count).OrderBy(x => r.Next()))
+        {
+            var entry = map.ElementAt(j);
+            var itemKey = entry.Key;
+            var itemValue = entry.Value;
+            Console.WriteLine(j);
+
+
+            //if not all doors are filled, and this isnt the boss room
+            if (entry.Value.GetDoorCount() != 4 && map[entry.Key].roomType != RoomType.Boss)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    Point potential = GetNeighborByInt(entry.Key, i);
+                    if (!(map.ContainsKey(potential)))
+                    {
+                        map[potential] = new Room(i, potential, 0)
+                        {
+                            roomType = RoomType.Item,
+                            isRoomLocked = true,
+                            numEnemies = 0
+                        };
+                        map[potential].SpawnItem();
+                        return;
+                    }
+                }
+
+            }
+        }
+        
+  
+    
+    }
     void MakeBossRoom(){
         var assetRoom = Resources.Load<GameObject>("Sprites/room");
   
@@ -217,14 +272,13 @@ public class MainScript : MonoBehaviour
             }
         }
         Room previous = map[new Point(x, y)];
-        longestPath = 0;
         Point spawnAt = new Point(0,0);
         int dirToSpawn = -1;
         for (int i = 0; i < 4; i++)
         {
            var next =  GetNeighborByInt(previous.point, i);
             var dist = distance(
-                previous.point.x, previous.point.y,
+                0,0,
                 next.x, next.y
             );
             if(dist>longestPath){
