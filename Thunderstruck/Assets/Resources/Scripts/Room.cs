@@ -106,6 +106,11 @@ namespace Assets.Scripts
                     throw new Exception("Shouldnt hit this level");
             }
         }
+        public void SpawnItem()
+        {
+          var  xLoc = point.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
+           var yLoc = point.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
+        }
         public
         void SpawnEnemies()
         {
@@ -120,6 +125,7 @@ namespace Assets.Scripts
                 case RoomType.Normal:
                     enemyAsset = Resources.Load<GameObject>("Sprites/EnemyCloudLevel1");
                     break;
+                
                 default:
                     throw new Exception("What type of room is this...");
             }
