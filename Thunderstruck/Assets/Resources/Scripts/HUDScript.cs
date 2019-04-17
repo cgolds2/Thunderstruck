@@ -36,14 +36,14 @@ public class HUDScript : MonoBehaviour
         LevelText = Level.GetComponent<Text>();
         LevelText.text = "Level: " + _level.ToString();
         Key = GameObject.Find("HUDKey");
-       
+
 
 
     }
     // Start is called before the first frame update
     void Start()
     {
-   
+
         //AddSecondToTimer();
         StartTimer();
         healthbars = new GameObject[8];
@@ -52,27 +52,31 @@ public class HUDScript : MonoBehaviour
         for (int i = 0; i < healthbars.Length; i++)
         {
             healthbars[i] = MainScript.Instantiate(barAsset);
-            healthbars[i].transform.position = new Vector3((float)-5.058 + offset*i, (float) 4.594, (float) -0.6);
+            healthbars[i].transform.position = new Vector3((float)-5.058 + offset * i, (float)4.594, (float)-0.6);
             healthbars[i].transform.parent = HUD.transform;
         }
     }
-    public void PauseTimer(){
+    public void PauseTimer()
+    {
         CancelInvoke();
     }
-    public void StartTimer(){
+    public void StartTimer()
+    {
         InvokeRepeating("CallRepeat", 1, 1);
     }
-    public void ResetTimer(){
+    public void ResetTimer()
+    {
         _time = new TimeSpan();
     }
 
-    public void CallRepeat(){
+    public void CallRepeat()
+    {
         AddSecondToTimer();
     }
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public static void SetScore(int score)
@@ -93,7 +97,7 @@ public class HUDScript : MonoBehaviour
     public static void SetLevel(int level)
     {
         _level = level;
-     
+
     }
     public static int GetLevel()
     {
@@ -128,7 +132,8 @@ public class HUDScript : MonoBehaviour
         return _time;
     }
 
-    public static void AddSecondToTimer(){
+    public static void AddSecondToTimer()
+    {
         _time += TimeSpan.FromSeconds(1);
         SetTime(_time);
     }
@@ -143,7 +148,7 @@ public class HUDScript : MonoBehaviour
         //Score.transform.position = location;
         //Time.transform.position = location;
     }
-}
+
 
     public static void SetKey(bool keyStatus)
     {
@@ -160,7 +165,8 @@ public class HUDScript : MonoBehaviour
     {
         if (CharacterScript.blueUmbrella)
         {
-            points =  (int)(points * 1.25);
+            points = (int)(points * 1.25);
         }
         SetScore(_score + points);
     }
+}
