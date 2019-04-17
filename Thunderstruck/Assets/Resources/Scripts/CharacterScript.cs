@@ -301,6 +301,12 @@ public class CharacterScript : BaseSprite
             SetHealth(Mathf.Min(health + HS.restoreValue, maxHealth)); //never go over max hp
             Destroy(col.gameObject);
         }
+        else if (col.gameObject.tag == "Key")
+        {
+            HUDScript.SetKey(true);
+
+            Destroy(col.gameObject);
+        }
     }
 
     public void Fire(Vector2 origin, float speed)

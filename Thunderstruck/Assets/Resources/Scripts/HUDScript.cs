@@ -12,10 +12,11 @@ public class HUDScript : MonoBehaviour
     public static GameObject Time;
     public static GameObject Level;
     public static GameObject MapAnchor;
+    public static GameObject Key;
     private static Text ScoreText;
     private static Text TimeText;
     private static Text LevelText;
-
+    private static bool hasKey;
     private static int _level;
     private static int _score;
     private static TimeSpan _time;
@@ -34,6 +35,9 @@ public class HUDScript : MonoBehaviour
         Level = GameObject.Find("Level");
         LevelText = Level.GetComponent<Text>();
         LevelText.text = "Level: " + _level.ToString();
+        Key = GameObject.Find("HUDKey");
+        SetKey(false);
+
 
     }
     // Start is called before the first frame update
@@ -69,6 +73,16 @@ public class HUDScript : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public static void SetKey(bool vis)
+    {
+        Key.SetActive(vis);
+    }
+
+    public static bool GetKeyStatus()
+    {
+        return hasKey;
     }
 
     public static void SetScore(int score)

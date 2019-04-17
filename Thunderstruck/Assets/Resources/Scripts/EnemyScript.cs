@@ -193,7 +193,7 @@ public class EnemyScript : BaseSprite {
         Vector3 position = new Vector3(
                  xLoc,
                  yLoc,
-                 0);
+                 -1);
         key.transform.position = position;
     }
     public void SpawnHeart(int restoreValue, float xLoc, float yLoc)
