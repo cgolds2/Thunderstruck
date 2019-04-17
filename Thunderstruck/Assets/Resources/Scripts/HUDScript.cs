@@ -71,6 +71,15 @@ public class HUDScript : MonoBehaviour
         
     }
 
+    public static void AddToScore(int points)
+    {
+        if (CharacterScript.blueUmbrella)
+        {
+            points =  (int)(points * 1.25);
+        }
+        SetScore(_score + points);
+    }
+
     public static void SetScore(int score)
     {
         _score = score;

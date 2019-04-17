@@ -170,7 +170,7 @@ public class EnemyScript : BaseSprite {
 
     public void KillObject()
     {
-        HUDScript.SetScore(HUDScript.GetScore() + 100);
+        HUDScript.AddToScore(100);
         if (isKeyEnemy)
         {
             SpawnKey( gameObject.transform.position.x, gameObject.transform.position.y);

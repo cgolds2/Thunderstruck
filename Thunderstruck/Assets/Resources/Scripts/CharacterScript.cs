@@ -33,6 +33,11 @@ public class CharacterScript : BaseSprite
     bool played;
     float umbrellaXOffset = -.02f;
     float umbrellaYOffset = -0.419f;
+
+    //item flags
+    public static bool blueCoat, redCoat, redUmbrella, blueUmbrella, hat, boots = false;
+
+
     // I don't know how to get the camera object to grab the resolution from it
     //Camera maincam = (Camera)GameObject.Find("MainCamera").GetComponent("Camera");
     // Use this for initialization
