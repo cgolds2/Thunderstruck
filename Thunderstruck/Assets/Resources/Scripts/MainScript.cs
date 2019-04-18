@@ -242,7 +242,7 @@ public class MainScript : MonoBehaviour
                             isRoomLocked = true,
                             numEnemies = 0
                         };
-                        map[potential].SpawnItem();
+                        map[potential].SpawnItem(potential);
                         return;
                     }
                 }

@@ -1,10 +1,8 @@
 ﻿using System;
-namespace Application
-{
     public class ItemsManager
     {
         //have these appeared
-        public static int numItems;
+        public static int numItems = 6;
         public static bool[] haveItemsAppeared = new bool[numItems];
         public static Items GetRandomItem(Random r){
             while(true){
@@ -23,4 +21,4 @@ namespace Application
         hat, 
         boots
     }
-}
+

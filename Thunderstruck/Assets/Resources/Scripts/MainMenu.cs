@@ -19,14 +19,27 @@ public class MainMenu : MonoBehaviour
 
     }
 
-    public void QuitGame()
+    public static void QuitGame()
     {
-        Application.Quit();
+        // save any game data here
+#if UNITY_EDITOR
+        // Application.Quit() does not work in the editor so
+        // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
     }
 
     public void Leaderboard()
     {
-        Application.OpenURL("https://umbrellastudios.azurewebsites.net/Home/Leaderboards");
+        // save any game data here
+#if UNITY_EDITOR
+        //idk    
+#else
+              Application.OpenURL("https://umbrellastudios.azurewebsites.net/Home/Leaderboards");
+
+#endif
     }
 
     public void HowToPlay()

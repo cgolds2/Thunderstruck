@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Application;
 using UnityEditor;
 using UnityEngine;
 
@@ -107,35 +106,35 @@ namespace Assets.Scripts
                     throw new Exception("Shouldnt hit this level");
             }
         }
-        public void SpawnItem()
+        public void SpawnItem(Point p)
         {
-            var  xLoc = point.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
-            var yLoc = point.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
+            var  xLoc = p.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
+            var yLoc = p.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
             var itemToSpawn = ItemsManager.GetRandomItem(MainScript.r);
             GameObject obToSpawn = null;
             switch (itemToSpawn)
             {
-                case Application.Items.blueCoat:
+                case Items.blueCoat:
                     obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_blue");
                     break;
-                case Application.Items.redCoat:
+                case Items.redCoat:
                     obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_blue");
                     break;
-                case Application.Items.redUmbrella:
+                case Items.redUmbrella:
                     obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_red");
                     break;
-                case Application.Items.blueUmbrella:
+                case Items.blueUmbrella:
                     obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_blue");
                     break;
-                case Application.Items.hat:
+                case Items.hat:
                     obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_blue");
                     break;
-                case Application.Items.boots:
+                case Items.boots:
                     obToSpawn = Resources.Load<GameObject>("Sprites/item_boots");
                     break;
             }
             var x  = UnityEngine.Object.Instantiate(obToSpawn);
-            obToSpawn.transform.position = new Vector3(xLoc, yLoc, -1);
+            x.transform.position = new Vector3(xLoc, yLoc, -1);
         }
 
         public
