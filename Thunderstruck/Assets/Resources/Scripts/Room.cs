@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application;
 using UnityEditor;
 using UnityEngine;
 
@@ -108,9 +109,35 @@ namespace Assets.Scripts
         }
         public void SpawnItem()
         {
-          var  xLoc = point.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
-           var yLoc = point.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
+            var  xLoc = point.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
+            var yLoc = point.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
+            var itemToSpawn = ItemsManager.GetRandomItem(MainScript.r);
+            GameObject obToSpawn = null;
+            switch (itemToSpawn)
+            {
+                case Application.Items.blueCoat:
+                    obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_blue");
+                    break;
+                case Application.Items.redCoat:
+                    obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_blue");
+                    break;
+                case Application.Items.redUmbrella:
+                    obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_red");
+                    break;
+                case Application.Items.blueUmbrella:
+                    obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_blue");
+                    break;
+                case Application.Items.hat:
+                    obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_blue");
+                    break;
+                case Application.Items.boots:
+                    obToSpawn = Resources.Load<GameObject>("Sprites/item_boots");
+                    break;
+            }
+            var x  = UnityEngine.Object.Instantiate(obToSpawn);
+            obToSpawn.transform.position = new Vector3(xLoc, yLoc, -1);
         }
+
         public
         void SpawnEnemies()
         {
