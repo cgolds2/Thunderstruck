@@ -22,6 +22,10 @@ public class PlayerFeetScript : MonoBehaviour
     {
   
         Debug.Log(direction);
+        if (direction == 5)
+        {
+            direction = -1;
+        }
         animator.SetInteger("WalkState", direction);
     }
 }

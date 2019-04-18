@@ -11,7 +11,8 @@ namespace Assets.Scripts
     public enum RoomType
     {
         Normal,
-        Boss
+        Boss,
+        Item
     }
     public class Room
     {
@@ -22,7 +23,8 @@ namespace Assets.Scripts
         public int numEnemies;
         public int difficulty;
         private List<GameObject> doors = new List<GameObject>();
-
+        public int isKeyRoom = -1;
+        public bool isRoomLocked = false;
         public List<GameObject> Doors
         {
             get
@@ -90,6 +92,25 @@ namespace Assets.Scripts
         {
             doors.Add(door);
         }
+        public GameObject GetBossPrefab()
+        {
+            switch (HUDScript.GetLevel())
+            {
+                case 1:
+                    return Resources.Load<GameObject>("Sprites/EnemyCloudBoss");
+                case 2:
+                    return Resources.Load<GameObject>("Sprites/BossHail");
+                case 3:
+                    return Resources.Load<GameObject>("Sprites/TornadoBoss");
+                default:
+                    throw new Exception("Shouldnt hit this level");
+            }
+        }
+        public void SpawnItem()
+        {
+          var  xLoc = point.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
+           var yLoc = point.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
+        }
         public
         void SpawnEnemies()
         {
@@ -99,11 +120,12 @@ namespace Assets.Scripts
             {
                 case RoomType.Boss:
 
-                     enemyAsset = Resources.Load<GameObject>("Sprites/EnemyCloudBoss");
+                    enemyAsset = GetBossPrefab();
                     break;
                 case RoomType.Normal:
                     enemyAsset = Resources.Load<GameObject>("Sprites/EnemyCloudLevel1");
                     break;
+                
                 default:
                     throw new Exception("What type of room is this...");
             }
@@ -113,6 +135,7 @@ namespace Assets.Scripts
             }
             for (int i = 0; i < numEnemies; i++)
             {
+               
                 float xLoc = UnityEngine.Random.Range(-1 * MainScript.mapWidth / 2, MainScript.mapWidth / 2);
                 float yLoc = UnityEngine.Random.Range(-1 * MainScript.mapHeight / 2, MainScript.mapHeight / 2);
                 if(numEnemies==1){
@@ -128,26 +151,47 @@ namespace Assets.Scripts
                   xLoc,
                   yLoc,
                   0);
-
+                if (i == isKeyRoom)
+                {
+                    newEnemy.GetComponent<EnemyScript>().isKeyEnemy = true;
+                }
                 newEnemy.transform.position = position;
             }
         }
-
+        Sprite open = Resources.Load<Sprite>("Artwork/Long Stone Grass Path");
+        Sprite closed = Resources.Load<Sprite>("Artwork/Long Grass Path");
         public void SetDoors(bool isOpen)
         {
-            var open = Resources.Load<Sprite>("Artwork/Long Stone Grass Path");
-            var closed = Resources.Load<Sprite>("Artwork/Long Grass Path");
-
+            Sprite opend;
+            Sprite closedd;
+          
             foreach (GameObject door in doors)
             {
-                if (isOpen)
+                var targetRoom = GetRoomInt(door.GetComponent<DoorScript>().Direction);
+                var RoomType =targetRoom.roomType;
+                if ( RoomType == RoomType.Boss)
                 {
-                    //Long Grass Path
-                    door.GetComponent<SpriteRenderer>().sprite = open;
+                    opend = Resources.Load<Sprite>("Artwork/Long Stone Grass Path Boss");
+                    closedd = Resources.Load<Sprite>("Artwork/Long Grass Path Boss");
+                }else if(RoomType == RoomType.Item && targetRoom.isRoomLocked)
+                {
+                    opend = open;
+                    closedd = Resources.Load<Sprite>("Artwork/Long Grass Path Lock");
                 }
                 else
                 {
-                    door.GetComponent<SpriteRenderer>().sprite = closed;
+                    opend = open;
+                    closedd =closed;
+                }
+                if (isOpen && !(RoomType == RoomType.Item && targetRoom.isRoomLocked))
+                {
+                    //Long stone Grass Path
+                    door.GetComponent<SpriteRenderer>().sprite = opend;
+                    
+                }
+                else
+                {
+                    door.GetComponent<SpriteRenderer>().sprite = closedd;
 
                 }
             }
