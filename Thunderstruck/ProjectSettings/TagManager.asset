@@ -12,6 +12,7 @@ TagManager:
   - Umbrella
   - Heart
   - Key
+  - Level1
   layers:
   - Default
   - TransparentFX

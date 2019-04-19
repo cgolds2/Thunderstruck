@@ -6,9 +6,15 @@ public class SoundManagerScript : MonoBehaviour
 {
 
     public static AudioClip playerShootSound, playerHitSound, playerWalkingSound, playerDeathSound,playerReflectSound,
-        playerPickupSound, playerPowerupSound;
+        playerPickupSound, playerPowerupSound, levelTwoSound;
     public static bool isPlaying;
     static AudioSource audioSrc;
+    public HUDScript hudscript;
+    public static bool themePlaying = false;
+    public AudioClip Level2;
+    public int level = 1;
+    public GameObject[] levelaudio;
+
     //public CharacterScript playerScript;
 
     // Start is called before the first frame update
@@ -21,10 +27,16 @@ public class SoundManagerScript : MonoBehaviour
         playerReflectSound = Resources.Load<AudioClip>("Reflecting");
         playerPickupSound = Resources.Load<AudioClip>("pickup");
         playerPowerupSound = Resources.Load<AudioClip>("powerup");
+        
+        Level2 = Resources.Load<AudioClip>("LevelTwo");
+
+
 
 
 
         audioSrc = GetComponent<AudioSource>();
+
+        
 
 
 
@@ -32,8 +44,9 @@ public class SoundManagerScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { 
         
+
     }
 
     public static void PlaySound(string clip)
@@ -71,7 +84,23 @@ public class SoundManagerScript : MonoBehaviour
 
         }
 
-
-
     }
+    public static void playTheme(int level)
+    {
+        switch (level)
+        {
+            case 1:
+                themePlaying = true;
+                GameObject level1audio = GameObject.FindGameObjectWithTag("Level1");
+                level1audio.SetActive(true);
+                break;
+            case 2:
+                themePlaying = true;
+                //audioSrc.clip = Level2;
+                audioSrc.Play();
+                break;
+
+        }
+    }
+
 }
