@@ -31,12 +31,15 @@ public class ItemScript : MonoBehaviour
                     break;
                 case Items.blueUmbrella:
                     CharacterScript.blueUmbrella = true;
+                    CharacterScript.redUmbrella = false;
                     break;
                 case Items.redCoat:
                     CharacterScript.redCoat = true;
+                    CharacterScript.blueCoat = false;
                     break;
                 case Items.redUmbrella:
                     CharacterScript.redUmbrella = true;
+                    CharacterScript.blueUmbrella = false;
                     break;
                 case Items.hat:
                     CharacterScript.hat = true;
@@ -53,6 +56,7 @@ public class ItemScript : MonoBehaviour
     public static void SetBodyBlue()
     {
         CharacterScript.blueCoat = true;
+        CharacterScript.redCoat = false;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         CharacterScript script = player.GetComponent<CharacterScript>();
 
