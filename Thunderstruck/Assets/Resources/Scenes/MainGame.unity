@@ -671,6 +671,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0274a51263b08dc42ac2479cb6fa3bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skins: []
+  blueBodyLeft:
+    name: 
+    sheet: {fileID: 0}
+  yellowBodyLeft:
+    name: 
+    sheet: {fileID: 0}
+  skin: 0
 --- !u!1 &113299880
 GameObject:
   m_ObjectHideFlags: 0
