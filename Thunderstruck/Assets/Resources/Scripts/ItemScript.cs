@@ -33,6 +33,7 @@ public class ItemScript : MonoBehaviour
                 case Items.blueUmbrella:
                     CharacterScript.blueUmbrella = true;
                     CharacterScript.redUmbrella = false;
+                    HUDScript.blueUmb.GetComponent<SpriteRenderer>().material = HUDScript.normal;
                     break;
                 case Items.redCoat:
                     SetBodyRed();
@@ -40,12 +41,15 @@ public class ItemScript : MonoBehaviour
                 case Items.redUmbrella:
                     CharacterScript.redUmbrella = true;
                     CharacterScript.blueUmbrella = false;
+                    HUDScript.redUmb.GetComponent<SpriteRenderer>().material = HUDScript.normal;
                     break;
                 case Items.hat:
                     CharacterScript.hat = true;
+                    HUDScript.yellowHat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
                     break;
                 case Items.boots:
                     CharacterScript.boots = true;
+                    HUDScript.redBoots.GetComponent<SpriteRenderer>().material = HUDScript.normal;
                     break;
             }
 
@@ -58,6 +62,9 @@ public class ItemScript : MonoBehaviour
         CharacterScript.blueCoat = true;
         CharacterScript.redCoat = false;
         PlayerBodyScript.playerSkin = PlayerBodyScript.Skin.blue;
+        HUDScript.blueCoat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+        HUDScript.redCoat.GetComponent<SpriteRenderer>().material = HUDScript.greyed;
+
 
     }
 
@@ -66,6 +73,8 @@ public class ItemScript : MonoBehaviour
         CharacterScript.blueCoat = false;
         CharacterScript.redCoat = true;
         PlayerBodyScript.playerSkin = PlayerBodyScript.Skin.red;
+        HUDScript.blueCoat.GetComponent<SpriteRenderer>().material = HUDScript.greyed;
+        HUDScript.redCoat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
 
     }
 

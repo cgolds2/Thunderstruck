@@ -68,7 +68,6 @@ public class CharacterScript : BaseSprite
         base.BaseStart();
         playerDeath.GetComponent<Renderer>().enabled = false;
 
-        ItemScript.SetBodyBlue();
     }
     public float GetHeath()
     {
