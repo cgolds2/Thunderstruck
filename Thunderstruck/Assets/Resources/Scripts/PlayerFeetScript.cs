@@ -21,7 +21,7 @@ public class PlayerFeetScript : MonoBehaviour
     public void Walk(int direction)
     {
   
-        Debug.Log(direction);
+        //Debug.Log(direction);
         if (direction == 5)
         {
             direction = -1;

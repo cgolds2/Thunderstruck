@@ -23,7 +23,7 @@ public class PlayerHeadScript : MonoBehaviour
         {
             direction = -1;
         }
-        Debug.Log(direction);
+        //Debug.Log(direction);
         animator.SetInteger("WalkState", direction);
     }
 }

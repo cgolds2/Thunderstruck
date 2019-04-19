@@ -41,6 +41,7 @@ public class MainScript : MonoBehaviour
             seed = (int)_seed;
         }
         r = new Random(seed);
+        Debug.Log("Seed is: " + seed);
 
     }
     void Awake()
@@ -99,7 +100,7 @@ public class MainScript : MonoBehaviour
             if (x > xMax) { xMax = x; };
             if (y > yMax) { yMax = y; };
             string test = string.Format("Point at {0},{1}", x, y);
-            Debug.Log(test);
+            //Debug.Log(test);
             GameObject newBox = Instantiate(assetRoom);
             // GameObject newBox = Instantiate(mapPic);
             newBox.name = "madeBox";
