@@ -10,6 +10,7 @@ public class TornadoScript : EnemyScript
     void Start()
     {
         Health = 1;
+        transform.position = new Vector3(transform.position.x, transform.position.y, -1);
     }
 
     // Update is called once per frame

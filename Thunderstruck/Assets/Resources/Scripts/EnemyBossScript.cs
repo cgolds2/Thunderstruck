@@ -28,7 +28,8 @@ public class EnemyBossScript : EnemyScript
             {
                 HUDScript.AddToScore(1000);
 
-                SceneManager.LoadScene("Level Complete");
+                if (!MainScript.gameOver)
+                    SceneManager.LoadScene("Level Complete");
                 
             }
             else
