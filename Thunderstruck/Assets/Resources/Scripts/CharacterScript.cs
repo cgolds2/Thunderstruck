@@ -340,7 +340,7 @@ public class CharacterScript : BaseSprite
         else if (col.gameObject.tag == "Key")
         {
             HUDScript.SetKey(true);
-
+            SoundManagerScript.PlaySound("pickup");
             Destroy(col.gameObject);
         }
     }
