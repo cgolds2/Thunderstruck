@@ -106,11 +106,38 @@ namespace Assets.Scripts
                     throw new Exception("Shouldnt hit this level");
             }
         }
-        public void SpawnItem()
+        public void SpawnItem(Point p)
         {
-          var  xLoc = point.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
-           var yLoc = point.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
+            var  xLoc = p.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
+            var yLoc = p.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
+            var itemToSpawn = ItemsManager.GetRandomItem(MainScript.r);
+            GameObject obToSpawn = null;
+            switch (itemToSpawn)
+            {
+                case Items.blueCoat:
+                    obToSpawn = Resources.Load<GameObject>("Sprites/item_coat_blue");
+                    break;
+                case Items.redCoat:
+                    obToSpawn = Resources.Load<GameObject>("Sprites/item_coat_red");
+                    break;
+                case Items.redUmbrella:
+                    obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_red");
+                    break;
+                case Items.blueUmbrella:
+                    obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_blue");
+                    break;
+                case Items.hat:
+                    obToSpawn = Resources.Load<GameObject>("Sprites/item_hat");
+                    break;
+                case Items.boots:
+                    obToSpawn = Resources.Load<GameObject>("Sprites/item_boots");
+                    break;
+            }
+            var x  = UnityEngine.Object.Instantiate(obToSpawn);
+            x.GetComponent<ItemScript>().Item = itemToSpawn;
+            x.transform.position = new Vector3(xLoc, yLoc, -1);
         }
+
         public
         void SpawnEnemies()
         {

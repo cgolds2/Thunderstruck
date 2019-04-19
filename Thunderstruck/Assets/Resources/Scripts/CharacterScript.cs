@@ -43,6 +43,7 @@ public class CharacterScript : BaseSprite
     // Use this for initialization
     void Start()
     {
+
         bodyScript = body.GetComponent<PlayerBodyScript>();
         feetScript = feet.GetComponent<PlayerFeetScript>();
         headScript = head.GetComponent<PlayerHeadScript>();
@@ -66,6 +67,8 @@ public class CharacterScript : BaseSprite
         umbrellaOffset = new Vector3(umbrellaXOffset,umbrellaYOffset, -1);
         base.BaseStart();
         playerDeath.GetComponent<Renderer>().enabled = false;
+
+        ItemScript.SetBodyBlue();
     }
     public float GetHeath()
     {
