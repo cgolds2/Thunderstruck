@@ -8,10 +8,26 @@ public class PlayerBodyScript : MonoBehaviour
 
     Animator animator;
     private new SpriteRenderer renderer;
-    public List<SpriteCollection> skins = new List<SpriteCollection>();
+    public List<SpriteCollection> skinsLeft = new List<SpriteCollection>();
     public SpriteCollection blueBodyLeft;
     public SpriteCollection yellowBodyLeft;
-    public int skin = 0;
+    public SpriteCollection redBodyLeft;
+
+    public Sprite blueBodyForward;
+    public Sprite yellowBodyForward;
+    public Sprite redBodyForward;
+    public List<Sprite> skinsForward = new List<Sprite>();
+
+    public Sprite blueBodyTwirl;
+    public Sprite yellowBodyTwirl;
+    public Sprite redBodyTwirl;
+    public List<Sprite> skinsTwirl = new List<Sprite>();
+
+
+    public int skin = 1;
+    //0 is yellow
+    //1 is blue
+    //2 is red
 
  
     void Start()
@@ -21,15 +37,23 @@ public class PlayerBodyScript : MonoBehaviour
         renderer = GetComponent<SpriteRenderer>();
 
         //First thing we must do is load all the sprites for the character
-        skins.Add(blueBodyLeft);
-        skins.Add(yellowBodyLeft);
+        skinsLeft.Add(yellowBodyLeft);
+        skinsLeft.Add(blueBodyLeft);
+        skinsLeft.Add(redBodyLeft);
 
-        foreach (SpriteCollection coll in skins){
+        foreach (SpriteCollection coll in skinsLeft){
             var thesprites = Resources.LoadAll<Sprite>("Artwork/" + coll.sheet.name);
             coll.sprites = thesprites;
         }
 
-         
+        skinsForward.Add(yellowBodyForward);
+        skinsForward.Add(blueBodyForward);
+        skinsForward.Add(redBodyForward);
+
+        skinsTwirl.Add(yellowBodyTwirl);
+        skinsTwirl.Add(blueBodyTwirl);
+        skinsTwirl.Add(redBodyTwirl);
+
     }
 
     // Update is called once per frame
@@ -47,24 +71,45 @@ public class PlayerBodyScript : MonoBehaviour
     void LateUpdate()
     {
         //Select the correct sprite
-        SpriteCollection coll = skins[this.skin];
-
-        //Get the name
+        var state = animator.GetInteger("WalkState");
         string spriteName = renderer.sprite.name.Split('_').Last();
-        int res = -1;
-        if (!int.TryParse(spriteName, out res)){
-            return;
+
+        switch (state){
+            case 0:
+                //left
+            case 2:
+                //right
+                SpriteCollection coll = skinsLeft[this.skin];
+
+                //Get the name
+
+
+                //Search for the correct name
+                if (coll == null || coll.sprites == null) return;
+
+                Sprite newSprite = coll.sprites.Where(item => item.name.Split('_').Last() == spriteName).ToArray()[0];
+
+                //Set the sprite
+                if (newSprite)
+                    renderer.sprite = newSprite;
+                break;
+            case -1:
+                //idle
+            case 1:
+                //up:
+            case 3:
+                //down
+                renderer.sprite = skinsForward[skin];
+
+                break;
+            case 5:
+                //twirl
+                renderer.sprite = skinsTwirl[skin];
+                break;
+
         }
-      
 
-        //Search for the correct name
-        if (coll == null || coll.sprites == null) return;
 
-        Sprite newSprite = coll.sprites.Where(item => item.name.Split('_').Last() == spriteName).ToArray()[0];
-
-        //Set the sprite
-        if (newSprite)
-            renderer.sprite = newSprite;
     }
 }
 

@@ -671,13 +671,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0274a51263b08dc42ac2479cb6fa3bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skins: []
+  skinsLeft: []
   blueBodyLeft:
     name: 
-    sheet: {fileID: 0}
+    sheet: {fileID: 2800000, guid: cdc3cd1462057ca47bffe0874d73db91, type: 3}
   yellowBodyLeft:
     name: 
-    sheet: {fileID: 0}
+    sheet: {fileID: 2800000, guid: 138070a64ff1f4a539b5a16c6c4cb482, type: 3}
+  redBodyLeft:
+    name: 
+    sheet: {fileID: 2800000, guid: 7f355a031b94a7b4581d78d0a4ff88ab, type: 3}
+  blueBodyForward: {fileID: 21300000, guid: 379f1a2b1b99fdf4fbdcaadab5c4d294, type: 3}
+  yellowBodyForward: {fileID: 21300000, guid: aafa8ae5758abb64e9f3b21a2bd2430e, type: 3}
+  redBodyForward: {fileID: 21300000, guid: 00437ff6778834c4bbfd690651878798, type: 3}
+  skinsForward: []
+  blueBodyTwirl: {fileID: 21300000, guid: 9f0e65c74d27af9428d8be4f22d96526, type: 3}
+  yellowBodyTwirl: {fileID: 21300000, guid: 4494a675decd8ed45aa80daefe2bcabf, type: 3}
+  redBodyTwirl: {fileID: 21300000, guid: 38c37d54e0d158440ab6e7c80c2052fa, type: 3}
+  skinsTwirl: []
   skin: 0
 --- !u!1 &113299880
 GameObject:
