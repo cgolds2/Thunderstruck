@@ -67,6 +67,8 @@ public class CharacterScript : BaseSprite
         umbrellaOffset = new Vector3(umbrellaXOffset,umbrellaYOffset, -1);
         base.BaseStart();
         playerDeath.GetComponent<Renderer>().enabled = false;
+
+        ItemScript.SetBodyBlue();
     }
     public float GetHeath()
     {
