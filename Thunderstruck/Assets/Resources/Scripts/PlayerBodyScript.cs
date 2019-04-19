@@ -20,7 +20,7 @@ public class PlayerBodyScript : MonoBehaviour
 
     public void Walk(int direction)
     {
-     
+      
         Debug.Log(direction);
         animator.SetInteger("WalkState", direction);
     }
