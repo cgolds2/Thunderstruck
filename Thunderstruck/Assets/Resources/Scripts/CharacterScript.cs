@@ -333,6 +333,7 @@ public class CharacterScript : BaseSprite
         else if(col.gameObject.tag == "Heart")
         {
             HeartScript HS = col.gameObject.GetComponent<HeartScript>();
+            SoundManagerScript.PlaySound("pickup");
             SetHealth(Mathf.Min(health + HS.restoreValue, maxHealth)); //never go over max hp
             Destroy(col.gameObject);
         }
