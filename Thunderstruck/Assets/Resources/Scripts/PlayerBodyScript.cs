@@ -24,11 +24,15 @@ public class PlayerBodyScript : MonoBehaviour
     public List<Sprite> skinsTwirl = new List<Sprite>();
 
 
-    public int skin = 1;
+    public static Skin playerSkin;
     //0 is yellow
     //1 is blue
     //2 is red
-
+    public enum Skin{
+        yellow,
+        blue,
+        red
+    }
  
     void Start()
     {
@@ -53,6 +57,7 @@ public class PlayerBodyScript : MonoBehaviour
         skinsTwirl.Add(yellowBodyTwirl);
         skinsTwirl.Add(blueBodyTwirl);
         skinsTwirl.Add(redBodyTwirl);
+        playerSkin = Skin.yellow;
 
     }
 
@@ -79,7 +84,7 @@ public class PlayerBodyScript : MonoBehaviour
                 //left
             case 2:
                 //right
-                SpriteCollection coll = skinsLeft[this.skin];
+                SpriteCollection coll = skinsLeft[(int)playerSkin];
 
                 //Get the name
 
@@ -99,12 +104,12 @@ public class PlayerBodyScript : MonoBehaviour
                 //up:
             case 3:
                 //down
-                renderer.sprite = skinsForward[skin];
+                renderer.sprite = skinsForward[(int)playerSkin];
 
                 break;
             case 5:
                 //twirl
-                renderer.sprite = skinsTwirl[skin];
+                renderer.sprite = skinsTwirl[(int)playerSkin];
                 break;
 
         }

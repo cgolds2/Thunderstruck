@@ -34,8 +34,7 @@ public class ItemScript : MonoBehaviour
                     CharacterScript.redUmbrella = false;
                     break;
                 case Items.redCoat:
-                    CharacterScript.redCoat = true;
-                    CharacterScript.blueCoat = false;
+                    SetBodyRed();
                     break;
                 case Items.redUmbrella:
                     CharacterScript.redUmbrella = true;
@@ -57,14 +56,15 @@ public class ItemScript : MonoBehaviour
     {
         CharacterScript.blueCoat = true;
         CharacterScript.redCoat = false;
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        CharacterScript script = player.GetComponent<CharacterScript>();
+        PlayerBodyScript.playerSkin = PlayerBodyScript.Skin.blue;
 
-       script.body.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Artwork/BLUEFwdBody");
-       //script.body.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Artwork/BLUEFwdBody");
+    }
 
-        //script.forwaredBody = Resources.Load<Sprite>("Artwork/BLUEFwdBody");
-        //script.holdingHand = Resources.Load<Sprite>("Artwork/BLUEShieldCoat");
+    public static void SetBodyRed()
+    {
+        CharacterScript.blueCoat = false;
+        CharacterScript.redCoat = true;
+        PlayerBodyScript.playerSkin = PlayerBodyScript.Skin.red;
 
     }
 
