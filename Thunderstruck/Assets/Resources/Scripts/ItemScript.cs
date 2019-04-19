@@ -22,10 +22,12 @@ public class ItemScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            switch(Item)
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            CharacterScript script = player.GetComponent<CharacterScript>();
+            switch (Item)
             {
                 case Items.blueCoat:
-                    CharacterScript.blueCoat = true;
+                    SetBodyBlue();
                     break;
                 case Items.blueUmbrella:
                     CharacterScript.blueUmbrella = true;
@@ -47,4 +49,19 @@ public class ItemScript : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public static void SetBodyBlue()
+    {
+        CharacterScript.blueCoat = true;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        CharacterScript script = player.GetComponent<CharacterScript>();
+
+       script.body.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Artwork/BLUEFwdBody");
+       //script.body.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Artwork/BLUEFwdBody");
+
+        //script.forwaredBody = Resources.Load<Sprite>("Artwork/BLUEFwdBody");
+        //script.holdingHand = Resources.Load<Sprite>("Artwork/BLUEShieldCoat");
+
+    }
+
 }
