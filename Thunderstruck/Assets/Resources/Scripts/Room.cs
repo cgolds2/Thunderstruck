@@ -115,10 +115,10 @@ namespace Assets.Scripts
             switch (itemToSpawn)
             {
                 case Items.blueCoat:
-                    obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_blue");
+                    obToSpawn = Resources.Load<GameObject>("Sprites/item_coat_blue");
                     break;
                 case Items.redCoat:
-                    obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_blue");
+                    obToSpawn = Resources.Load<GameObject>("Sprites/item_coat_red");
                     break;
                 case Items.redUmbrella:
                     obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_red");
@@ -127,13 +127,14 @@ namespace Assets.Scripts
                     obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_blue");
                     break;
                 case Items.hat:
-                    obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_blue");
+                    obToSpawn = Resources.Load<GameObject>("Sprites/item_hat");
                     break;
                 case Items.boots:
                     obToSpawn = Resources.Load<GameObject>("Sprites/item_boots");
                     break;
             }
             var x  = UnityEngine.Object.Instantiate(obToSpawn);
+            x.GetComponent<ItemScript>().Item = itemToSpawn;
             x.transform.position = new Vector3(xLoc, yLoc, -1);
         }
 
