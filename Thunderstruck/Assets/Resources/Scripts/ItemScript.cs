@@ -5,6 +5,7 @@ using UnityEngine;
 public class ItemScript : MonoBehaviour
 {
     public Items Item { get; set; }
+    
 
     // Start is called before the first frame update
     void Start()
