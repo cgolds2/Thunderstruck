@@ -8,6 +8,8 @@ public class HowToPlayScript : MonoBehaviour
     public GameObject screen01;
     public GameObject screen02;
     public GameObject screen03;
+    public GameObject screen04;
+    public GameObject screen05;
 
 
     public GameObject btnNext;
@@ -24,7 +26,9 @@ public class HowToPlayScript : MonoBehaviour
             //add them here after
             screen01,
             screen02,
-            screen03
+            screen03,
+            screen04,
+            screen05
             //etc
         };
         btnPrevious.SetActive(false);
