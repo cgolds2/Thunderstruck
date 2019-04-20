@@ -8,8 +8,10 @@ public class AudioTheme : MonoBehaviour
     public AudioClip theme2;
     public AudioClip theme3;
     public AudioClip MiniBoss;
+    public AudioClip Boss;
     public static int level;
     public bool isPlaying = false;
+    public bool isPlaying1 = false;
     AudioSource audioSrc;
 
     // Start is called before the first frame update
@@ -18,10 +20,11 @@ public class AudioTheme : MonoBehaviour
         //Main Soundtracks
         theme1 = Resources.Load<AudioClip>("level1theme");
         theme2 = Resources.Load<AudioClip>("LevelTwo");
-        theme3 = Resources.Load<AudioClip>("LevelTwo");
+        theme3 = Resources.Load<AudioClip>("Level3");
 
         //MiniBoss and Boss
         MiniBoss = Resources.Load<AudioClip>("MiniBoss");
+        Boss = Resources.Load<AudioClip>("FinalBoss");
 
         audioSrc = GetComponent<AudioSource>();
         //audioSrc.clip = theme1;
@@ -39,9 +42,10 @@ public class AudioTheme : MonoBehaviour
 
         }
 
-        else
+        else if(HUDScript.GetLevel() == 3)
             audioSrc.clip = theme3;
             audioSrc.Play();
+
 
 
 
@@ -54,6 +58,13 @@ public class AudioTheme : MonoBehaviour
         {
             isPlaying = true;
             audioSrc.clip = MiniBoss;
+            audioSrc.Play();
+
+        }
+
+        if(MainScript.currentRoom.roomType.ToString() == "Boss" && HUDScript.GetLevel() == 3 && isPlaying1 == false)
+        {
+            audioSrc.clip = Boss;
             audioSrc.Play();
 
         }
