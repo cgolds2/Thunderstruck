@@ -234,7 +234,7 @@ public class CharacterScript : BaseSprite
         {
             if(playerDeath.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("PlayerDeath")){
                 //
-                Debug.Log("Playing");
+                //Debug.Log("Playing");
                 played = true;
             }
             else
@@ -243,7 +243,7 @@ public class CharacterScript : BaseSprite
                 {
                     SceneManager.LoadScene("Game Over");
                 }
-                Debug.Log("NotPlaying");
+                //Debug.Log("NotPlaying");
 
             }
         }

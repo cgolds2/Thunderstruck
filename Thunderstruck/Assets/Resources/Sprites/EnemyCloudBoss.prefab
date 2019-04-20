@@ -95,6 +95,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spherePrefab: {fileID: 0}
+  isKeyEnemy: 0
+  otherBullet: {fileID: 8080770227382525238, guid: 5230477c46c1d411299bf6ffb422bc4a,
+    type: 3}
 --- !u!95 &1499451408505503307
 Animator:
   serializedVersion: 3
