@@ -22,6 +22,15 @@ public class HUDScript : MonoBehaviour
     private static TimeSpan _time;
     private static GameObject[] healthbars;
     public static Vector3 mapStartingPos;
+    public static Material normal;
+    public static Material greyed;
+
+    public static GameObject redUmb;
+    public static GameObject blueUmb;
+    public static GameObject redBoots;
+    public static GameObject yellowHat;
+    public static GameObject redCoat;
+    public static GameObject blueCoat;
 
     private void Awake()
     {
@@ -37,6 +46,15 @@ public class HUDScript : MonoBehaviour
         LevelText.text = "Level: " + _level.ToString();
         Key = GameObject.Find("HUDKey");
 
+        normal = Resources.Load<Material>("Sprites/DefaultMat");
+        greyed = Resources.Load<Material>("Sprites/DefaultMat");
+
+        redUmb = GameObject.Find("REDumbrella");
+        blueUmb = GameObject.Find("BLUEumbrella");
+        redBoots = GameObject.Find("boots");
+        yellowHat = GameObject.Find("yellow hat pickup");
+        redCoat = GameObject.Find("Red_Coat_Pickup");
+        blueCoat = GameObject.Find("Blue_Coat_Pickup");
 
 
     }

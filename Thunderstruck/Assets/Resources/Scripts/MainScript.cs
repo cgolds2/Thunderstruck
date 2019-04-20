@@ -41,6 +41,7 @@ public class MainScript : MonoBehaviour
             seed = (int)_seed;
         }
         r = new Random(seed);
+        Debug.Log("Seed is: " + seed);
 
     }
     void Awake()
@@ -48,7 +49,7 @@ public class MainScript : MonoBehaviour
         if (r == null)
         {
 
-            CalcSeed(-1478172814);
+            CalcSeed(null);
         }
         mainCamera = GameObject.Find("MainCamera");
         currentRoom = null;
@@ -77,7 +78,7 @@ public class MainScript : MonoBehaviour
         map[new Point(0, 0)].SpawnNewRoom(numRooms);
 
         var keyRoom = RandomValues(map).Take(1).First();
-        keyRoom.isKeyRoom = r.Next(keyRoom.numEnemies+1);
+        keyRoom.isKeyRoom = r.Next(keyRoom.numEnemies);
         MakeBossRoom();
         MakeItemRoom();
         SetRoom(GetRoomFromCoord(0, 0));
@@ -99,7 +100,7 @@ public class MainScript : MonoBehaviour
             if (x > xMax) { xMax = x; };
             if (y > yMax) { yMax = y; };
             string test = string.Format("Point at {0},{1}", x, y);
-            Debug.Log(test);
+            //Debug.Log(test);
             GameObject newBox = Instantiate(assetRoom);
             // GameObject newBox = Instantiate(mapPic);
             newBox.name = "madeBox";
@@ -242,7 +243,7 @@ public class MainScript : MonoBehaviour
                             isRoomLocked = true,
                             numEnemies = 0
                         };
-                        map[potential].SpawnItem();
+                        map[potential].SpawnItem(potential);
                         return;
                     }
                 }

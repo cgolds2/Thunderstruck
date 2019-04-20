@@ -43,6 +43,7 @@ public class CharacterScript : BaseSprite
     // Use this for initialization
     void Start()
     {
+
         bodyScript = body.GetComponent<PlayerBodyScript>();
         feetScript = feet.GetComponent<PlayerFeetScript>();
         headScript = head.GetComponent<PlayerHeadScript>();

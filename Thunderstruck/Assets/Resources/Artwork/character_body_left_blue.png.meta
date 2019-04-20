@@ -1,18 +1,29 @@
 fileFormatVersion: 2
-guid: 7f355a031b94a7b4581d78d0a4ff88ab
+guid: cdc3cd1462057ca47bffe0874d73db91
 TextureImporter:
   fileIDToRecycleName:
-    21300000: REDLeftBodyWalkSpriteSheet_0
-    21300002: REDLeftBodyWalkSpriteSheet_1
-    21300004: REDLeftBodyWalkSpriteSheet_2
-    21300006: REDLeftBodyWalkSpriteSheet_3
-    21300008: REDLeftBodyWalkSpriteSheet_4
-    21300010: REDLeftBodyWalkSpriteSheet_5
-    21300012: REDLeftBodyWalkSpriteSheet_6
-    21300014: REDLeftBodyWalkSpriteSheet_7
-    21300016: REDLeftBodyWalkSpriteSheet_8
-    21300018: REDLeftBodyWalkSpriteSheet_9
-    21300020: REDLeftBodyWalkSpriteSheet_10
+    21300000: BLUELeftBodyWalkSpriteSheet_0
+    21300002: BLUELeftBodyWalkSpriteSheet_1
+    21300004: BLUELeftBodyWalkSpriteSheet_2
+    21300006: BLUELeftBodyWalkSpriteSheet_3
+    21300008: BLUELeftBodyWalkSpriteSheet_4
+    21300010: BLUELeftBodyWalkSpriteSheet_5
+    21300012: BLUELeftBodyWalkSpriteSheet_6
+    21300014: BLUELeftBodyWalkSpriteSheet_7
+    21300016: BLUELeftBodyWalkSpriteSheet_8
+    21300018: BLUELeftBodyWalkSpriteSheet_9
+    21300020: BLUELeftBodyWalkSpriteSheet_10
+    21300022: character_body_left_blue_0
+    21300024: character_body_left_blue_1
+    21300026: character_body_left_blue_2
+    21300028: character_body_left_blue_3
+    21300030: character_body_left_blue_4
+    21300032: character_body_left_blue_5
+    21300034: character_body_left_blue_6
+    21300036: character_body_left_blue_7
+    21300038: character_body_left_blue_8
+    21300040: character_body_left_blue_9
+    21300042: character_body_left_blue_10
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -95,13 +106,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: REDLeftBodyWalkSpriteSheet_0
+      name: character_body_left_blue_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 45
-        height: 50
+        x: 2
+        y: 3
+        width: 41
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -109,19 +120,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9669e805eb38e44fda3bf3e2bf3005c0
+      spriteID: dc7cc630c131041bfac324bed0d7768d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: REDLeftBodyWalkSpriteSheet_1
+      name: character_body_left_blue_1
       rect:
         serializedVersion: 2
-        x: 45
-        y: 0
-        width: 45
-        height: 50
+        x: 47
+        y: 3
+        width: 41
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -129,19 +140,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f83112effaa0f4e48977e4dc6dd3b579
+      spriteID: df1fdc5c00e11476a947b8b94b991f17
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: REDLeftBodyWalkSpriteSheet_2
+      name: character_body_left_blue_2
       rect:
         serializedVersion: 2
-        x: 90
-        y: 0
-        width: 45
-        height: 50
+        x: 92
+        y: 3
+        width: 41
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,19 +160,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4ed21420ed7914047a224d2346844ab2
+      spriteID: 48226873675044df19c66572f52eb8da
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: REDLeftBodyWalkSpriteSheet_3
+      name: character_body_left_blue_3
       rect:
         serializedVersion: 2
-        x: 135
-        y: 0
-        width: 45
-        height: 50
+        x: 137
+        y: 3
+        width: 41
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,19 +180,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 505424ad2925049859efe865b3da8579
+      spriteID: 8c18e8faaab604874ba280c844c6129b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: REDLeftBodyWalkSpriteSheet_4
+      name: character_body_left_blue_4
       rect:
         serializedVersion: 2
-        x: 180
-        y: 0
-        width: 45
-        height: 50
+        x: 182
+        y: 3
+        width: 41
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -189,19 +200,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba3eb7ddc4b8844f58169be804c679db
+      spriteID: 76b20b02deb7e433eb5bbdad7b027a06
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: REDLeftBodyWalkSpriteSheet_5
+      name: character_body_left_blue_5
       rect:
         serializedVersion: 2
-        x: 225
-        y: 0
-        width: 45
-        height: 50
+        x: 227
+        y: 3
+        width: 41
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -209,19 +220,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 95b9db8f1f7084576802d5efb43607d6
+      spriteID: bfb3a6bbd37444312992890d5b4baf8b
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: REDLeftBodyWalkSpriteSheet_6
+      name: character_body_left_blue_6
       rect:
         serializedVersion: 2
-        x: 270
-        y: 0
-        width: 45
-        height: 50
+        x: 272
+        y: 3
+        width: 41
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,19 +240,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1d2d36b6934124229bc19b7c3db0168e
+      spriteID: 1be72e5d661bc412b81f58dd91212dc9
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: REDLeftBodyWalkSpriteSheet_7
+      name: character_body_left_blue_7
       rect:
         serializedVersion: 2
-        x: 315
-        y: 0
-        width: 45
-        height: 50
+        x: 317
+        y: 3
+        width: 41
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -249,19 +260,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0c0495ddcb45a4238917308a250ec4a4
+      spriteID: c6c9b4d6ce5d44e878a135b257b14ae9
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: REDLeftBodyWalkSpriteSheet_8
+      name: character_body_left_blue_8
       rect:
         serializedVersion: 2
-        x: 360
-        y: 0
-        width: 45
-        height: 50
+        x: 362
+        y: 3
+        width: 41
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -269,19 +280,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e70b6cb944cd543ea9f01e160a128a81
+      spriteID: a4a7d4d8a1fac4e93957e9e56f0f7411
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: REDLeftBodyWalkSpriteSheet_9
+      name: character_body_left_blue_9
       rect:
         serializedVersion: 2
-        x: 405
-        y: 0
-        width: 45
-        height: 50
+        x: 407
+        y: 3
+        width: 41
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -289,19 +300,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d514684fbe4da4962a1f6827a0d29077
+      spriteID: b93da46fbdfcb451a948148ae67d8f10
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: REDLeftBodyWalkSpriteSheet_10
+      name: character_body_left_blue_10
       rect:
         serializedVersion: 2
-        x: 450
-        y: 0
-        width: 45
-        height: 50
+        x: 452
+        y: 3
+        width: 41
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -309,7 +320,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1ed858283093e454e832cc76f7adcbfe
+      spriteID: d56b4f19e31b14df29899e5252b1d97e
       vertices: []
       indices: 
       edges: []
@@ -317,7 +328,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: c439ed04cd184864aaee4496655bd961
+    spriteID: 387eeb0184bc7fc48a58f8d47e165aa0
     vertices: []
     indices: 
     edges: []

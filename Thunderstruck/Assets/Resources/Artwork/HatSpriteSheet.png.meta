@@ -1,12 +1,11 @@
 fileFormatVersion: 2
-guid: d227a9e652fe2bf468bc6e379f93ebb0
+guid: 1476c88c622ec4019b0e39d81a229718
 TextureImporter:
   fileIDToRecycleName:
-    21300000: CharacterIdleSpriteSheet_0
-    21300002: CharacterIdleSpriteSheet_1
-    21300004: CharacterIdleSpriteSheet_2
-    21300006: CharacterIdleSpriteSheet_3
-    21300008: CharacterIdleSpriteSheet_4
+    21300000: HatSpriteSheet_0
+    21300002: HatSpriteSheet_1
+    21300004: HatSpriteSheet_2
+    21300006: HatSpriteSheet_3
   externalObjects: {}
   serializedVersion: 9
   mipmaps:
@@ -89,13 +88,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CharacterIdleSpriteSheet_0
+      name: HatSpriteSheet_0
       rect:
         serializedVersion: 2
-        x: 14
+        x: 0
         y: 0
-        width: 65
-        height: 44
+        width: 150
+        height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -103,19 +102,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9adcbaa9f6ebd4224aea759baabc9be0
+      spriteID: 36686feb55f3e47daaa97f2812181b10
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharacterIdleSpriteSheet_1
+      name: HatSpriteSheet_1
       rect:
         serializedVersion: 2
-        x: 93
+        x: 150
         y: 0
-        width: 79
-        height: 44
+        width: 150
+        height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -123,19 +122,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb7b2c01e39314b6ba7056bc8d4187ee
+      spriteID: bd82860ffeef14e25b4a98a0e1f80edf
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharacterIdleSpriteSheet_2
+      name: HatSpriteSheet_2
       rect:
         serializedVersion: 2
-        x: 186
+        x: 300
         y: 0
-        width: 89
-        height: 44
+        width: 150
+        height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,19 +142,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 862a88e5d1efa4525ba957c6eb963084
+      spriteID: e9057bc0fbc784c37a55785daa0c8563
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CharacterIdleSpriteSheet_3
+      name: HatSpriteSheet_3
       rect:
         serializedVersion: 2
-        x: 289
+        x: 450
         y: 0
-        width: 79
-        height: 44
+        width: 150
+        height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,27 +162,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d7318baee0e44b82b6c30ab735558e5
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CharacterIdleSpriteSheet_4
-      rect:
-        serializedVersion: 2
-        x: 382
-        y: 0
-        width: 65
-        height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bf6da45a236c3401eac7474ca1b5ff18
+      spriteID: acc8d353178c546dd9ff1cd3f74886cc
       vertices: []
       indices: 
       edges: []
@@ -191,7 +170,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: ac3d891252a8b304d8a97bafb2a03585
+    spriteID: e4aab896285604fc2891862fbe506f26
     vertices: []
     indices: 
     edges: []
