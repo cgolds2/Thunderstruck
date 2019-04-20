@@ -31,7 +31,7 @@ public class MainScript : MonoBehaviour
   public static void CalcSeed(int? _seed)
     {
         MainScript.gameOver = false;
-        HUDScript.SetLevel(1);
+        HUDScript.SetLevel(3);
         CharacterScript.SetAllItemsFalse();
         if (_seed == null)
         {

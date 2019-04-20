@@ -177,7 +177,7 @@ namespace Assets.Scripts
                 Vector3 position = new Vector3(
                   xLoc,
                   yLoc,
-                  0);
+                  -1);
                 if (i == isKeyRoom)
                 {
                     newEnemy.GetComponent<EnemyScript>().isKeyEnemy = true;
