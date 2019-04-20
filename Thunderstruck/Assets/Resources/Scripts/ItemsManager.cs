@@ -4,10 +4,12 @@
         //have these appeared
         public static int numItems = 6;
         public static bool[] haveItemsAppeared = new bool[numItems];
+
         public static Items GetRandomItem(Random r){
             while(true){
                 int x = r.Next(0, numItems);
                 if(!haveItemsAppeared[x]){
+                    haveItemsAppeared[x] = true;
                     return (Items)x;
                 }
             }
