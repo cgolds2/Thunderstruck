@@ -33,6 +33,9 @@ public class CharacterScript : BaseSprite
     bool played;
     float umbrellaXOffset = -.02f;
     float umbrellaYOffset = -0.419f;
+    public Sprite IdleUmbYellow;
+    public Sprite IdleUmbBlue;
+    public Sprite IdleUmbRed;
 
     //item flags
     public static bool blueCoat, redCoat, redUmbrella, blueUmbrella, hat, boots = false;

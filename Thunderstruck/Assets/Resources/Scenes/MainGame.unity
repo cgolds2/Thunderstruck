@@ -308,6 +308,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: aafa8ae5758abb64e9f3b21a2bd2430e,
         type: 3}
+    - target: {fileID: 114401712832998442, guid: 66345d00bd126274e825f3f01b9de314,
+        type: 3}
+      propertyPath: IdleUmbBlue
+      value: 
+      objectReference: {fileID: 21300000, guid: d4ed5ce0ed86f244280d32abe25e2a23,
+        type: 3}
+    - target: {fileID: 114401712832998442, guid: 66345d00bd126274e825f3f01b9de314,
+        type: 3}
+      propertyPath: IdleUmbRed
+      value: 
+      objectReference: {fileID: 21300000, guid: 348bca926151f3d4f92c03f98f2cd155,
+        type: 3}
+    - target: {fileID: 114401712832998442, guid: 66345d00bd126274e825f3f01b9de314,
+        type: 3}
+      propertyPath: IdleUmbYellow
+      value: 
+      objectReference: {fileID: 21300000, guid: 264d799aa8d8b4d3788d1b66d7411b44,
+        type: 3}
     - target: {fileID: 212752660831652006, guid: 66345d00bd126274e825f3f01b9de314,
         type: 3}
       propertyPath: m_Enabled
