@@ -42,14 +42,10 @@ public class ItemScript : MonoBehaviour
                     SetUmberellaRed(script);
                     break;
                 case Items.hat:
-                    CharacterScript.hat = true;
-                    SoundManagerScript.PlaySound("powerup");
-                    HUDScript.yellowHat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+                    SetYellowHat();
                     break;
                 case Items.boots:
-                    CharacterScript.boots = true;
-                    SoundManagerScript.PlaySound("powerup");
-                    HUDScript.redBoots.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+                    SetRedBoots();
                     break;
             }
 
@@ -57,6 +53,16 @@ public class ItemScript : MonoBehaviour
         }
     }
 
+    public static void SetYellowHat(){
+        CharacterScript.hat = true;
+        SoundManagerScript.PlaySound("powerup");
+        HUDScript.yellowHat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+    }
+
+    public static void SetRedBoots(){
+        CharacterScript.boots = true;
+       HUDScript.redBoots.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+    }
     public static void SetBodyBlue()
     {
         CharacterScript.blueCoat = true;
@@ -89,7 +95,7 @@ public class ItemScript : MonoBehaviour
         CharacterScript.blueUmbrella = true;
         HUDScript.redUmb.GetComponent<SpriteRenderer>().material = HUDScript.greyed;
         HUDScript.blueUmb.GetComponent<SpriteRenderer>().material = HUDScript.normal;
-        c.shieldUmberella.GetComponent<UmbrellaScript>().SetUmberella(UmbrellaScript.Umberella.red);
+        c.shieldUmberella.GetComponent<UmbrellaScript>().SetUmberella(UmbrellaScript.Umberella.blue);
         c.idleUmberella.GetComponent<SpriteRenderer>().sprite = c.IdleUmbBlue;
 
     }
