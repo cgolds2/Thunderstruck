@@ -56,7 +56,8 @@ public class UmbrellaScript : BaseSprite
             return;
         }
         base.ReflectOther(collision);
-        if(collision.gameObject.tag == "EnemyBullet")
+        SoundManagerScript.PlaySound("reflect");
+        if (collision.gameObject.tag == "EnemyBullet")
         {
             GameObject shot = Instantiate(spherePrefab, collision.gameObject.transform.position, Quaternion.identity);
             shot.tag = "PlayerBullet";

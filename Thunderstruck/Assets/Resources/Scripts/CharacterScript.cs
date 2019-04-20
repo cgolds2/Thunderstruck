@@ -139,19 +139,24 @@ public class CharacterScript : BaseSprite
                     SoundManagerScript.PlaySound("fire");
                 }
             }
+            float adjPanSpeed = panSpeed;
+            if(boots == true)
+            {
+                adjPanSpeed += 2.5f;
+            }
             if (Input.GetKey("w"))
             {
                 WalkDirection(1);
                 isIdle = false;
                 SoundManagerScript.PlaySound("walking");
-                pos.y += panSpeed * Time.deltaTime;
+                pos.y += adjPanSpeed * Time.deltaTime;
             }
             if (Input.GetKey("s"))
             {
                 WalkDirection(3);
                 isIdle = false;
                 SoundManagerScript.PlaySound("walking");
-                pos.y -= panSpeed * Time.deltaTime;
+                pos.y -= adjPanSpeed * Time.deltaTime;
             }
             if (Input.GetKey("d"))
             {
@@ -159,7 +164,7 @@ public class CharacterScript : BaseSprite
                 WalkDirection(0);
 
                 SoundManagerScript.PlaySound("walking");
-                pos.x += panSpeed * Time.deltaTime;
+                pos.x += adjPanSpeed * Time.deltaTime;
             }
             if (Input.GetKey("a"))
             {
@@ -167,7 +172,7 @@ public class CharacterScript : BaseSprite
                 WalkDirection(2);
 
                 SoundManagerScript.PlaySound("walking");
-                pos.x -= panSpeed * Time.deltaTime;
+                pos.x -= adjPanSpeed * Time.deltaTime;
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -260,10 +265,13 @@ public class CharacterScript : BaseSprite
             {
                 float damage = 1;
                 if (CharacterScript.blueUmbrella || CharacterScript.redUmbrella)
+                {
                     damage = damage * 1.25f;
+                }
                 if (CharacterScript.blueCoat)
+                {
                     damage = damage * .75f;
-
+                }
                 SetHealth(health - damage);
                 SoundManagerScript.PlaySound("hit");
                 lastHitTaken = Time.time;
@@ -333,13 +341,14 @@ public class CharacterScript : BaseSprite
         else if(col.gameObject.tag == "Heart")
         {
             HeartScript HS = col.gameObject.GetComponent<HeartScript>();
+            SoundManagerScript.PlaySound("pickup");
             SetHealth(Mathf.Min(health + HS.restoreValue, maxHealth)); //never go over max hp
             Destroy(col.gameObject);
         }
         else if (col.gameObject.tag == "Key")
         {
             HUDScript.SetKey(true);
-
+            SoundManagerScript.PlaySound("pickup");
             Destroy(col.gameObject);
         }
     }
@@ -393,5 +402,10 @@ public class CharacterScript : BaseSprite
 
             numBullets--;
         }
+    }
+
+    public static void SetAllItemsFalse()
+    {
+        blueCoat = redCoat = redUmbrella = blueUmbrella = hat = boots = false;
     }
 }

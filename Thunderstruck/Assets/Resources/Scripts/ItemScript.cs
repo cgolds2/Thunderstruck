@@ -29,22 +29,32 @@ public class ItemScript : MonoBehaviour
             {
                 case Items.blueCoat:
                     SetBodyBlue();
+                    SoundManagerScript.PlaySound("powerup");
                     break;
                 case Items.blueUmbrella:
-                    SetUmberellaBlue(script);
+                    CharacterScript.blueUmbrella = true;
+                    SoundManagerScript.PlaySound("powerup");
+                    CharacterScript.redUmbrella = false;
+                    HUDScript.blueUmb.GetComponent<SpriteRenderer>().material = HUDScript.normal;
                     break;
                 case Items.redCoat:
                     SetBodyRed();
+                    SoundManagerScript.PlaySound("powerup");
                     break;
                 case Items.redUmbrella:
-                    SetUmberellaRed(script);
+                    CharacterScript.redUmbrella = true;
+                    SoundManagerScript.PlaySound("powerup");
+                    CharacterScript.blueUmbrella = false;
+                    HUDScript.redUmb.GetComponent<SpriteRenderer>().material = HUDScript.normal;
                     break;
                 case Items.hat:
                     CharacterScript.hat = true;
+                    SoundManagerScript.PlaySound("powerup");
                     HUDScript.yellowHat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
                     break;
                 case Items.boots:
                     CharacterScript.boots = true;
+                    SoundManagerScript.PlaySound("powerup");
                     HUDScript.redBoots.GetComponent<SpriteRenderer>().material = HUDScript.normal;
                     break;
             }
