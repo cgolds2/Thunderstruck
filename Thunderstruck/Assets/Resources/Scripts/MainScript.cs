@@ -49,7 +49,7 @@ public class MainScript : MonoBehaviour
         if (r == null)
         {
 
-            CalcSeed(null);
+            CalcSeed(-476715784);
         }
         mainCamera = GameObject.Find("MainCamera");
         currentRoom = null;
@@ -77,7 +77,11 @@ public class MainScript : MonoBehaviour
         map[new Point(0, 0)] = new Room(0, new Point(0, 0), 1);
         map[new Point(0, 0)].SpawnNewRoom(numRooms);
 
-        var keyRoom = RandomValues(map).Take(1).First();
+        var keyRooms = RandomValues(map);
+        //var keyRoom = RandomValues(map).Take(1).First();
+        var keyRoom = keyRooms.First(item => item.numEnemies > 0);
+     
+
         keyRoom.isKeyRoom = r.Next(keyRoom.numEnemies);
         MakeBossRoom();
         MakeItemRoom();
