@@ -24,6 +24,7 @@ public class MainScript : MonoBehaviour
     public static float currentRoomX;
     public static bool gameOver;
     public static float currentRoomY;
+    public static HUDScript HUD;
   
 
     // Start is called before the first frame update
@@ -31,6 +32,8 @@ public class MainScript : MonoBehaviour
     {
         MainScript.gameOver = false;
         HUDScript.SetLevel(1);
+        CharacterScript.SetAllItemsFalse();
+        HUD.ResetTimer();
         if (_seed == null)
         {
             seed = (int)System.DateTime.Now.Ticks;
@@ -46,6 +49,7 @@ public class MainScript : MonoBehaviour
     }
     void Awake()
     {
+        HUD = GameObject.FindGameObjectWithTag("HUD").GetComponent<HUDScript>();
         if (r == null)
         {
 

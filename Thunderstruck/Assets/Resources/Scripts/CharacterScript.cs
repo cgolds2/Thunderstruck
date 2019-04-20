@@ -403,4 +403,9 @@ public class CharacterScript : BaseSprite
             numBullets--;
         }
     }
+
+    public static void SetAllItemsFalse()
+    {
+        blueCoat = redCoat = redUmbrella = blueUmbrella = hat = boots = false;
+    }
 }
