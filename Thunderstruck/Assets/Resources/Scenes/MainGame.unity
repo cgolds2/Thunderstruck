@@ -1050,6 +1050,10 @@ MonoBehaviour:
   theme1: {fileID: 0}
   theme2: {fileID: 0}
   theme3: {fileID: 0}
+  MiniBoss: {fileID: 0}
+  Boss: {fileID: 0}
+  isPlaying: 0
+  isPlaying1: 0
 --- !u!82 &226072341
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1062,9 +1066,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.32
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1158,7 +1162,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &251805147
 GameObject:
@@ -2788,7 +2792,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.107
+  m_Volume: 0.466
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2973,7 +2977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8fa8c6c88347e4089a6614d83f7572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
+  canvas: {fileID: 459026382}
 --- !u!1 &1184457763
 GameObject:
   m_ObjectHideFlags: 0
@@ -3114,7 +3118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8fa8c6c88347e4089a6614d83f7572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
+  canvas: {fileID: 459026382}
 --- !u!1 &1221399379
 GameObject:
   m_ObjectHideFlags: 0
