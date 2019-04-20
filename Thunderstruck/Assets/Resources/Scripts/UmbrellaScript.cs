@@ -10,8 +10,13 @@ public class UmbrellaScript : BaseSprite
     Rigidbody2D rb;
     Vector2 vel;
     public GameObject spherePrefab;
+    public Sprite Yellow;
+    public Sprite Red;
+    public Sprite Blue;
+    public SpriteRenderer rend;
     void Start()
     {
+        rend = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         vel = new Vector2(0, 0);
         spherePrefab = Resources.Load<GameObject>("Sprites/sphere");
@@ -23,6 +28,25 @@ public class UmbrellaScript : BaseSprite
         base.BaseUpdate();
         
     }
+    public enum Umberella{
+        yellow,
+        red,
+        blue
+    }
+    public void SetUmberella(Umberella powerUp){
+        switch (powerUp)
+        {
+            case Umberella.yellow:
+                rend.sprite = Yellow;
+                break;
+            case Umberella.red:
+                rend.sprite = Red;
+                break;
+            case Umberella.blue:
+                rend.sprite = Blue;
+                break;
+        }
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -32,7 +56,8 @@ public class UmbrellaScript : BaseSprite
             return;
         }
         base.ReflectOther(collision);
-        if(collision.gameObject.tag == "EnemyBullet")
+        SoundManagerScript.PlaySound("reflect");
+        if (collision.gameObject.tag == "EnemyBullet")
         {
             GameObject shot = Instantiate(spherePrefab, collision.gameObject.transform.position, Quaternion.identity);
             shot.tag = "PlayerBullet";

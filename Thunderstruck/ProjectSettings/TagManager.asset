@@ -12,6 +12,8 @@ TagManager:
   - Umbrella
   - Heart
   - Key
+  - Level1
+  - HUD
   layers:
   - Default
   - TransparentFX
