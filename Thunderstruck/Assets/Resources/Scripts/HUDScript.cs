@@ -47,7 +47,7 @@ public class HUDScript : MonoBehaviour
         Key = GameObject.Find("HUDKey");
 
         normal = Resources.Load<Material>("Sprites/DefaultMat");
-        greyed = Resources.Load<Material>("Sprites/DefaultMat");
+        greyed = Resources.Load<Material>("Sprites/greyedMat");
 
         redUmb = GameObject.Find("REDumbrella");
         blueUmb = GameObject.Find("BLUEumbrella");

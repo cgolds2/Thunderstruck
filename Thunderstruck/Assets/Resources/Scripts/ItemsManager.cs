@@ -19,6 +19,7 @@
         redUmbrella, 
         blueUmbrella, 
         hat, 
-        boots
+        boots,
+
     }
 
