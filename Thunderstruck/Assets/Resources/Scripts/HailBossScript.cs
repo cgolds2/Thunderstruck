@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class HailBossScript : EnemyScript
 {
     // Start is called before the first frame update
+    private int numHits = 0;
     void Start()
     {
         base.EnemyStart();
@@ -24,21 +25,24 @@ public class HailBossScript : EnemyScript
 
         if (col.gameObject.tag == "PlayerBullet")
         {
+            numHits++;
             TakeDamage();
             Destroy(col.gameObject);
             if (Health <= 0)
             {
                 HUDScript.AddToScore(1000);
-                SceneManager.LoadScene("Level Complete");
+                if (!MainScript.gameOver)
+                    SceneManager.LoadScene("Level Complete");
 
             }
             else
             {
                 var croutine = base.BlinkGameObject(gameObject, 2, .1f);
                 StartCoroutine(croutine);
-                if ((int)Health % 2 == 0)
+                if ((int)Health % 2 == 0 || numHits == 2)
                 {
                     base.FireInACircle(transform.position, 7, 9);
+                    numHits = 0;
                 }
             }
         }
