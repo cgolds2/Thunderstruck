@@ -261,10 +261,13 @@ public class CharacterScript : BaseSprite
             {
                 float damage = 1;
                 if (CharacterScript.blueUmbrella || CharacterScript.redUmbrella)
+                {
                     damage = damage * 1.25f;
+                }
                 if (CharacterScript.blueCoat)
+                {
                     damage = damage * .75f;
-
+                }
                 SetHealth(health - damage);
                 SoundManagerScript.PlaySound("hit");
                 lastHitTaken = Time.time;
