@@ -7,6 +7,7 @@ public class HowToPlayScript : MonoBehaviour
     //make one per screen
     public GameObject screen01;
     public GameObject screen02;
+    public GameObject screen03;
 
 
     public GameObject btnNext;
@@ -22,7 +23,8 @@ public class HowToPlayScript : MonoBehaviour
         {
             //add them here after
             screen01,
-            screen02
+            screen02,
+            screen03
             //etc
         };
         btnPrevious.SetActive(false);
@@ -62,7 +64,7 @@ public class HowToPlayScript : MonoBehaviour
     }
     public void PreviousScreen()
     {
-        if (screenOn - 1 > 0)
+        if (screenOn - 1 < 0)
         {
             return;
         }
