@@ -11,7 +11,7 @@ public class EnemyScript : BaseSprite {
     float rateOfFire = 1f;
     float bulletSpeed = 7;
     IEnumerator blinkRoutine;
-    int heartDropRate = 50;
+    int heartDropRate = 20;
     int heartDropRestoreValue = 2;
     Animator animator;
     public bool isKeyEnemy = false;
@@ -179,7 +179,7 @@ public class EnemyScript : BaseSprite {
         {
             int dropPercent = heartDropRate;
             if (CharacterScript.redCoat)
-                dropPercent = (int)(dropPercent * 1.25);
+                dropPercent = 50;
             if (Random.Range(0, 100) < dropPercent) // heartDropRate % chance to spawn heart
             {
                 SpawnHeart(heartDropRestoreValue, gameObject.transform.position.x, gameObject.transform.position.y);
