@@ -96,6 +96,7 @@ public class CharacterScript : BaseSprite
                 this.health = 1;
                 FireInACircle(transform.position, 7, 9);
                 HUDScript.SetHealth(this.health);
+                HUDScript.yellowHat.GetComponent<SpriteRenderer>().material = HUDScript.greyed;
                 return;
             }
             KillPlayer();
