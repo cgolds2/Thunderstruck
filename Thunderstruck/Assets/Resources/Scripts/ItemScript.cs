@@ -60,7 +60,8 @@ public class ItemScript : MonoBehaviour
     }
 
     public static void SetRedBoots(){
-        SetRedBoots();
+        CharacterScript.boots = true;
+       HUDScript.redBoots.GetComponent<SpriteRenderer>().material = HUDScript.normal;
     }
     public static void SetBodyBlue()
     {

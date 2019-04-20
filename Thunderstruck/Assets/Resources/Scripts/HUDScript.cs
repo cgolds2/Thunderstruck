@@ -79,11 +79,11 @@ public class HUDScript : MonoBehaviour
         }
         if (CharacterScript.boots)
         {
-            redBoots.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+            ItemScript.SetRedBoots();
         }
         if (CharacterScript.hat)
         {
-            yellowHat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+            ItemScript.SetYellowHat();
         }
     }
     // Start is called before the first frame update
