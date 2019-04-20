@@ -1050,6 +1050,10 @@ MonoBehaviour:
   theme1: {fileID: 0}
   theme2: {fileID: 0}
   theme3: {fileID: 0}
+  MiniBoss: {fileID: 0}
+  Boss: {fileID: 0}
+  isPlaying: 0
+  isPlaying1: 0
 --- !u!82 &226072341
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1158,7 +1162,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 24
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &251805147
 GameObject:
@@ -2315,7 +2319,7 @@ GameObject:
   - component: {fileID: 763446861}
   m_Layer: 5
   m_Name: HUD
-  m_TagString: Untagged
+  m_TagString: HUD
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
