@@ -264,7 +264,7 @@ public class CharacterScript : BaseSprite
             if (Time.time > damageGracePeriod + lastHitTaken)
             {
                 float damage = 1;
-                if (CharacterScript.blueUmbrella || CharacterScript.redUmbrella)
+                if (CharacterScript.redUmbrella)
                 {
                     damage = damage * 1.25f;
                 }
