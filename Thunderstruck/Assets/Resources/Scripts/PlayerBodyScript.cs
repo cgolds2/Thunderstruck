@@ -78,9 +78,10 @@ public class PlayerBodyScript : MonoBehaviour
         var state = animator.GetInteger("WalkState");
         string spriteName = renderer.sprite.name.Split('_').Last();
 
-        switch (state){
+        switch (state)
+        {
             case 0:
-                //left
+            //left
             case 2:
                 //right
                 SpriteCollection coll = skinsLeft[(int)playerSkin];
@@ -98,9 +99,9 @@ public class PlayerBodyScript : MonoBehaviour
                     renderer.sprite = newSprite;
                 break;
             case -1:
-                //idle
+            //idle
             case 1:
-                //up:
+            //up:
             case 3:
                 //down
                 renderer.sprite = skinsForward[(int)playerSkin];
@@ -112,8 +113,6 @@ public class PlayerBodyScript : MonoBehaviour
                 break;
 
         }
-
-
     }
 }
 

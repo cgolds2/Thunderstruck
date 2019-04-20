@@ -3673,6 +3673,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78ead30ae418b294c8ed2225ac3e1f22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bootsForward:
+    name: 
+    sheet: {fileID: 2800000, guid: 44c14349896724a12a158339568b8777, type: 3}
+  bootsLeft:
+    name: 
+    sheet: {fileID: 2800000, guid: 7fc825846a66a4e5dba4104bcbba8cbf, type: 3}
+  bootsLeftSprites: []
+  bootsForwardSprites: []
 --- !u!1 &1609903504
 GameObject:
   m_ObjectHideFlags: 0
