@@ -5,12 +5,12 @@ using UnityEngine;
 public class ItemScript : MonoBehaviour
 {
     public Items Item { get; set; }
-    
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
@@ -81,6 +81,27 @@ public class ItemScript : MonoBehaviour
         PlayerBodyScript.playerSkin = PlayerBodyScript.Skin.red;
         HUDScript.blueCoat.GetComponent<SpriteRenderer>().material = HUDScript.greyed;
         HUDScript.redCoat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+
+    }
+
+    public static void SetUmberellaBlue(CharacterScript c)
+    {
+        CharacterScript.redUmbrella = false;
+        CharacterScript.blueUmbrella = true;
+        HUDScript.redUmb.GetComponent<SpriteRenderer>().material = HUDScript.greyed;
+        HUDScript.blueUmb.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+        c.shieldUmberella.GetComponent<UmbrellaScript>().SetUmberella(UmbrellaScript.Umberella.red);
+
+
+    }
+
+    public static void SetUmberellaRed(CharacterScript c)
+    {
+        CharacterScript.redUmbrella = true;
+        CharacterScript.blueUmbrella = false;
+        HUDScript.redUmb.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+        HUDScript.blueUmb.GetComponent<SpriteRenderer>().material = HUDScript.greyed;
+        c.shieldUmberella.GetComponent<UmbrellaScript>().SetUmberella(UmbrellaScript.Umberella.red);
 
     }
 
