@@ -142,7 +142,7 @@ public class CharacterScript : BaseSprite
             float adjPanSpeed = panSpeed;
             if(boots == true)
             {
-                adjPanSpeed += 4;
+                adjPanSpeed += 2.5f;
             }
             if (Input.GetKey("w"))
             {
