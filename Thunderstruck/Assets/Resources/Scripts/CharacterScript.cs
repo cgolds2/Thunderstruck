@@ -261,10 +261,13 @@ public class CharacterScript : BaseSprite
             {
                 float damage = 1;
                 if (CharacterScript.blueUmbrella || CharacterScript.redUmbrella)
+                {
                     damage = damage * 1.25f;
+                }
                 if (CharacterScript.blueCoat)
+                {
                     damage = damage * .75f;
-
+                }
                 SetHealth(health - damage);
                 SoundManagerScript.PlaySound("hit");
                 lastHitTaken = Time.time;
@@ -334,13 +337,14 @@ public class CharacterScript : BaseSprite
         else if(col.gameObject.tag == "Heart")
         {
             HeartScript HS = col.gameObject.GetComponent<HeartScript>();
+            SoundManagerScript.PlaySound("pickup");
             SetHealth(Mathf.Min(health + HS.restoreValue, maxHealth)); //never go over max hp
             Destroy(col.gameObject);
         }
         else if (col.gameObject.tag == "Key")
         {
             HUDScript.SetKey(true);
-
+            SoundManagerScript.PlaySound("pickup");
             Destroy(col.gameObject);
         }
     }
