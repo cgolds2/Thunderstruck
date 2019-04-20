@@ -64,6 +64,7 @@ public class AudioTheme : MonoBehaviour
 
         if(MainScript.currentRoom.roomType.ToString() == "Boss" && HUDScript.GetLevel() == 3 && isPlaying1 == false)
         {
+            isPlaying1 = true;
             audioSrc.clip = Boss;
             audioSrc.Play();
 
