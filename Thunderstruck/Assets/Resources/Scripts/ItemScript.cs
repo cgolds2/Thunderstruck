@@ -94,7 +94,7 @@ public class ItemScript : MonoBehaviour
         CharacterScript.blueUmbrella = true;
         HUDScript.redUmb.GetComponent<SpriteRenderer>().material = HUDScript.greyed;
         HUDScript.blueUmb.GetComponent<SpriteRenderer>().material = HUDScript.normal;
-        c.shieldUmberella.GetComponent<UmbrellaScript>().SetUmberella(UmbrellaScript.Umberella.red);
+        c.shieldUmberella.GetComponent<UmbrellaScript>().SetUmberella(UmbrellaScript.Umberella.blue);
         c.idleUmberella.GetComponent<SpriteRenderer>().sprite = c.IdleUmbBlue;
 
     }
