@@ -57,7 +57,6 @@ public class PlayerBodyScript : MonoBehaviour
         skinsTwirl.Add(yellowBodyTwirl);
         skinsTwirl.Add(blueBodyTwirl);
         skinsTwirl.Add(redBodyTwirl);
-        playerSkin = Skin.yellow;
 
     }
 

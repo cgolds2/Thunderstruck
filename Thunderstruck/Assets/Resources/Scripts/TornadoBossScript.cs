@@ -34,7 +34,8 @@ public class TornadoBossScript : EnemyScript
             if (Health <= 0)
             {
                 HUDScript.AddToScore(1000);
-                SceneManager.LoadScene("Level Complete");
+                if (!MainScript.gameOver)
+                    SceneManager.LoadScene("Level Complete");
 
             }
             else
