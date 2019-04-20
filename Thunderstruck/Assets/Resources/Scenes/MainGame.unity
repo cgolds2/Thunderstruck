@@ -308,6 +308,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: aafa8ae5758abb64e9f3b21a2bd2430e,
         type: 3}
+    - target: {fileID: 114401712832998442, guid: 66345d00bd126274e825f3f01b9de314,
+        type: 3}
+      propertyPath: IdleUmbBlue
+      value: 
+      objectReference: {fileID: 21300000, guid: d4ed5ce0ed86f244280d32abe25e2a23,
+        type: 3}
+    - target: {fileID: 114401712832998442, guid: 66345d00bd126274e825f3f01b9de314,
+        type: 3}
+      propertyPath: IdleUmbRed
+      value: 
+      objectReference: {fileID: 21300000, guid: 348bca926151f3d4f92c03f98f2cd155,
+        type: 3}
+    - target: {fileID: 114401712832998442, guid: 66345d00bd126274e825f3f01b9de314,
+        type: 3}
+      propertyPath: IdleUmbYellow
+      value: 
+      objectReference: {fileID: 21300000, guid: 264d799aa8d8b4d3788d1b66d7411b44,
+        type: 3}
     - target: {fileID: 212752660831652006, guid: 66345d00bd126274e825f3f01b9de314,
         type: 3}
       propertyPath: m_Enabled
@@ -1066,9 +1084,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.243
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -2147,7 +2165,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &715075655
 GameObject:
@@ -2792,7 +2810,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.107
+  m_Volume: 0.554
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2977,7 +2995,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8fa8c6c88347e4089a6614d83f7572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
+  canvas: {fileID: 459026382}
 --- !u!1 &1184457763
 GameObject:
   m_ObjectHideFlags: 0
@@ -3118,7 +3136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8fa8c6c88347e4089a6614d83f7572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
+  canvas: {fileID: 459026382}
 --- !u!1 &1221399379
 GameObject:
   m_ObjectHideFlags: 0
@@ -3858,7 +3876,7 @@ GameObject:
   - component: {fileID: 1714322857}
   m_Layer: 0
   m_Name: New Sprite
-  m_TagString: Untagged
+  m_TagString: HUD
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4724,7 +4742,7 @@ PrefabInstance:
     - target: {fileID: 2268786534542991029, guid: d6a45a8fb9b83fc47ae2dd58a64151cf,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2268786534542991029, guid: d6a45a8fb9b83fc47ae2dd58a64151cf,
         type: 3}

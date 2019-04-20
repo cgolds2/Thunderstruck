@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class CharacterScript : BaseSprite
 {
     public float panSpeed;
-    private float health;
+    public static float health;
     private float maxHealth;
     public int iFrames;
     public float fireRate;
@@ -33,6 +33,9 @@ public class CharacterScript : BaseSprite
     bool played;
     float umbrellaXOffset = -.02f;
     float umbrellaYOffset = -0.419f;
+    public Sprite IdleUmbYellow;
+    public Sprite IdleUmbBlue;
+    public Sprite IdleUmbRed;
 
     //item flags
     public static bool blueCoat, redCoat, redUmbrella, blueUmbrella, hat, boots = false;
@@ -48,8 +51,8 @@ public class CharacterScript : BaseSprite
         headScript = head.GetComponent<PlayerHeadScript>();
         played = false;
         panSpeed = 10;
-        health = 8;
-        maxHealth = health;
+        //health = 8;
+        maxHealth = 8;
         iFrames = 0;
         fireRate = .5f;
         lastShot = 0f;
@@ -71,6 +74,9 @@ public class CharacterScript : BaseSprite
     {
         return health;
     }
+    public static void ResetItems(){
+        blueCoat = redCoat = redUmbrella = blueUmbrella = hat = boots = false;
+    }
     public void KillPlayer()
     {
         playerDeath.transform.position = transform.position;
@@ -84,18 +90,19 @@ public class CharacterScript : BaseSprite
         playerDeath.GetComponent<Renderer>().enabled = true;
 
     }
-    public void SetHealth(float health)
+    public void SetHealth(float newHP)
     {
-        this.health = health;
+        health = newHP;
         if (health <= 0)
         {
             health = 0;
             if (CharacterScript.hat == true) //dont die if wearing the hat
             {
                 CharacterScript.hat = false;
-                this.health = 1;
+                health = 1;
                 FireInACircle(transform.position, 7, 9);
-                HUDScript.SetHealth(this.health);
+                HUDScript.SetHealth(health);
+                HUDScript.yellowHat.GetComponent<SpriteRenderer>().material = HUDScript.greyed;
                 return;
             }
             KillPlayer();
@@ -230,7 +237,7 @@ public class CharacterScript : BaseSprite
         {
             if(playerDeath.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("PlayerDeath")){
                 //
-                Debug.Log("Playing");
+                //Debug.Log("Playing");
                 played = true;
             }
             else
@@ -239,7 +246,7 @@ public class CharacterScript : BaseSprite
                 {
                     SceneManager.LoadScene("Game Over");
                 }
-                Debug.Log("NotPlaying");
+                //Debug.Log("NotPlaying");
 
             }
         }
@@ -264,7 +271,7 @@ public class CharacterScript : BaseSprite
             if (Time.time > damageGracePeriod + lastHitTaken)
             {
                 float damage = 1;
-                if (CharacterScript.blueUmbrella || CharacterScript.redUmbrella)
+                if (CharacterScript.redUmbrella)
                 {
                     damage = damage * 1.25f;
                 }

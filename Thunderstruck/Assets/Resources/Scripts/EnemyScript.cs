@@ -11,7 +11,7 @@ public class EnemyScript : BaseSprite {
     float rateOfFire = 1f;
     float bulletSpeed = 7;
     IEnumerator blinkRoutine;
-    int heartDropRate = 50;
+    int heartDropRate = 20;
     int heartDropRestoreValue = 2;
     Animator animator;
     public bool isKeyEnemy = false;
@@ -85,17 +85,25 @@ public class EnemyScript : BaseSprite {
         shootDirection = player.transform.position;
         shootDirection.z = 0.0f;
         float angle = 90 + Mathf.Atan2(origin.x - shootDirection.x, origin.y - shootDirection.y) * Mathf.Rad2Deg;
-        Debug.Log(angle);
+
+        //float angle2 = Mathf.Atan2(origin.x - shootDirection.y, origin.y - shootDirection.x) * Mathf.Rad2Deg;
+        //shot.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+         var v_diff = (player.transform.position - transform.position);
+        var atan2 = Mathf.Atan2(v_diff.y, v_diff.x);
+       shot.transform.rotation = Quaternion.Euler(0f, 0f, atan2 * Mathf.Rad2Deg);
+
+        //shot.transform.rotation = targetRotation;
+        //Debug.Log(angle +":"+angle2);
 
         angle = angle * Mathf.PI / -180;
-     //   Debug.Log(angle);
-
-
         float xUnit = Mathf.Cos(angle);
         float yUnit = Mathf.Sin(angle);
 
         Rigidbody2D rigidBody = shot.GetComponent<Rigidbody2D>();
         rigidBody.velocity = new Vector2(xUnit * speed, yUnit * speed);
+
+
         Destroy(shot, 5f);
     }
 
@@ -129,7 +137,7 @@ public class EnemyScript : BaseSprite {
             if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("EnemyCloudDeath"))
             {
                 //
-                Debug.Log("Playing");
+                //Debug.Log("Playing");
                 played = true;
             }
             else
@@ -140,7 +148,7 @@ public class EnemyScript : BaseSprite {
 
                     Destroy(gameObject);
                 }
-                Debug.Log("NotPlaying");
+                //Debug.Log("NotPlaying");
 
             }
         }
@@ -179,7 +187,7 @@ public class EnemyScript : BaseSprite {
         {
             int dropPercent = heartDropRate;
             if (CharacterScript.redCoat)
-                dropPercent = (int)(dropPercent * 1.25);
+                dropPercent = 50;
             if (Random.Range(0, 100) < dropPercent) // heartDropRate % chance to spawn heart
             {
                 SpawnHeart(heartDropRestoreValue, gameObject.transform.position.x, gameObject.transform.position.y);
@@ -228,7 +236,7 @@ public class EnemyScript : BaseSprite {
             if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("EnemyCloudDeath"))
             {
                 //
-                Debug.Log("Playing");
+                //Debug.Log("Playing");
                 played = true;
             }
             else
@@ -239,7 +247,7 @@ public class EnemyScript : BaseSprite {
 
                     Destroy(gameObject);
                 }
-                Debug.Log("NotPlaying");
+                //Debug.Log("NotPlaying");
 
             }
         }

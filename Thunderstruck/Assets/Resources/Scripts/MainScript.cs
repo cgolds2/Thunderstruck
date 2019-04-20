@@ -33,7 +33,6 @@ public class MainScript : MonoBehaviour
         MainScript.gameOver = false;
         HUDScript.SetLevel(1);
         CharacterScript.SetAllItemsFalse();
-        HUD.ResetTimer();
         if (_seed == null)
         {
             seed = (int)System.DateTime.Now.Ticks;
@@ -45,6 +44,7 @@ public class MainScript : MonoBehaviour
         }
         r = new Random(seed);
         Debug.Log("Seed is: " + seed);
+        CharacterScript.health = 8;
 
     }
     void Awake()
@@ -55,6 +55,8 @@ public class MainScript : MonoBehaviour
 
             CalcSeed(null);
         }
+        HUD.ResetTimer();
+        CharacterScript.ResetItems();
         mainCamera = GameObject.Find("MainCamera");
         currentRoom = null;
         GameObject mapPic = GameObject.Find("templateRoom");

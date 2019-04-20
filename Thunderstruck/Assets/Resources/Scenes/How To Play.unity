@@ -2327,7 +2327,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '- if health hits 0, it adds 1 to health and shoots a circle of bullets'
+  m_Text: '- if health hits 0, set health to 1 and fire a barrage of bullets. The
+    hat is then lost'
 --- !u!222 &892047168
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2796,7 +2797,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '- 1.25 score modifier, take bonus damage'
+  m_Text: '- 1.25 score modifier'
 --- !u!222 &1112997205
 CanvasRenderer:
   m_ObjectHideFlags: 0

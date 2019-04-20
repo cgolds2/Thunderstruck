@@ -108,7 +108,7 @@ namespace Assets.Scripts
         }
         public void SpawnItem(Point p)
         {
-            var  xLoc = p.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
+            var xLoc = p.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
             var yLoc = p.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
             var itemToSpawn = ItemsManager.GetRandomItem(MainScript.r);
             GameObject obToSpawn = null;
@@ -162,9 +162,9 @@ namespace Assets.Scripts
             }
             for (int i = 0; i < numEnemies; i++)
             {
-               
-                float xLoc = UnityEngine.Random.Range(-1 * MainScript.mapWidth / 2, MainScript.mapWidth / 2);
-                float yLoc = UnityEngine.Random.Range(-1 * MainScript.mapHeight / 2, MainScript.mapHeight / 2);
+                float placeBuffer = 3;
+                float xLoc = UnityEngine.Random.Range(-1 * MainScript.mapWidth / 2 +placeBuffer, MainScript.mapWidth / 2 - placeBuffer);
+                float yLoc = UnityEngine.Random.Range(-1 * MainScript.mapHeight / 2 +placeBuffer, MainScript.mapHeight / 2 - placeBuffer);
                 if(numEnemies==1){
                     xLoc = 0;
                     yLoc = 0;
@@ -177,7 +177,7 @@ namespace Assets.Scripts
                 Vector3 position = new Vector3(
                   xLoc,
                   yLoc,
-                  0);
+                  -1);
                 if (i == isKeyRoom)
                 {
                     newEnemy.GetComponent<EnemyScript>().isKeyEnemy = true;
