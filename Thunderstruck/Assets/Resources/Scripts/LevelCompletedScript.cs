@@ -13,7 +13,7 @@ public class LevelCompletedScript : MonoBehaviour
     void Start()
     {
         Score.text = "Score = " + HUDScript.GetScore().ToString();
-        if (HUDScript.GetLevel() >= 2)
+        if (HUDScript.GetLevel() >= 3)
         {
             NextLevelButton.SetActive(false);
             LevelCompleted.text = "Demo Completed";

@@ -8,6 +8,7 @@ public class CharacterScript : BaseSprite
 {
     public float panSpeed;
     private float health;
+    private float maxHealth;
     public int iFrames;
     public float fireRate;
     public float lastShot;
@@ -27,7 +28,16 @@ public class CharacterScript : BaseSprite
     public Quaternion startRotation;
     public Vector3 umbrellaOffset;
     PlayerBodyScript bodyScript;
+    public Sprite forwaredBody;
+    public Sprite holdingHand;
     bool played;
+    float umbrellaXOffset = -.02f;
+    float umbrellaYOffset = -0.419f;
+
+    //item flags
+    public static bool blueCoat, redCoat, redUmbrella, blueUmbrella, hat, boots = false;
+
+
     // I don't know how to get the camera object to grab the resolution from it
     //Camera maincam = (Camera)GameObject.Find("MainCamera").GetComponent("Camera");
     // Use this for initialization
@@ -39,6 +49,7 @@ public class CharacterScript : BaseSprite
         played = false;
         panSpeed = 10;
         health = 8;
+        maxHealth = health;
         iFrames = 0;
         fireRate = .5f;
         lastShot = 0f;
@@ -51,12 +62,10 @@ public class CharacterScript : BaseSprite
         shieldUmberella.SetActive(false);
         startRotation = new Quaternion(0,0,0,0);
         shieldUmberella.transform.rotation = startRotation;
-        float umbrellaXOffset = -.25f;
-        float umbrellaYOffset = .25f;
-        umbrellaOffset = new Vector3(umbrellaXOffset,umbrellaYOffset);
+     
+        umbrellaOffset = new Vector3(umbrellaXOffset,umbrellaYOffset, -1);
         base.BaseStart();
         playerDeath.GetComponent<Renderer>().enabled = false;
-
     }
     public float GetHeath()
     {
@@ -81,6 +90,15 @@ public class CharacterScript : BaseSprite
         if (health <= 0)
         {
             health = 0;
+            if (CharacterScript.hat == true) //dont die if wearing the hat
+            {
+                CharacterScript.hat = false;
+                this.health = 1;
+                FireInACircle(transform.position, 7, 9);
+                HUDScript.SetHealth(this.health);
+                HUDScript.yellowHat.GetComponent<SpriteRenderer>().material = HUDScript.greyed;
+                return;
+            }
             KillPlayer();
             SoundManagerScript.PlaySound("death");
 
@@ -88,7 +106,7 @@ public class CharacterScript : BaseSprite
 
             //here
         }
-        HUDScript.SetHealth((int)health);
+        HUDScript.SetHealth(health);
     }
    
     public bool IsAlive()
@@ -97,12 +115,14 @@ public class CharacterScript : BaseSprite
 
     }
     // Update is called once per frame
+    
     void Update()
     {
         if (!MainScript.gameOver)
         {
-            shieldUmberella.transform.position = transform.position + umbrellaOffset;
             
+
+
 
             bodyMC.velocity = new Vector3(0, 0, 0);
             Vector3 pos = transform.position;
@@ -110,7 +130,8 @@ public class CharacterScript : BaseSprite
             // Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
 
             //  bodyMC.velocity = new Vector2(movement.x *panSpeed, movement.y * panSpeed);
-            bool idle = true;
+            bool isIdle = true;
+            bool isUmbrellaActive = false;
             if (Input.GetMouseButton(0) && (Time.time > fireRate + lastShot))
             {
                 if (!Input.GetKey(KeyCode.Space))
@@ -119,40 +140,47 @@ public class CharacterScript : BaseSprite
                     SoundManagerScript.PlaySound("fire");
                 }
             }
+            float adjPanSpeed = panSpeed;
+            if(boots == true)
+            {
+                adjPanSpeed += 2.5f;
+            }
             if (Input.GetKey("w"))
             {
                 WalkDirection(1);
-                idle = false;
+                isIdle = false;
                 SoundManagerScript.PlaySound("walking");
-                pos.y += panSpeed * Time.deltaTime;
+                pos.y += adjPanSpeed * Time.deltaTime;
             }
             if (Input.GetKey("s"))
             {
                 WalkDirection(3);
-                idle = false;
+                isIdle = false;
                 SoundManagerScript.PlaySound("walking");
-                pos.y -= panSpeed * Time.deltaTime;
+                pos.y -= adjPanSpeed * Time.deltaTime;
             }
             if (Input.GetKey("d"))
             {
-                idle = false;
+                isIdle = false;
                 WalkDirection(0);
 
                 SoundManagerScript.PlaySound("walking");
-                pos.x += panSpeed * Time.deltaTime;
+                pos.x += adjPanSpeed * Time.deltaTime;
             }
             if (Input.GetKey("a"))
             {
-                idle = false;
+                isIdle = false;
                 WalkDirection(2);
 
                 SoundManagerScript.PlaySound("walking");
-                pos.x -= panSpeed * Time.deltaTime;
+                pos.x -= adjPanSpeed * Time.deltaTime;
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 shieldUmberella.SetActive(true);
                 idleUmberella.SetActive(false);
+                isUmbrellaActive = true;
+                //body.GetComponent<SpriteRenderer>().sprite = holdingHand;
 
                 //Vector3 shootDirection;
                 //shootDirection = Input.mousePosition;
@@ -166,18 +194,36 @@ public class CharacterScript : BaseSprite
             }
             if (Input.GetKey(KeyCode.Space))
             {
-                shieldUmberella.transform.Rotate(Vector3.forward * 5);
+                shieldUmberella.transform.Rotate(Vector3.forward * 230 * Time.deltaTime);
+                isUmbrellaActive = true;
             }
             if (Input.GetKeyUp(KeyCode.Space))
             {
                 shieldUmberella.SetActive(false);
                 shieldUmberella.transform.rotation = startRotation;
                 idleUmberella.SetActive(true);
+                isUmbrellaActive = false ;
 
             }
-            if (idle)
+            if (isIdle)
             {
-                WalkDirection(-1);
+                umbrellaOffset = new Vector3(umbrellaXOffset, umbrellaYOffset, -1);
+
+                if (isUmbrellaActive)
+                {
+                    WalkDirection(5);
+
+                }
+                else
+                {
+                    WalkDirection(-1);
+
+                }
+            }
+            else
+            {
+                umbrellaOffset = new Vector3(umbrellaXOffset, umbrellaYOffset, 0);
+
             }
             transform.position = pos;
         }
@@ -198,11 +244,15 @@ public class CharacterScript : BaseSprite
 
             }
         }
+        
+        shieldUmberella.transform.position = transform.position + umbrellaOffset;
+
         base.BaseUpdate();
 
     }
     public void WalkDirection(int direction)
     {
+
         bodyScript.Walk(direction);
         feetScript.Walk(direction);
         headScript.Walk(direction);
@@ -210,19 +260,51 @@ public class CharacterScript : BaseSprite
     }
     void OnCollisionEnter2D(Collision2D col)
     {
-        if ((col.gameObject.tag == "Enemy" || col.gameObject.tag == "EnemyBullet") && GetHeath()>0)
+        if ((col.gameObject.tag == "Enemy" || col.gameObject.tag == "EnemyBullet") && GetHeath() > 0)
         {
             if (Time.time > damageGracePeriod + lastHitTaken)
             {
-                SetHealth(health - 1);
+                float damage = 1;
+                if (CharacterScript.redUmbrella)
+                {
+                    damage = damage * 1.25f;
+                }
+                if (CharacterScript.blueCoat)
+                {
+                    damage = damage * .75f;
+                }
+                SetHealth(health - damage);
                 SoundManagerScript.PlaySound("hit");
                 lastHitTaken = Time.time;
+
+                if (GetHeath() > 0)
+                {
+                    var croutine = base.BlinkGameObject(gameObject, 4, damageGracePeriod / 6);
+                    StartCoroutine(croutine);
+                }
             }
         }
         else if (col.gameObject.tag == "Door" && MainScript.currentRoom.numEnemies<=0)
         {
             var direction = col.gameObject.GetComponent<DoorScript>().Direction;
-            MainScript.SetRoom(MainScript.currentRoom.GetRoomInt(direction));
+            var targetRoom = MainScript.currentRoom.GetRoomInt(direction);
+            if (targetRoom.isRoomLocked)
+            {
+                if (targetRoom.roomType == Assets.Scripts.RoomType.Item && HUDScript.GetKeyStatus() && targetRoom.numEnemies==0)
+                {
+                    HUDScript.SetKey(false);
+                    targetRoom.isRoomLocked = false;
+                    MainScript.currentRoom.SetDoors(true);
+                    //targetRoom.SetDoors(true);
+
+                }
+                else
+                {
+                    return;
+                }
+            }
+           
+            MainScript.SetRoom(targetRoom);
             switch (direction)
             {
                 case 0:
@@ -257,6 +339,19 @@ public class CharacterScript : BaseSprite
                     throw new System.Exception("Something went wrong with player door management");
             }
         }
+        else if(col.gameObject.tag == "Heart")
+        {
+            HeartScript HS = col.gameObject.GetComponent<HeartScript>();
+            SoundManagerScript.PlaySound("pickup");
+            SetHealth(Mathf.Min(health + HS.restoreValue, maxHealth)); //never go over max hp
+            Destroy(col.gameObject);
+        }
+        else if (col.gameObject.tag == "Key")
+        {
+            HUDScript.SetKey(true);
+            SoundManagerScript.PlaySound("pickup");
+            Destroy(col.gameObject);
+        }
     }
 
     public void Fire(Vector2 origin, float speed)
@@ -285,5 +380,33 @@ public class CharacterScript : BaseSprite
         lastShot = Time.time;
     }
 
+    public void FireInACircle(Vector2 origin, float speed, int numBullets)
+    {
+        int[] shots = new int[numBullets];
+        int step = 360 / numBullets;
+        for (int i = 0; i <= 360; i += step)
+        {
+            GameObject shot = Instantiate(spherePrefab, transform.position, Quaternion.identity);
+            shot.tag = "PlayerBullet";
+            Physics2D.IgnoreCollision(shot.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            Physics2D.IgnoreCollision(shot.GetComponent<Collider2D>(), shieldUmberella.GetComponent<Collider2D>());
 
+            float angle = i;
+            angle = angle * Mathf.PI / -180;
+            float xUnit = Mathf.Cos(angle);
+            float yUnit = Mathf.Sin(angle);
+
+            Rigidbody2D rigidBody = shot.GetComponent<Rigidbody2D>();
+            rigidBody.velocity = new Vector2(xUnit * speed, yUnit * speed);
+            Destroy(shot, 3f);
+            lastShot = Time.time;
+
+            numBullets--;
+        }
+    }
+
+    public static void SetAllItemsFalse()
+    {
+        blueCoat = redCoat = redUmbrella = blueUmbrella = hat = boots = false;
+    }
 }

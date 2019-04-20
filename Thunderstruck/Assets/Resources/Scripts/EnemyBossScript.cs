@@ -22,14 +22,20 @@ public class EnemyBossScript : EnemyScript
 
         if (col.gameObject.tag == "PlayerBullet")
         {
-            Health--;
+            TakeDamage();
             Destroy(col.gameObject);
-            if (Health < 1)
+            if (Health <= 0)
             {
-                HUDScript.SetScore(HUDScript.GetScore() + 1000);
+                HUDScript.AddToScore(1000);
 
-                SceneManager.LoadScene("Level Complete");
+                if (!MainScript.gameOver)
+                    SceneManager.LoadScene("Level Complete");
                 
+            }
+            else
+            {
+                var croutine = base.BlinkGameObject(gameObject, 2, .1f);
+                StartCoroutine(croutine);
             }
         }
     }
