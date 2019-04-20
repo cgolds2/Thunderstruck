@@ -86,10 +86,15 @@ public class EnemyScript : BaseSprite {
         shootDirection.z = 0.0f;
         float angle = 90 + Mathf.Atan2(origin.x - shootDirection.x, origin.y - shootDirection.y) * Mathf.Rad2Deg;
 
-        float angle2 = Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg;
-        shot.transform.rotation = Quaternion.AngleAxis(angle2, Vector3.forward);
+        //float angle2 = Mathf.Atan2(origin.x - shootDirection.y, origin.y - shootDirection.x) * Mathf.Rad2Deg;
+        //shot.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+
+         var v_diff = (player.transform.position - transform.position);
+        var atan2 = Mathf.Atan2(v_diff.y, v_diff.x);
+       shot.transform.rotation = Quaternion.Euler(0f, 0f, atan2 * Mathf.Rad2Deg);
 
         //shot.transform.rotation = targetRotation;
+        //Debug.Log(angle +":"+angle2);
 
         angle = angle * Mathf.PI / -180;
         float xUnit = Mathf.Cos(angle);

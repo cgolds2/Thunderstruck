@@ -42,14 +42,10 @@ public class ItemScript : MonoBehaviour
                     SetUmberellaRed(script);
                     break;
                 case Items.hat:
-                    CharacterScript.hat = true;
-                    SoundManagerScript.PlaySound("powerup");
-                    HUDScript.yellowHat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+                    SetYellowHat();
                     break;
                 case Items.boots:
-                    CharacterScript.boots = true;
-                    SoundManagerScript.PlaySound("powerup");
-                    HUDScript.redBoots.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+                    SetRedBoots();
                     break;
             }
 
@@ -57,6 +53,15 @@ public class ItemScript : MonoBehaviour
         }
     }
 
+    public static void SetYellowHat(){
+        CharacterScript.hat = true;
+        SoundManagerScript.PlaySound("powerup");
+        HUDScript.yellowHat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+    }
+
+    public static void SetRedBoots(){
+        SetRedBoots();
+    }
     public static void SetBodyBlue()
     {
         CharacterScript.blueCoat = true;

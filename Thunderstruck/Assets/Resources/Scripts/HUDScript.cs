@@ -59,21 +59,23 @@ public class HUDScript : MonoBehaviour
 
     }
     void RefreshHud(){
-        
-        if(CharacterScript.blueCoat){
-            blueCoat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        CharacterScript script = player.GetComponent<CharacterScript>();
+
+        if (CharacterScript.blueCoat){
+            ItemScript.SetBodyBlue();
         }
         if (CharacterScript.redCoat)
         {
-            redCoat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+            ItemScript.SetBodyRed();
         }
         if (CharacterScript.redUmbrella)
         {
-            redUmb.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+            ItemScript.SetUmberellaRed(script);
         }
         if (CharacterScript.blueUmbrella)
         {
-            blueUmb.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+            ItemScript.SetUmberellaBlue(script);
         }
         if (CharacterScript.boots)
         {
