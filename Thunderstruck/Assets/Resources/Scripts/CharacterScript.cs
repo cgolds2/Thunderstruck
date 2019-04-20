@@ -74,6 +74,9 @@ public class CharacterScript : BaseSprite
     {
         return health;
     }
+    public static void ResetItems(){
+        blueCoat = redCoat = redUmbrella = blueUmbrella = hat = boots = false;
+    }
     public void KillPlayer()
     {
         playerDeath.transform.position = transform.position;
