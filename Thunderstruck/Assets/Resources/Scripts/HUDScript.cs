@@ -47,8 +47,8 @@ public class HUDScript : MonoBehaviour
         Key = GameObject.Find("HUDKey");
 
         normal = Resources.Load<Material>("Sprites/DefaultMat");
-        greyed = Resources.Load<Material>("Sprites/DefaultMat");
-
+        greyed = Resources.Load<Material>("Sprites/greyedMat");
+       
         redUmb = GameObject.Find("REDumbrella");
         blueUmb = GameObject.Find("BLUEumbrella");
         redBoots = GameObject.Find("boots");
@@ -58,10 +58,36 @@ public class HUDScript : MonoBehaviour
 
 
     }
+    void RefreshHud(){
+        
+        if(CharacterScript.blueCoat){
+            blueCoat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+        }
+        if (CharacterScript.redCoat)
+        {
+            redCoat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+        }
+        if (CharacterScript.redUmbrella)
+        {
+            redUmb.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+        }
+        if (CharacterScript.blueUmbrella)
+        {
+            blueUmb.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+        }
+        if (CharacterScript.boots)
+        {
+            redBoots.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+        }
+        if (CharacterScript.hat)
+        {
+            yellowHat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
-
+        RefreshHud();
         //AddSecondToTimer();
         StartTimer();
         healthbars = new GameObject[8];
@@ -73,6 +99,7 @@ public class HUDScript : MonoBehaviour
             healthbars[i].transform.position = new Vector3((float)-5.058 + offset * i, (float)4.594, (float)-0.6);
             healthbars[i].transform.parent = HUD.transform;
         }
+
     }
     public void PauseTimer()
     {
