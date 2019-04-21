@@ -160,17 +160,29 @@ namespace Assets.Scripts
             if(roomType==RoomType.Boss){
                 rateOfFire = 3f;
             }
+            var character = GameObject.FindWithTag("Player");
             for (int i = 0; i < numEnemies; i++)
             {
-                float placeBuffer = 3;
-                float xLoc = UnityEngine.Random.Range(-1 * MainScript.mapWidth / 2 +placeBuffer, MainScript.mapWidth / 2 - placeBuffer);
-                float yLoc = UnityEngine.Random.Range(-1 * MainScript.mapHeight / 2 +placeBuffer, MainScript.mapHeight / 2 - placeBuffer);
-                if(numEnemies==1){
+                float placeBuffer = MainScript.mapHeight/1.2f;
+                float xLoc;
+                float yLoc;
+                double dist = -1;
+                do
+                {
+                    xLoc = UnityEngine.Random.Range(-1 * MainScript.mapWidth / 2, MainScript.mapWidth / 2);
+                    yLoc = UnityEngine.Random.Range(-1 * MainScript.mapHeight / 2, MainScript.mapHeight / 2);
+                    xLoc += point.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
+                    yLoc += point.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
+                    dist = MainScript.distance(xLoc, yLoc, character.transform.position.x, character.transform.position.y);
+                } while (dist < placeBuffer);
+
+
+
+                if (numEnemies==1){
                     xLoc = 0;
                     yLoc = 0;
                 }
-                xLoc += point.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
-                yLoc += point.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
+               
                 GameObject newEnemy = UnityEngine.Object.Instantiate(enemyAsset);
                 newEnemy.GetComponent<EnemyScript>().RateOfFire = rateOfFire;
                 newEnemy.tag = "Enemy";

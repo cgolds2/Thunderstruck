@@ -291,7 +291,7 @@ public class MainScript : MonoBehaviour
            var next =  GetNeighborByInt(previous.point, i);
             var dist = distance(
                 0,0,
-                next.x, next.y
+                (float) next.x, (float) next.y
             );
             if(dist>longestPath){
                 longestPath = dist;
@@ -305,7 +305,7 @@ public class MainScript : MonoBehaviour
             numEnemies = 1
         };
     }
-    static double distance(int x1, int y1, int x2, int y2)
+    public static double distance(double x1, double y1, double x2, double y2)
     {
         // Calculating distance 
         return Math.Sqrt(Math.Pow(x2 - x1, 2) +
@@ -350,11 +350,7 @@ public class MainScript : MonoBehaviour
         currentRoom.TurnOnNeighborIcons();
 
 
-        if (currentRoom.numEnemies > 0)
-        {
-            currentRoom.SetDoors(false);
-            currentRoom.SpawnEnemies();
-        }
+     
         var xBound = (MainScript.mapWidth / 2) - MainScript.mapBorderWidth;
 
         var yBound = (MainScript.mapHeight / 2) - MainScript.mapBorderHeight;
@@ -390,7 +386,11 @@ public class MainScript : MonoBehaviour
             placementX,
             placementY,
             player.transform.position.z);
-
+        if (currentRoom.numEnemies > 0)
+        {
+            currentRoom.SetDoors(false);
+            currentRoom.SpawnEnemies();
+        }
         List<GameObject> killEmAll = new List<GameObject>();
         killEmAll.AddRange(GameObject.FindGameObjectsWithTag("PlayerBullet"));
         killEmAll.AddRange(GameObject.FindGameObjectsWithTag("EnemyBullet"));
