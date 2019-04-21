@@ -67,10 +67,11 @@ public class HUDScript : MonoBehaviour
 
         if (CharacterScript.blueCoat){
             ItemScript.SetBodyBlue();
-        }
-        if (CharacterScript.redCoat)
+        }else if (CharacterScript.redCoat)
         {
             ItemScript.SetBodyRed();
+        }else{
+            ItemScript.SetBodyYellow();
         }
         if (CharacterScript.redUmbrella)
         {
