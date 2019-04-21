@@ -31,6 +31,7 @@ public class HUDScript : MonoBehaviour
     public static GameObject yellowHat;
     public static GameObject redCoat;
     public static GameObject blueCoat;
+    public static float PlayerHealthStore = 8;
 
     private void Awake()
     {
@@ -56,33 +57,41 @@ public class HUDScript : MonoBehaviour
         redCoat = GameObject.Find("Red_Coat_Pickup");
         blueCoat = GameObject.Find("Blue_Coat_Pickup");
 
-
+    }
+    public static void ResetTimer(){
+        _time = new TimeSpan(0);
     }
     void RefreshHud(){
-        
-        if(CharacterScript.blueCoat){
-            blueCoat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
-        }
-        if (CharacterScript.redCoat)
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        CharacterScript script = player.GetComponent<CharacterScript>();
+
+        if (CharacterScript.blueCoat){
+            ItemScript.SetBodyBlue();
+        }else if (CharacterScript.redCoat)
         {
-            redCoat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+            ItemScript.SetBodyRed();
+        }else{
+            ItemScript.SetBodyYellow();
         }
         if (CharacterScript.redUmbrella)
         {
-            redUmb.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+            ItemScript.SetUmberellaRed(script);
         }
         if (CharacterScript.blueUmbrella)
         {
-            blueUmb.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+            ItemScript.SetUmberellaBlue(script);
         }
         if (CharacterScript.boots)
         {
-            redBoots.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+            ItemScript.SetRedBoots();
         }
         if (CharacterScript.hat)
         {
-            yellowHat.GetComponent<SpriteRenderer>().material = HUDScript.normal;
+            ItemScript.SetYellowHat();
         }
+
+        SetTime(GetTime());
+
     }
     // Start is called before the first frame update
     void Start()
@@ -99,6 +108,7 @@ public class HUDScript : MonoBehaviour
             healthbars[i].transform.position = new Vector3((float)-5.058 + offset * i, (float)4.594, (float)-0.6);
             healthbars[i].transform.parent = HUD.transform;
         }
+        SetHealth(CharacterScript.health);
 
     }
     public void PauseTimer()
@@ -109,10 +119,7 @@ public class HUDScript : MonoBehaviour
     {
         InvokeRepeating("CallRepeat", 1, 1);
     }
-    public void ResetTimer()
-    {
-        _time = new TimeSpan();
-    }
+  
 
     public void CallRepeat()
     {

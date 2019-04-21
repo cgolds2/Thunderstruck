@@ -5,11 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class EnemyBossScript : EnemyScript
 {
+    public GameObject otherBullet;
     // Start is called before the first frame update
     void Start()
     {
         base.EnemyStart();
         Health = 10;
+        if(otherBullet != null){
+            base.spherePrefab = otherBullet;
+
+        }
     }
 
     // Update is called once per frame

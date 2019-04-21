@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 public class CharacterScript : BaseSprite
 {
     public float panSpeed;
-    private float health;
+    public static float health;
     private float maxHealth;
     public int iFrames;
     public float fireRate;
@@ -33,6 +34,9 @@ public class CharacterScript : BaseSprite
     bool played;
     float umbrellaXOffset = -.02f;
     float umbrellaYOffset = -0.419f;
+    public Sprite IdleUmbYellow;
+    public Sprite IdleUmbBlue;
+    public Sprite IdleUmbRed;
 
     //item flags
     public static bool blueCoat, redCoat, redUmbrella, blueUmbrella, hat, boots = false;
@@ -48,8 +52,8 @@ public class CharacterScript : BaseSprite
         headScript = head.GetComponent<PlayerHeadScript>();
         played = false;
         panSpeed = 10;
-        health = 8;
-        maxHealth = health;
+        //health = 8;
+        maxHealth = 8;
         iFrames = 0;
         fireRate = .5f;
         lastShot = 0f;
@@ -71,6 +75,9 @@ public class CharacterScript : BaseSprite
     {
         return health;
     }
+    public static void ResetItems(){
+        blueCoat = redCoat = redUmbrella = blueUmbrella = hat = boots = false;
+    }
     public void KillPlayer()
     {
         playerDeath.transform.position = transform.position;
@@ -84,18 +91,18 @@ public class CharacterScript : BaseSprite
         playerDeath.GetComponent<Renderer>().enabled = true;
 
     }
-    public void SetHealth(float health)
+    public void SetHealth(float newHP)
     {
-        this.health = health;
+        health = newHP;
         if (health <= 0)
         {
             health = 0;
             if (CharacterScript.hat == true) //dont die if wearing the hat
             {
                 CharacterScript.hat = false;
-                this.health = 1;
+                health = 1;
                 FireInACircle(transform.position, 7, 9);
-                HUDScript.SetHealth(this.health);
+                HUDScript.SetHealth(health);
                 HUDScript.yellowHat.GetComponent<SpriteRenderer>().material = HUDScript.greyed;
                 return;
             }
@@ -231,16 +238,18 @@ public class CharacterScript : BaseSprite
         {
             if(playerDeath.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("PlayerDeath")){
                 //
-                Debug.Log("Playing");
+                //Debug.Log("Playing");
                 played = true;
             }
             else
             {
                 if (played)
                 {
+                    SendScore();
+
                     SceneManager.LoadScene("Game Over");
                 }
-                Debug.Log("NotPlaying");
+                //Debug.Log("NotPlaying");
 
             }
         }
@@ -250,6 +259,55 @@ public class CharacterScript : BaseSprite
         base.BaseUpdate();
 
     }
+    private class ScoreClass{
+        public int score;
+        public int gameTime;
+        public string username;
+
+    }
+    public static void SendScore(){
+        string baseurl = "https://umbrellastudios.azurewebsites.net";
+        string scoreUrl = "/Scores/CreateNewScore";
+        string userUrl = "/Scores/CreateNewUser";
+        int score = HUDScript.GetScore();
+        int time = (int) HUDScript.GetTime().TotalSeconds;
+        ScoreClass sc = new ScoreClass
+        {
+            score = score,
+            gameTime = time,
+            username = MainMenu.username
+        };
+        var uwr = new UnityWebRequest(baseurl + scoreUrl, "POST");
+        var jsonString = JsonUtility.ToJson(sc) ?? "";
+
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonString);
+        uwr.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        uwr.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        uwr.SetRequestHeader("Content-Type", "application/json");
+
+
+
+        //UnityWebRequest uwr = UnityWebRequest.Post(baseurl + scoreUrl, form);
+        uwr.SendWebRequest();
+
+        if (uwr.isNetworkError)
+        {
+            Debug.Log("Error While Sending: " + uwr.error);
+        }
+        else
+        {
+            Debug.Log("Received: " + uwr.downloadHandler.text);
+        }
+
+     
+
+        //UnityWebRequest request = UnityWebRequest.Put(baseurl +scoreUrl , jsonString);
+        //request.SetRequestHeader("Content-Type", "application/json");
+        //var x = request.SendWebRequest();
+
+    }
+   
+
     public void WalkDirection(int direction)
     {
 

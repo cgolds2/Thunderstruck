@@ -106,37 +106,47 @@ namespace Assets.Scripts
                     throw new Exception("Shouldnt hit this level");
             }
         }
-        public void SpawnItem(Point p)
+        public void SpawnItem(Point p, GameObject textCanvas, GameObject text)
         {
-            var  xLoc = p.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
+            var xLoc = p.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
             var yLoc = p.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
             var itemToSpawn = ItemsManager.GetRandomItem(MainScript.r);
             GameObject obToSpawn = null;
+            var itemText = text.GetComponent<UnityEngine.UI.Text>();
             switch (itemToSpawn)
             {
                 case Items.blueCoat:
+                    itemText.text = "Reduces Damage Taken";
                     obToSpawn = Resources.Load<GameObject>("Sprites/item_coat_blue");
                     break;
                 case Items.redCoat:
+                    itemText.text = "Increases Heart Drops";
                     obToSpawn = Resources.Load<GameObject>("Sprites/item_coat_red");
                     break;
                 case Items.redUmbrella:
+                    itemText.text = "Deal (and take) bonus Damage";
                     obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_red");
                     break;
                 case Items.blueUmbrella:
+                    itemText.text = "Increase score earned";
                     obToSpawn = Resources.Load<GameObject>("Sprites/item_umberella_blue");
                     break;
                 case Items.hat:
+                    itemText.text = "if health hits 0, set health to 1 and fire a barrage of bullets.\nThe hat is then lost";
                     obToSpawn = Resources.Load<GameObject>("Sprites/item_hat");
                     break;
                 case Items.boots:
                     obToSpawn = Resources.Load<GameObject>("Sprites/item_boots");
+                    itemText.text = "Increase movement speed";
                     break;
             }
+            itemText.text = "\n" + itemText.text;
             var x  = UnityEngine.Object.Instantiate(obToSpawn);
             x.GetComponent<ItemScript>().Item = itemToSpawn;
             x.transform.position = new Vector3(xLoc, yLoc, -1);
+            textCanvas.transform.position = new Vector3(xLoc, yLoc, -1);
         }
+
 
         public
         void SpawnEnemies()
@@ -160,17 +170,31 @@ namespace Assets.Scripts
             if(roomType==RoomType.Boss){
                 rateOfFire = 3f;
             }
+            var character = GameObject.FindWithTag("Player");
             for (int i = 0; i < numEnemies; i++)
             {
-               
-                float xLoc = UnityEngine.Random.Range(-1 * MainScript.mapWidth / 2, MainScript.mapWidth / 2);
-                float yLoc = UnityEngine.Random.Range(-1 * MainScript.mapHeight / 2, MainScript.mapHeight / 2);
-                if(numEnemies==1){
+                float placeBuffer = MainScript.mapHeight/1.2f;
+                float xLoc;
+                float yLoc;
+                double dist = -1;
+                do
+                {
+                    xLoc = UnityEngine.Random.Range(-1 * MainScript.mapWidth / 2, MainScript.mapWidth / 2);
+                    yLoc = UnityEngine.Random.Range(-1 * MainScript.mapHeight / 2, MainScript.mapHeight / 2);
+                    xLoc += point.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
+                    yLoc += point.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
+                    dist = MainScript.distance(xLoc, yLoc, character.transform.position.x, character.transform.position.y);
+                } while (dist < placeBuffer);
+
+
+
+                if (numEnemies==1){
                     xLoc = 0;
                     yLoc = 0;
+                    xLoc += point.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
+                    yLoc += point.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
                 }
-                xLoc += point.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
-                yLoc += point.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
+               
                 GameObject newEnemy = UnityEngine.Object.Instantiate(enemyAsset);
                 newEnemy.GetComponent<EnemyScript>().RateOfFire = rateOfFire;
                 newEnemy.tag = "Enemy";
@@ -198,8 +222,8 @@ namespace Assets.Scripts
                 var RoomType =targetRoom.roomType;
                 if ( RoomType == RoomType.Boss)
                 {
-                    opend = Resources.Load<Sprite>("Artwork/Long Stone Grass Path Boss");
-                    closedd = Resources.Load<Sprite>("Artwork/Long Grass Path Boss");
+                    opend = Resources.Load<Sprite>("Artwork/LongStoneGrassPathBoss2");
+                    closedd = Resources.Load<Sprite>("Artwork/LongGrassPathBoss2");
                 }else if(RoomType == RoomType.Item && targetRoom.isRoomLocked)
                 {
                     opend = open;

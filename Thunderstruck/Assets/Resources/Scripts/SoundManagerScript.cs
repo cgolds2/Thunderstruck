@@ -58,7 +58,7 @@ public class SoundManagerScript : MonoBehaviour
                 audioSrc.PlayOneShot(playerShootSound);
                 break;
             case "death":
-                Debug.Log("DEATH SOUND");
+                //Debug.Log("DEATH SOUND");
                 audioSrc.PlayOneShot(playerDeathSound);
                 break;
             case "walking":
@@ -66,13 +66,13 @@ public class SoundManagerScript : MonoBehaviour
                     audioSrc.PlayOneShot(playerWalkingSound);
                 break;
             case "hit":
-                Debug.Log("HIT SOUND");
+                //Debug.Log("HIT SOUND");
                 //GameObject thePlayer = GameObject.Find("ThePlayer");
                 //CharacterScript playerScript = thePlayer.GetComponent<CharacterScript>();
                 audioSrc.PlayOneShot(playerHitSound);
                 break;
             case "reflect":
-                Debug.Log("Reflect");
+                //Debug.Log("Reflect");
                 audioSrc.PlayOneShot(playerReflectSound);
                 break;
             case "pickup":
