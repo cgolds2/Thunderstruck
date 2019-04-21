@@ -54,9 +54,10 @@ public class MainScript : MonoBehaviour
         {
 
             CalcSeed(null);
+            HUDScript.ResetTimer();
+            CharacterScript.ResetItems();
         }
-        HUD.ResetTimer();
-        CharacterScript.ResetItems();
+
         mainCamera = GameObject.Find("MainCamera");
         currentRoom = null;
         GameObject mapPic = GameObject.Find("templateRoom");
