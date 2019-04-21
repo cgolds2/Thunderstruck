@@ -7,7 +7,9 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     public static string username;
-    public Text usernameBox;
+    public GameObject userBoxObject;
+
+    public InputField usernameBox;
     public GameObject pointerObject;
     public void PlayGame()
     {
@@ -36,6 +38,9 @@ public class MainMenu : MonoBehaviour
 
     public void Start()
     {
+        usernameBox = userBoxObject.GetComponent<InputField>();
+        username = PlayerPrefs.GetString("username");
+
         usernameBox.text = username;
 
         originalY = pointerObject.transform.position.y;
@@ -52,19 +57,19 @@ public class MainMenu : MonoBehaviour
 
     public void UsernameChanged(){
         MainMenu.username = usernameBox.text;
+ 
+            PlayerPrefs.SetString("username",username);
     }
 
 
     public static void QuitGame()
     {
         // save any game data here
-#if UNITY_EDITOR
+
         // Application.Quit() does not work in the editor so
         // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
+
          Application.Quit();
-#endif
     }
 
     public void Leaderboard()
