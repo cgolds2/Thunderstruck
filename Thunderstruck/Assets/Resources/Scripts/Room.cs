@@ -181,6 +181,8 @@ namespace Assets.Scripts
                 if (numEnemies==1){
                     xLoc = 0;
                     yLoc = 0;
+                    xLoc += point.x * (MainScript.mapWidth + MainScript.placementWidthBuffer);
+                    yLoc += point.y * (MainScript.mapHeight + MainScript.placementHeightBuffer);
                 }
                
                 GameObject newEnemy = UnityEngine.Object.Instantiate(enemyAsset);

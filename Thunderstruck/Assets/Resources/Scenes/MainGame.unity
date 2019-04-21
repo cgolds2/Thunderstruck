@@ -2948,6 +2948,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5d31501e049844e8eec9018d16d860, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userBoxObject: {fileID: 0}
+  usernameBox: {fileID: 0}
+  pointerObject: {fileID: 0}
 --- !u!114 &1177543368
 MonoBehaviour:
   m_ObjectHideFlags: 0
