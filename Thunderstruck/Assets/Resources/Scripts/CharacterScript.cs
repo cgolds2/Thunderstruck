@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 public class CharacterScript : BaseSprite
@@ -244,6 +245,8 @@ public class CharacterScript : BaseSprite
             {
                 if (played)
                 {
+                    SendScore();
+
                     SceneManager.LoadScene("Game Over");
                 }
                 //Debug.Log("NotPlaying");
@@ -256,6 +259,55 @@ public class CharacterScript : BaseSprite
         base.BaseUpdate();
 
     }
+    private class ScoreClass{
+        public int score;
+        public int gameTime;
+        public string username;
+
+    }
+    public void SendScore(){
+        string baseurl = "https://umbrellastudios.azurewebsites.net";
+        string scoreUrl = "/Scores/CreateNewScore";
+        string userUrl = "/Scores/CreateNewUser";
+        int score = HUDScript.GetScore();
+        int time = (int) HUDScript.GetTime().TotalSeconds;
+        ScoreClass sc = new ScoreClass
+        {
+            score = score,
+            gameTime = time,
+            username = MainMenu.username
+        };
+        var uwr = new UnityWebRequest(baseurl + scoreUrl, "POST");
+        var jsonString = JsonUtility.ToJson(sc) ?? "";
+
+        byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonString);
+        uwr.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        uwr.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        uwr.SetRequestHeader("Content-Type", "application/json");
+
+
+
+        //UnityWebRequest uwr = UnityWebRequest.Post(baseurl + scoreUrl, form);
+        uwr.SendWebRequest();
+
+        if (uwr.isNetworkError)
+        {
+            Debug.Log("Error While Sending: " + uwr.error);
+        }
+        else
+        {
+            Debug.Log("Received: " + uwr.downloadHandler.text);
+        }
+
+     
+
+        //UnityWebRequest request = UnityWebRequest.Put(baseurl +scoreUrl , jsonString);
+        //request.SetRequestHeader("Content-Type", "application/json");
+        //var x = request.SendWebRequest();
+
+    }
+   
+
     public void WalkDirection(int direction)
     {
 
