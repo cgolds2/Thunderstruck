@@ -210,8 +210,8 @@ namespace Assets.Scripts
                 var RoomType =targetRoom.roomType;
                 if ( RoomType == RoomType.Boss)
                 {
-                    opend = Resources.Load<Sprite>("Artwork/Long Stone Grass Path Boss");
-                    closedd = Resources.Load<Sprite>("Artwork/Long Grass Path Boss");
+                    opend = Resources.Load<Sprite>("Artwork/LongStoneGrassPathBoss2");
+                    closedd = Resources.Load<Sprite>("Artwork/LongGrassPathBoss2");
                 }else if(RoomType == RoomType.Item && targetRoom.isRoomLocked)
                 {
                     opend = open;
