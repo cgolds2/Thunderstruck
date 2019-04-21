@@ -25,10 +25,12 @@ public class MainScript : MonoBehaviour
     public static bool gameOver;
     public static float currentRoomY;
     public static HUDScript HUD;
-  
+    public GameObject itemTextCanvas;
+    public GameObject itemText;
+
 
     // Start is called before the first frame update
-  public static void CalcSeed(int? _seed)
+    public static void CalcSeed(int? _seed)
     {
         MainScript.gameOver = false;
         HUDScript.SetLevel(1);
@@ -254,7 +256,7 @@ public class MainScript : MonoBehaviour
                             isRoomLocked = true,
                             numEnemies = 0
                         };
-                        map[potential].SpawnItem(potential);
+                        map[potential].SpawnItem(potential,itemTextCanvas, itemText);
                         return;
                     }
                 }
