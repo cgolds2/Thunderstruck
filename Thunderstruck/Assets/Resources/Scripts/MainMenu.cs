@@ -2,14 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-   public void PlayGame()
+    public static string username;
+    public Text usernameBox;
+    public GameObject pointerObject;
+    public void PlayGame()
     {
+        if (string.IsNullOrEmpty(username))
+        {
+            pointerObject.SetActive(true);
+        }
+        else
+        {
+        
         MainScript.CalcSeed(null);
         HUDScript.SetScore(0);
         SceneManager.LoadScene("MainGame");
+    }
     }
     public void NextLevel()
     {
@@ -18,6 +30,30 @@ public class MainMenu : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainGame");
 
     }
+    Vector3 floatY;
+    float originalY;
+
+
+    public void Start()
+    {
+        usernameBox.text = username;
+
+        originalY = pointerObject.transform.position.y;
+            pointerObject.SetActive(false);
+
+    
+    }
+    public void Update()
+    {
+        floatY = pointerObject.transform.position;
+        floatY.y = originalY + (Mathf.Sin(Time.time) * 50);
+        pointerObject.transform.position = floatY;
+    }
+
+    public void UsernameChanged(){
+        MainMenu.username = usernameBox.text;
+    }
+
 
     public static void QuitGame()
     {
