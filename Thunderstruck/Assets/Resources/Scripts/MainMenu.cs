@@ -21,7 +21,9 @@ public class MainMenu : MonoBehaviour
         {
         
         MainScript.CalcSeed(null);
-        HUDScript.SetScore(0);
+            HUDScript.ResetTimer();
+        CharacterScript.ResetItems();
+            HUDScript.SetScore(0);
         SceneManager.LoadScene("MainGame");
     }
     }
@@ -38,21 +40,27 @@ public class MainMenu : MonoBehaviour
 
     public void Start()
     {
-        usernameBox = userBoxObject.GetComponent<InputField>();
-        username = PlayerPrefs.GetString("username");
+        if(userBoxObject != null){
+            usernameBox = userBoxObject.GetComponent<InputField>();
+            username = PlayerPrefs.GetString("username");
 
-        usernameBox.text = username;
+            usernameBox.text = username;
 
-        originalY = pointerObject.transform.position.y;
+            originalY = pointerObject.transform.position.y;
             pointerObject.SetActive(false);
+        }
+      
 
     
     }
     public void Update()
     {
-        floatY = pointerObject.transform.position;
-        floatY.y = originalY + (Mathf.Sin(Time.time) * 50);
-        pointerObject.transform.position = floatY;
+        if(userBoxObject != null){
+            floatY = pointerObject.transform.position;
+            floatY.y = originalY + (Mathf.Sin(Time.time) * 50);
+            pointerObject.transform.position = floatY;
+        }
+
     }
 
     public void UsernameChanged(){

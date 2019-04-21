@@ -17,7 +17,7 @@ public class LevelCompletedScript : MonoBehaviour
         {
             NextLevelButton.SetActive(false);
             LevelCompleted.text = "Demo Completed";
-
+            CharacterScript.SendScore();
         }
         else
         {

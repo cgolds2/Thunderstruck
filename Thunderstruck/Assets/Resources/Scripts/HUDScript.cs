@@ -58,6 +58,9 @@ public class HUDScript : MonoBehaviour
         blueCoat = GameObject.Find("Blue_Coat_Pickup");
 
     }
+    public static void ResetTimer(){
+        _time = new TimeSpan(0);
+    }
     void RefreshHud(){
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         CharacterScript script = player.GetComponent<CharacterScript>();
@@ -85,6 +88,9 @@ public class HUDScript : MonoBehaviour
         {
             ItemScript.SetYellowHat();
         }
+
+        SetTime(GetTime());
+
     }
     // Start is called before the first frame update
     void Start()
@@ -112,10 +118,7 @@ public class HUDScript : MonoBehaviour
     {
         InvokeRepeating("CallRepeat", 1, 1);
     }
-    public void ResetTimer()
-    {
-        _time = new TimeSpan();
-    }
+  
 
     public void CallRepeat()
     {

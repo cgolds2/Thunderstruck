@@ -265,7 +265,7 @@ public class CharacterScript : BaseSprite
         public string username;
 
     }
-    public void SendScore(){
+    public static void SendScore(){
         string baseurl = "https://umbrellastudios.azurewebsites.net";
         string scoreUrl = "/Scores/CreateNewScore";
         string userUrl = "/Scores/CreateNewUser";
