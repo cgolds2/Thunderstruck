@@ -157,14 +157,18 @@ public class CharacterScript : BaseSprite
                 WalkDirection(1);
                 isIdle = false;
                 SoundManagerScript.PlaySound("walking");
-                pos.y += adjPanSpeed * Time.deltaTime;
+                //pos.y += adjPanSpeed * Time.deltaTime;
+
+                bodyMC.velocity += new Vector2(0, panSpeed);
             }
             if (Input.GetKey("s"))
             {
                 WalkDirection(3);
                 isIdle = false;
                 SoundManagerScript.PlaySound("walking");
-                pos.y -= adjPanSpeed * Time.deltaTime;
+                //pos.y -= adjPanSpeed * Time.deltaTime;
+
+                bodyMC.velocity += new Vector2(0,-panSpeed);
             }
             if (Input.GetKey("d"))
             {
@@ -172,7 +176,9 @@ public class CharacterScript : BaseSprite
                 WalkDirection(0);
 
                 SoundManagerScript.PlaySound("walking");
-                pos.x += adjPanSpeed * Time.deltaTime;
+                //pos.x += adjPanSpeed * Time.deltaTime;
+
+                bodyMC.velocity += new Vector2(panSpeed, 0);
             }
             if (Input.GetKey("a"))
             {
@@ -180,7 +186,8 @@ public class CharacterScript : BaseSprite
                 WalkDirection(2);
 
                 SoundManagerScript.PlaySound("walking");
-                pos.x -= adjPanSpeed * Time.deltaTime;
+                bodyMC.velocity += new Vector2(-panSpeed, 0);
+                //pos.x -= adjPanSpeed * Time.deltaTime;
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
