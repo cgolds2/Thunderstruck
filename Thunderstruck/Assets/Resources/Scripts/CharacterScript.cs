@@ -37,7 +37,8 @@ public class CharacterScript : BaseSprite
     public Sprite IdleUmbYellow;
     public Sprite IdleUmbBlue;
     public Sprite IdleUmbRed;
-
+    Vector3 UmbrellaDefault;
+    
     //item flags
     public static bool blueCoat, redCoat, redUmbrella, blueUmbrella, hat, boots = false;
 
@@ -70,6 +71,9 @@ public class CharacterScript : BaseSprite
         umbrellaOffset = new Vector3(umbrellaXOffset,umbrellaYOffset, -1);
         base.BaseStart();
         playerDeath.GetComponent<Renderer>().enabled = false;
+
+
+        UmbrellaDefault = idleUmberella.transform.position;
     }
     public float GetHeath()
     {
@@ -134,6 +138,7 @@ public class CharacterScript : BaseSprite
             bodyMC.velocity = new Vector3(0, 0, 0);
             Vector3 pos = transform.position;
 
+
             // Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
 
             //  bodyMC.velocity = new Vector2(movement.x *panSpeed, movement.y * panSpeed);
@@ -145,8 +150,19 @@ public class CharacterScript : BaseSprite
                 {
                     Fire(pos, 5);
                     SoundManagerScript.PlaySound("fire");
+
+                    
                 }
             }
+
+            if (Time.time > lastShot + .5)
+            {
+                idleUmberella.transform.rotation = new Quaternion(0, 0, 0, 0);
+                idleUmberella.transform.Rotate(0, 0, 295);
+                idleUmberella.transform.position = bodyMC.transform.position + UmbrellaDefault;
+            }
+
+;           
             float adjPanSpeed = panSpeed;
             if(boots == true)
             {
@@ -441,6 +457,10 @@ public class CharacterScript : BaseSprite
         Rigidbody2D rigidBody = shot.GetComponent<Rigidbody2D>();
         rigidBody.velocity = new Vector2(xUnit * speed, yUnit * speed);
         Destroy(shot, 3f);
+        
+        idleUmberella.transform.position = bodyMC.transform.position + new Vector3(xUnit,yUnit,-1);   
+        idleUmberella.transform.rotation = new Quaternion(0, 0, 0, 0);
+        idleUmberella.transform.Rotate(0, 0, angle * 180 / Mathf.PI);
 
         lastShot = Time.time;
     }
