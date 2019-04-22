@@ -44,7 +44,6 @@ public class HUDScript : MonoBehaviour
         TimeText = Time.GetComponent<Text>();
         Level = GameObject.Find("Level");
         LevelText = Level.GetComponent<Text>();
-        LevelText.text = "Level: " + _level.ToString();
         Key = GameObject.Find("HUDKey");
 
         normal = Resources.Load<Material>("Sprites/DefaultMat");
@@ -64,6 +63,8 @@ public class HUDScript : MonoBehaviour
     void RefreshHud(){
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         CharacterScript script = player.GetComponent<CharacterScript>();
+        LevelText.text = "Level: " + _level.ToString();
+        ScoreText.text = "SCORE: " + _score.ToString();
 
         if (CharacterScript.blueCoat){
             ItemScript.SetBodyBlue();
@@ -109,6 +110,7 @@ public class HUDScript : MonoBehaviour
             healthbars[i].transform.parent = HUD.transform;
         }
         SetHealth(CharacterScript.health);
+
 
     }
     public void PauseTimer()
