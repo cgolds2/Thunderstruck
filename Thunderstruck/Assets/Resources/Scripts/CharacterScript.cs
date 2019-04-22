@@ -465,7 +465,7 @@ public class CharacterScript : BaseSprite
     }
     public IEnumerator RotateUmbrella()
     {
-        for (int i = 0; i < 35; i++)
+        for (int i = 0; i < 35 || Input.GetKey(KeyCode.Space); i++)
         {
             shieldUmberella.transform.Rotate(Vector3.forward * 270 * Time.deltaTime);
             yield return new WaitForSeconds(.01f);
