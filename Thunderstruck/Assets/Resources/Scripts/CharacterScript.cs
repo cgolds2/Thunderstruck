@@ -37,6 +37,7 @@ public class CharacterScript : BaseSprite
     public Sprite IdleUmbYellow;
     public Sprite IdleUmbBlue;
     public Sprite IdleUmbRed;
+    public bool shieldCharge;
 
     //item flags
     public static bool blueCoat, redCoat, redUmbrella, blueUmbrella, hat, boots = false;
@@ -59,6 +60,7 @@ public class CharacterScript : BaseSprite
         lastShot = 0f;
         damageGracePeriod = .6f;
         lastHitTaken = 0f;
+        shieldCharge = true;
         spherePrefab = Resources.Load<GameObject>("Sprites/sphere");
 
         Physics2D.IgnoreCollision(shieldUmberella.GetComponent<Collider2D>(), GetComponent<Collider2D>());
@@ -182,11 +184,13 @@ public class CharacterScript : BaseSprite
                 SoundManagerScript.PlaySound("walking");
                 pos.x -= adjPanSpeed * Time.deltaTime;
             }
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && shieldCharge)
             {
                 shieldUmberella.SetActive(true);
                 idleUmberella.SetActive(false);
                 isUmbrellaActive = true;
+                shieldCharge = false;
+                SwingUmbrella();
                 //body.GetComponent<SpriteRenderer>().sprite = holdingHand;
 
                 //Vector3 shootDirection;
@@ -199,17 +203,20 @@ public class CharacterScript : BaseSprite
                 ////float yUnit = Mathf.Sin(angle);
                 //shieldUmberella.transform.rotation = Quaternion.Euler(shieldUmberella.transform.rotation.x , shieldUmberella.transform.rotation.x, angle);
             }
-            if (Input.GetKey(KeyCode.Space))
-            {
-                shieldUmberella.transform.Rotate(Vector3.forward * 230 * Time.deltaTime);
-                isUmbrellaActive = true;
-            }
+            //if (Input.GetKey(KeyCode.Space) && shieldCharge)
+            //{
+            //    //shieldUmberella.transform.Rotate(Vector3.forward * 230 * Time.deltaTime);
+            //    isUmbrellaActive = true;
+            //    SwingUmbrella();
+            //    //isUmbrellaActive = true;
+            //}
             if (Input.GetKeyUp(KeyCode.Space))
             {
-                shieldUmberella.SetActive(false);
-                shieldUmberella.transform.rotation = startRotation;
-                idleUmberella.SetActive(true);
-                isUmbrellaActive = false ;
+                //shieldUmberella.SetActive(false);
+                //shieldUmberella.transform.rotation = startRotation;
+                //idleUmberella.SetActive(true);
+                //isUmbrellaActive = false ;
+                //Invoke("RestoreShield", 2);
 
             }
             if (isIdle)
@@ -438,6 +445,43 @@ public class CharacterScript : BaseSprite
         lastShot = Time.time;
     }
 
+    public void SwingUmbrella()
+    {
+        Vector3 shootDirection;
+        shootDirection = Input.mousePosition;
+        shootDirection.z = 0.0f;
+        var v_diff = (Camera.main.ScreenToWorldPoint(shootDirection) - shieldUmberella.transform.position);
+        //var atan2 = Mathf.Atan2(v_diff.y, v_diff.x);
+        //Quaternion a = transform.rotation;
+        //a.z = atan2 * Mathf.Rad2Deg;
+        //shieldUmberella.transform.rotation = Quaternion.Lerp(transform.rotation, a, .3f);
+        //var v_diff = (player.transform.position - transform.position);
+        var atan2 = Mathf.Atan2(v_diff.y, v_diff.x);
+        shieldUmberella.transform.rotation = Quaternion.Euler(0f, 0f, (atan2 * Mathf.Rad2Deg) -160);
+        // shieldUmberella.transform.rotation = Quaternion.Lerp(Quaternion.Euler(0f, 0f, (atan2 * Mathf.Rad2Deg)), Quaternion.Euler(0f, 0f, (atan2 * Mathf.Rad2Deg) + 100), .2f);
+        //shieldUmberella.transform.rotation = Quaternion.Lerp(shieldUmberella.transform.rotation, Quaternion.Euler(0f, 0f, (atan2 * Mathf.Rad2Deg) + 270), .2f);
+        var croutine = RotateUmbrella();
+        StartCoroutine(croutine);
+    }
+    public IEnumerator RotateUmbrella()
+    {
+        for (int i = 0; i < 35 || Input.GetKey(KeyCode.Space); i++)
+        {
+            shieldUmberella.transform.Rotate(Vector3.forward * 270 * Time.deltaTime);
+            yield return new WaitForSeconds(.01f);
+        }
+
+        shieldUmberella.SetActive(false);
+        shieldUmberella.transform.rotation = startRotation;
+        idleUmberella.SetActive(true);
+        Invoke("RestoreShield", .6f);
+    }
+
+    public void RestoreShield()
+    {
+        shieldCharge = true;
+    }
+
     public void FireInACircle(Vector2 origin, float speed, int numBullets)
     {
         int[] shots = new int[numBullets];
@@ -468,3 +512,4 @@ public class CharacterScript : BaseSprite
         blueCoat = redCoat = redUmbrella = blueUmbrella = hat = boots = false;
     }
 }
+
