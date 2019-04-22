@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -19,6 +20,15 @@ public class EnemyScript : BaseSprite {
     public float Health { get => health; set => health = value; }
     public float RateOfFire { get => rateOfFire; set => rateOfFire = value; }
     public float BulletSpeed { get => bulletSpeed; set => bulletSpeed = value; }
+    private new SpriteRenderer renderer;
+    public int skin = 0;
+
+    public List<SpriteCollection> cloudSkinds = new List<SpriteCollection>();
+    public SpriteCollection skin01 = new SpriteCollection();
+    public SpriteCollection skin02= new SpriteCollection();
+    public SpriteCollection skin03= new SpriteCollection();
+
+    private bool isDead = false;
 
     // Use this for initialization
     public void EnemyStart(){
@@ -29,6 +39,9 @@ public class EnemyScript : BaseSprite {
     }
     void Start()
     {
+        
+        renderer = GetComponent<SpriteRenderer>();
+
         player = GameObject.FindWithTag("Player");
         spherePrefab = Resources.Load<GameObject>("Sprites/tempSphere");
         animator = GetComponent<Animator>();
@@ -37,6 +50,50 @@ public class EnemyScript : BaseSprite {
         base.BaseStart();
         StartTimer();
         blinkRoutine = base.BlinkGameObject(gameObject, 2, .2f);
+
+        skin01.sheet = Resources.Load<Texture>("Artwork/Enemy1Pulsating");
+        skin02.sheet = Resources.Load<Texture>("Artwork/Enemy2Pulsating");
+        skin03.sheet = Resources.Load<Texture>("Artwork/Enemy3Pulsating");
+
+        cloudSkinds.Add(skin01);
+        cloudSkinds.Add(skin02);
+        cloudSkinds.Add(skin03);
+
+        foreach (SpriteCollection coll in cloudSkinds)
+        {
+            var thesprites = Resources.LoadAll<Sprite>("Artwork/" + coll.sheet.name);
+            coll.sprites = thesprites;
+        }
+    }
+
+    void LateUpdate()
+    {
+        //Select the correct sprite
+        if(skin > 0 && !isDead)
+        {
+            string spriteName = renderer.sprite.name.Split('_').Last();
+
+
+            SpriteCollection coll = cloudSkinds[(int)skin];
+
+            //Get the name
+
+
+            //Search for the correct name
+            if (coll == null || coll.sprites == null) return;
+            var sprites = coll.sprites.Where(item => item.name.Split('_').Last() == spriteName).ToArray();
+            if(sprites != null && sprites.Length > 0)
+            {
+                Sprite newSprite = sprites[0];
+                if (newSprite)
+                    renderer.sprite = newSprite;
+            }
+
+          
+        }
+     
+         
+        
     }
 
     public void StartTimer()
@@ -193,7 +250,7 @@ public class EnemyScript : BaseSprite {
                 SpawnHeart(heartDropRestoreValue, gameObject.transform.position.x, gameObject.transform.position.y);
             }
         }
-     
+        isDead = true;
         animator.SetTrigger("KillCloud");
 
     }

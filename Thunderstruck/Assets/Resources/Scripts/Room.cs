@@ -196,7 +196,14 @@ namespace Assets.Scripts
                 }
                
                 GameObject newEnemy = UnityEngine.Object.Instantiate(enemyAsset);
-                newEnemy.GetComponent<EnemyScript>().RateOfFire = rateOfFire;
+                var script = newEnemy.GetComponent<EnemyScript>();
+                script.RateOfFire = rateOfFire;
+                if(roomType == RoomType.Normal)
+                {
+                  script.skin = HUDScript.GetLevel()-1;
+                   script.Health += HUDScript.GetLevel() - 1;
+                    script.RateOfFire += HUDScript.GetLevel() - 1;
+                }
                 newEnemy.tag = "Enemy";
                 Vector3 position = new Vector3(
                   xLoc,

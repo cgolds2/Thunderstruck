@@ -86,7 +86,7 @@ public class MainMenu : MonoBehaviour
 #if UNITY_EDITOR
         //idk    
 #else
-              Application.OpenURL("https://umbrellastudios.azurewebsites.net/Home/Leaderboards");
+              Application.OpenURL("https://umbrellastudios.azurewebsites.net/Scores/Index");
 
 #endif
     }
