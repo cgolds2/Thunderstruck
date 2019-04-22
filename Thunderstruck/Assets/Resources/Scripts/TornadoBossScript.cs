@@ -7,12 +7,18 @@ public class TornadoBossScript : EnemyScript
 {
     // Start is called before the first frame update
     private int numHits = 0;
+    public int iFrames;
+    public float damageGracePeriod;
+    public float lastHitTaken;
     void Start()
     {
         base.EnemyStart();
         Health = 30;
         RateOfFire = .5f;
         BulletSpeed = 10f;
+        iFrames = 0;
+        damageGracePeriod = .6f;
+        lastHitTaken = 0f;
 
         InvokeRepeating("CallSpawnTornados", 5, 20);
     }
@@ -28,26 +34,31 @@ public class TornadoBossScript : EnemyScript
 
         if (col.gameObject.tag == "PlayerBullet")
         {
-            TakeDamage();
-            numHits++;
-            Destroy(col.gameObject);
-            if (Health <= 0)
+            if (Time.time > damageGracePeriod + lastHitTaken)
             {
-                HUDScript.AddToScore(1000);
-                if (!MainScript.gameOver)
-                    SceneManager.LoadScene("Level Complete");
-
-            }
-            else
-            {
-                var croutine = base.BlinkGameObject(gameObject, 2, .1f);
-                StartCoroutine(croutine);
-                if (Health % 5 == 0 || numHits ==5 )
+                TakeDamage();
+                numHits++;
+                
+                if (Health <= 0)
                 {
-                    base.FireInACircle(transform.position, 4, 15);
-                    numHits = 0;
+                    HUDScript.AddToScore(1000);
+                    if (!MainScript.gameOver)
+                        SceneManager.LoadScene("Level Complete");
+
                 }
+                else
+                {
+                    var croutine = base.BlinkGameObject(gameObject, 2, .1f);
+                    StartCoroutine(croutine);
+                    if (Health % 5 == 0 || numHits == 5)
+                    {
+                        base.FireInACircle(transform.position, 4, 15);
+                        numHits = 0;
+                    }
+                }
+                lastHitTaken = Time.time;
             }
+            Destroy(col.gameObject);
         }
     }
 
