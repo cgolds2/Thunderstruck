@@ -20,7 +20,7 @@ public class TornadoBossScript : EnemyScript
         damageGracePeriod = .6f;
         lastHitTaken = 0f;
 
-        InvokeRepeating("CallSpawnTornados", 5, 20);
+        InvokeRepeating("CallSpawnTornados", 5, 15);
     }
 
     // Update is called once per frame
