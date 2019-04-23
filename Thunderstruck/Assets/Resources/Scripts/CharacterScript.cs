@@ -359,7 +359,17 @@ public class CharacterScript : BaseSprite
                 {
                     HUDScript.SetKey(false);
                     targetRoom.isRoomLocked = false;
-                    MainScript.currentRoom.SetDoors(true);
+                    for (int i = 0; i < 4; i++)
+                    {
+                       var tKeyRoomPoint =  MainScript.GetNeighborByInt(targetRoom.point, i);
+                        if(MainScript.map.ContainsKey(tKeyRoomPoint)){
+                            var tKeyRoom = MainScript.map[tKeyRoomPoint];
+                            tKeyRoom.SetDoors(true);
+
+                        }
+                       
+                    }
+
                     //targetRoom.SetDoors(true);
 
                 }
