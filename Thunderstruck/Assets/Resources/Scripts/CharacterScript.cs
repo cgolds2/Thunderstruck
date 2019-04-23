@@ -38,6 +38,7 @@ public class CharacterScript : BaseSprite
     public Sprite IdleUmbBlue;
     public Sprite IdleUmbRed;
     public bool shieldCharge;
+    public bool isUmbrellaActive = false;
 
     //item flags
     public static bool blueCoat, redCoat, redUmbrella, blueUmbrella, hat, boots = false;
@@ -140,7 +141,7 @@ public class CharacterScript : BaseSprite
 
             //  bodyMC.velocity = new Vector2(movement.x *panSpeed, movement.y * panSpeed);
             bool isIdle = true;
-            bool isUmbrellaActive = false;
+            //bool isUmbrellaActive = false;
             if (Input.GetMouseButton(0) && (Time.time > fireRate + lastShot))
             {
                 if (!Input.GetKey(KeyCode.Space))
@@ -191,6 +192,7 @@ public class CharacterScript : BaseSprite
                 isUmbrellaActive = true;
                 shieldCharge = false;
                 SwingUmbrella();
+                isUmbrellaActive = true;
                 //body.GetComponent<SpriteRenderer>().sprite = holdingHand;
 
                 //Vector3 shootDirection;
@@ -484,6 +486,7 @@ public class CharacterScript : BaseSprite
         shieldUmberella.SetActive(false);
         shieldUmberella.transform.rotation = startRotation;
         idleUmberella.SetActive(true);
+        isUmbrellaActive = false;
         Invoke("RestoreShield", .6f);
     }
 
