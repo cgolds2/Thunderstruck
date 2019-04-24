@@ -70,7 +70,7 @@ public class MainMenu : MonoBehaviour
     }
 
 
-    public static void QuitGame()
+    public void QuitGame()
     {
         // save any game data here
 
